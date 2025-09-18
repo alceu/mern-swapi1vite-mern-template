@@ -1,0 +1,1 @@
+When adding author references in comments or documentation, dynamically fetch the user's name from the git config using the `git config user.name` command.
