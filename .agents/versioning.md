@@ -1,6 +1,8 @@
-When changes are made to the repository, the agent will:
+# Versioning and Committing Instructions
 
-1. Draft a commit message based on Conventional Commits guidelines, summarizing the query and the tasks performed in response.
-1. Present the proposed commit message to the author.
-1. Even if edits are accepted by default, the author will always be prompted for confirmation before committing the changes.
-1. If confirmed by the author, the agent will proceed with the commit.
+After successfully completing a task that modifies the repository, you must:
+
+1.  Draft a commit message following Conventional Commits guidelines.
+1.  Present the commit message to the user for approval.
+1.  Wait for explicit confirmation before committing.
+1.  Commit the changes once approved.
