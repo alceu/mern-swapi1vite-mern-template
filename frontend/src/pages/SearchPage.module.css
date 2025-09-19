@@ -1,0 +1,8 @@
+.container {
+  background-color: #dedede;
+  padding: 0 8px 11px;
+}
+
+.main {
+  display: flex;
+}

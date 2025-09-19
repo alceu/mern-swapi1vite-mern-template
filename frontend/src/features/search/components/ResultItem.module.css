@@ -1,0 +1,31 @@
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #c4c4c4;
+}
+
+.name {
+  font-family: Montserrat;
+  font-size: 8px;
+  font-weight: bold;
+  color: #000;
+}
+
+.button {
+  width: 67px;
+  height: 17px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 8.5px;
+  background-color: #0ab463;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Montserrat;
+  font-size: 7px;
+  font-weight: bold;
+}

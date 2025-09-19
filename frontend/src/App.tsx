@@ -1,7 +1,10 @@
-import React from "react";
+import React from 'react';
+import SearchPage from './pages/SearchPage';
 
-function App() {
-  return <p>Hello World</p>;
-}
+const App: React.FC = () => {
+  return (
+    <SearchPage />
+  );
+};
 
 export default App;

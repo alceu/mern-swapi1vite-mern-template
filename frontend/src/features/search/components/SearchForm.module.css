@@ -1,0 +1,71 @@
+.searchContainer {
+  width: 294px;
+  height: 115px;
+  margin: 15px 17px 17px 184px;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0.5px 1.5px 0 rgba(0,0,0,0.1);
+  border: solid 0.5px #383838;
+  background-color: #fff;
+}
+
+.label {
+  font-family: Roboto;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.radioGroup {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  font-family: Roboto;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #000;
+}
+
+.radio {
+  margin-right: 5px;
+}
+
+.inputGroup {
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 5px;
+  border-radius: 2px;
+  border: solid 0.5px #383838;
+  background-color: #fff;
+  box-shadow: inset 0 0.5px 1.5px 0 rgba(132,132,132,0.75);
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 2px;
+  background-color: #00d474;
+  color: #fff;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.33;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #0ab463;
+  border: solid 0.5px #0ab463;
+  cursor: not-allowed;
+}
