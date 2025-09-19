@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './ResultItem.module.css';
 
 interface ResultItemProps {
@@ -8,10 +9,14 @@ interface ResultItemProps {
 }
 
 const ResultItem: React.FC<ResultItemProps> = ({ name, type, id }) => {
+  const detailsPath = type === "people" ? `/people/${id}` : `/films/${id}`;
+
   return (
     <div className={styles.itemContainer}>
       <p className={styles.name}>{name}</p>
-      <button className={styles.button}>SEE DETAILS</button>
+      <Link to={detailsPath} className={styles.button}>
+        SEE DETAILS
+      </Link>
     </div>
   );
 };
