@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import SearchForm from "../features/search/components/SearchForm";
 import ResultsDisplay from "../features/search/components/ResultsDisplay";
 import styles from "./SearchPage.module.css";
 import { useGetPeopleQuery, useGetFilmsQuery } from "../features/api/swapiApi";
+import { usePostSearchQueryMutation } from "../features/api/statsApi";
 
 const SearchPage: React.FC = () => {
   const [searchType, setSearchType] = useState<"people" | "films">("people");
@@ -16,9 +17,17 @@ const SearchPage: React.FC = () => {
     skip: searchType !== "films" || searchQuery.length < 1,
   });
 
+  const [postSearchQuery] = usePostSearchQueryMutation();
+
   const data = searchType === "people" ? peopleData : filmsData;
   const isLoading = searchType === "people" ? peopleLoading : filmsLoading;
   const isError = searchType === "people" ? peopleError : filmsError;
+
+  useEffect(() => {
+    if (!isLoading && !isError && data && searchQuery.length > 0) {
+      postSearchQuery({ query: searchQuery });
+    }
+  }, [data, isLoading, isError, searchQuery, postSearchQuery]);
 
   return (
     <div className={styles.container}>

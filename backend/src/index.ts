@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 
 import routes from "./routes";
 
@@ -14,6 +15,8 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
+app.use(cors());
+app.use(express.json());
 app.use(routes);
 
 app.listen(port, () => {
