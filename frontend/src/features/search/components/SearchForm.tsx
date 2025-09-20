@@ -1,6 +1,5 @@
-
-import React from 'react';
-import styles from './SearchForm.module.css';
+import React from "react";
+import styles from "./SearchForm.module.css";
 
 interface SearchFormProps {
   searchType: "people" | "films";
@@ -15,13 +14,24 @@ const SearchForm: React.FC<SearchFormProps> = ({
   searchQuery,
   setSearchQuery,
 }) => {
-  const handleSearchTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const peoplePlaceholder = "e.g. Luke Skywalker, C-3PO, R2-D2";
+  const filmsPlaceholder =
+    "e.g. A New Hope, The Empire Strikes Back, Return of the Jedi";
+
+  const handleSearchTypeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchType(event.target.value as "people" | "films");
   };
 
-  const handleSearchQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchQueryChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchQuery(event.target.value);
   };
+
+  const currentPlaceholder =
+    searchType === "people" ? peoplePlaceholder : filmsPlaceholder;
 
   return (
     <div className={styles.searchContainer}>
@@ -56,7 +66,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           className={styles.input}
           value={searchQuery}
           onChange={handleSearchQueryChange}
-          placeholder={`Search for ${searchType}...`}
+          placeholder={currentPlaceholder}
         />
       </div>
       <button className={styles.button}>SEARCH</button>
