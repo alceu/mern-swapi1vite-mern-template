@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import Header from "../components/Header/Header";
 import SearchForm from "../features/search/components/SearchForm";
 import ResultsDisplay from "../features/search/components/ResultsDisplay";
@@ -27,15 +28,15 @@ const SearchPage: React.FC = () => {
 
   const [postSearchQuery] = usePostSearchQueryMutation();
 
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      postSearchQuery({ query: searchQuery, type: searchType });
+    }
+  }, [searchQuery, searchType, postSearchQuery]);
+
   const data = searchType === "people" ? peopleData : filmsData;
   const isLoading = searchType === "people" ? peopleLoading : filmsLoading;
   const isError = searchType === "people" ? peopleError : filmsError;
-
-  useEffect(() => {
-    if (!isLoading && !isError && data && searchQuery.length > 0) {
-      postSearchQuery({ query: searchQuery });
-    }
-  }, [data, isLoading, isError, searchQuery, postSearchQuery]);
 
   return (
     <div className={styles.container}>

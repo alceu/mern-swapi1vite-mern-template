@@ -1,27 +1,30 @@
-import SearchQuery from "../models/SearchQuery";
+import SearchQuery, { ISearchQuery } from "../models/SearchQuery";
 import TopSearch, { ITopSearch } from "../models/TopSearch";
 
 /**
- * Calculates the top search queries from the SearchQuery model.
+ * Calculates the top search queries from the SearchQuery model for a given type.
+ * @param type The type of search (films or people).
  * @param limit The maximum number of top queries to return. Defaults to 5.
- * @returns An array of objects, each containing a query and its percentage.
+ * @returns An array of objects, each containing the SearchQuery _id and its percentage.
  */
 async function _calculateTopQueries(
+  type: 'films' | 'people',
   limit: number = 5
-): Promise<{ query: string; percentage: number }[]> {
+): Promise<{ searchQuery: ISearchQuery['_id']; percentage: number }[]> {
   const topQueriesWithPercentage = await SearchQuery.aggregate([
+    { $match: { type: type } }, // Filter by type
     {
       $group: {
         _id: null,
         totalCount: { $sum: "$count" },
-        queries: { $push: { query: "$query", count: "$count" } },
+        queries: { $push: { _id: "$_id", count: "$count" } },
       },
     },
     { $unwind: "$queries" },
     {
       $project: {
         _id: 0,
-        query: "$queries.query",
+        searchQuery: "$queries._id",
         count: "$queries.count",
         totalCount: "$totalCount",
         percentage: {
@@ -34,40 +37,56 @@ async function _calculateTopQueries(
   ]);
 
   return topQueriesWithPercentage.map((item) => ({
-    query: item.query,
+    searchQuery: item.searchQuery,
     percentage: item.percentage,
   }));
 }
 
 /**
- * Calculates the top search queries and persists them into the TopSearch model.
+ * Calculates the top search queries for both 'films' and 'people' and persists them into the TopSearch model.
  */
 export async function calculateAndPersistTopQueries(): Promise<void> {
   console.log("Calculating and persisting top queries...");
-  const topQueries = await _calculateTopQueries();
+
+  // Calculate for films
+  const topFilmQueries = await _calculateTopQueries('films');
+  // Calculate for people
+  const topPeopleQueries = await _calculateTopQueries('people');
 
   // Clear existing top queries and insert new ones
   await TopSearch.deleteMany({});
   await TopSearch.insertMany(
-    topQueries.map((q) => ({ query: q.query, percentage: q.percentage }))
+    [...topFilmQueries, ...topPeopleQueries].map((q) => ({
+      searchQuery: q.searchQuery,
+      percentage: q.percentage,
+    }))
   );
   console.log("Top queries calculated and persisted successfully.");
 }
 
 /**
- * Gets the pre-calculated top search queries with their percentages.
+ * Gets the pre-calculated top search queries with their percentages, optionally filtered by type.
  * @param limit The maximum number of top queries to return. Defaults to 5.
- * @returns An array of objects, each containing a query and its percentage.
+ * @param type Optional: The type of search to filter by (films or people).
+ * @returns An array of objects, each containing a query, its type, and its percentage.
  */
 export async function getTopQueries(
-  limit: number = 5
-): Promise<{ query: string; percentage: number }[]> {
-  const topQueries = await TopSearch.find({})
-    .sort({ percentage: -1 })
-    .limit(limit);
+  limit: number = 5,
+  type?: 'films' | 'people'
+): Promise<Array<ITopSearch & { searchQuery: ISearchQuery }>> {
+  const matchStage: any = {};
+  if (type) {
+    matchStage['searchQuery.type'] = type; // Filter by the type in the populated SearchQuery
+  }
 
-  return topQueries.map((item: ITopSearch) => ({
-    query: item.query,
-    percentage: item.percentage,
-  }));
+  const topQueries = await TopSearch.aggregate([
+    { $lookup: { from: 'searchqueries', localField: 'searchQuery', foreignField: '_id', as: 'searchQuery' } },
+    { $unwind: '$searchQuery' },
+    { $match: matchStage },
+    { $sort: { percentage: -1 } },
+    { $limit: limit },
+    { $project: { _id: 0, searchQuery: { _id: '$searchQuery._id', query: '$searchQuery.query', type: '$searchQuery.type' }, percentage: 1, timestamp: 1 } }
+  ]);
+
+  return topQueries as Array<ITopSearch & { searchQuery: ISearchQuery }>;
 }

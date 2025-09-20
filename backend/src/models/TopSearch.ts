@@ -1,13 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { ISearchQuery } from "./SearchQuery"; // Import ISearchQuery for population
 
 export interface ITopSearch extends Document {
-  query: string;
+  searchQuery: mongoose.Schema.Types.ObjectId | ISearchQuery; // Reference to SearchQuery
   percentage: number;
   timestamp: Date;
 }
 
 const TopSearchSchema: Schema = new Schema({
-  query: { type: String, required: true, unique: true },
+  searchQuery: { type: mongoose.Schema.Types.ObjectId, ref: 'SearchQuery', required: true, unique: true },
   percentage: { type: Number, required: true },
   timestamp: { type: Date, default: Date.now },
 });
