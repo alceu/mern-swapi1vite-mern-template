@@ -4,16 +4,24 @@ import SearchForm from "../features/search/components/SearchForm";
 import ResultsDisplay from "../features/search/components/ResultsDisplay";
 import styles from "./SearchPage.module.css";
 import { useGetPeopleQuery, useGetFilmsQuery } from "../features/api/swapiApi";
-import { usePostSearchQueryMutation } from "../features/api/statsApi";
+import { usePostSearchQueryMutation } from "../features/api/searchesStatsApi";
 
 const SearchPage: React.FC = () => {
   const [searchType, setSearchType] = useState<"people" | "films">("people");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data: peopleData, isLoading: peopleLoading, isError: peopleError } = useGetPeopleQuery(searchQuery, {
+  const {
+    data: peopleData,
+    isLoading: peopleLoading,
+    isError: peopleError,
+  } = useGetPeopleQuery(searchQuery, {
     skip: searchType !== "people" || searchQuery.length < 1,
   });
-  const { data: filmsData, isLoading: filmsLoading, isError: filmsError } = useGetFilmsQuery(searchQuery, {
+  const {
+    data: filmsData,
+    isLoading: filmsLoading,
+    isError: filmsError,
+  } = useGetFilmsQuery(searchQuery, {
     skip: searchType !== "films" || searchQuery.length < 1,
   });
 
@@ -39,7 +47,12 @@ const SearchPage: React.FC = () => {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />
-        <ResultsDisplay data={data} isLoading={isLoading} isError={isError} searchType={searchType} />
+        <ResultsDisplay
+          data={data}
+          isLoading={isLoading}
+          isError={isError}
+          searchType={searchType}
+        />
       </div>
     </div>
   );

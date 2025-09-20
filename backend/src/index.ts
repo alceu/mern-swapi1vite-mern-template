@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import cron from "node-cron";
 
 import routes from "./routes";
+import { calculateAndPersistTopQueries } from "./services/TopSearchService";
 
 dotenv.config();
 
@@ -12,7 +14,14 @@ const port = process.env.PORT || 3000;
 
 mongoose
   .connect(process.env.MONGO_URI!)
-  .then(() => console.log("MongoDB connected"))
+  .then(() => {
+    console.log("MongoDB connected");
+    // Schedule the top queries calculation and persistence every 5 minutes
+    cron.schedule("*/5 * * * *", () => {
+      console.log("Running scheduled task: calculateAndPersistTopQueries");
+      calculateAndPersistTopQueries();
+    });
+  })
   .catch((err) => console.log(err));
 
 app.use(cors());
