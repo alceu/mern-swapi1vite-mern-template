@@ -14,10 +14,11 @@ export async function registerSearchQuery(query: string): Promise<void> {
 }
 
 /**
- * Gets the top five search queries with their percentages.
+ * Gets the top search queries with their percentages.
+ * @param limit The maximum number of top queries to return. Defaults to 5.
  * @returns An array of objects, each containing a query and its percentage.
  */
-export async function getTopFiveQueries(): Promise<{ query: string; percentage: number }[]> {
+export async function getTopQueries(limit: number = 5): Promise<{ query: string; percentage: number }[]> {
   const totalQueries = await SearchQuery.aggregate([
     { $group: { _id: null, total: { $sum: '$count' } } },
   ]);
@@ -26,13 +27,13 @@ export async function getTopFiveQueries(): Promise<{ query: string; percentage: 
     return [];
   }
 
-  const topFive = await SearchQuery.find({})
+  const topQueries = await SearchQuery.find({})
     .sort({ count: -1 })
-    .limit(5);
+    .limit(limit);
 
   const total = totalQueries[0].total;
 
-  return topFive.map((item: ISearchQuery) => ({
+  return topQueries.map((item: ISearchQuery) => ({
     query: item.query,
     percentage: (item.count / total) * 100,
   }));

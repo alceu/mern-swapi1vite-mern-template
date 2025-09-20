@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express';
 import {
   registerSearchQuery,
-  getTopFiveQueries,
+  getTopQueries,
 } from '../../services/SearchStatsService';
 
 const router = express.Router();
@@ -27,10 +27,11 @@ router.post('/search', async (req: Request, res: Response) => {
 // GET /api/stats/top-searches
 router.get('/top-searches', async (req: Request, res: Response) => {
   try {
-    const topFive = await getTopFiveQueries();
-    res.status(200).json(topFive);
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+    const topQueries = await getTopQueries(limit);
+    res.status(200).json(topQueries);
   } catch (error) {
-    console.error('Error fetching top five queries:', error);
+    console.error('Error fetching top queries:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
