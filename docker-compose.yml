@@ -10,6 +10,25 @@ services:
       - '27017:27017'
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: always
+    mem_limit: 512m
+    ports:
+      - '3001:3001'
+    depends_on:
+      mongo:
+        condition: service_healthy
 
 volumes:
   mongo-data:
+    name: "mern-swapi1vite-mern-template-mongo-data"

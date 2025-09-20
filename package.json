@@ -9,9 +9,9 @@
     "dev:frontend": "npm start --prefix ./frontend",
     "check-types": "tsc",
     "prettier": "prettier --write .",
-    "build:backend": "tsc",
+    "build:backend": "tsc -p tsconfig.json",
     "build:frontend": "npm run build --prefix ./frontend",
-    "build": "tsc && npm run build:frontend"
+    "build": "npm run build:backend && npm run build:frontend"
   },
   "repository": "https://github.com/apicgg/vite-mern-template.git",
   "license": "MIT",

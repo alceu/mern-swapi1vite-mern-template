@@ -1,4 +1,41 @@
+# mern-swapi1vite-mern-template
+
+## Environment Setup
+
+This project uses `.env` files to manage environment variables. There are two sample files provided:
+
+- `sample-dev.env`: For local development.
+- `sample-prod.env`: For production (Docker) environment.
+
+### Running with Docker
+
+```bash
+git clone
+
+docker compose up -d
+```
+
+### Local Development
+
+```bash
+git clone
+
+cp sample-dev.env .env
+
+npm install
+cd frontend
+npm install
+cd ..
+
+docker compose up mongo -d
+
+npm run dev:backend
+npm run dev:frontend
+```
+
 # vite-mern-template
+
+**(Original template readme content)**
 
 [![Depfu](https://badges.depfu.com/badges/1b70410a7764005553d576dd171dce8d/status.svg)](https://depfu.com)
 [![Depfu](https://badges.depfu.com/badges/1b70410a7764005553d576dd171dce8d/count.svg)](https://depfu.com/github/apicgg/vite-mern-template?project_id=38988)
@@ -97,7 +134,7 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
-- Remove the .github folder and initialize your own git repository with ```git init```.
+- Remove the .github folder and initialize your own git repository with `git init`.
 
 ## TODO
 
