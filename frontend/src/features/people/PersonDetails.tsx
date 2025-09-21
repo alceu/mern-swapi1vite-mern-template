@@ -1,10 +1,13 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetPersonByIdQuery } from '@features/api/swapiApi';
 import styles from './PersonDetails.module.css';
 
-const PersonDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+interface PersonDetailsProps {
+  id: string;
+}
+
+const PersonDetails: React.FC<PersonDetailsProps> = ({ id }) => {
   const navigate = useNavigate();
   const { data, error, isLoading } = useGetPersonByIdQuery(id || '');
 

@@ -1,8 +1,8 @@
-import PersonDetails from "./PersonDetails";
+import PersonDetailsPage from "./PersonDetailsPage";
 
 export const peopleRoutes = [
   {
     path: ":id",
-    Component: PersonDetails,
+    Component: PersonDetailsPage,
   },
 ];

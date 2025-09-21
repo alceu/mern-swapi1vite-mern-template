@@ -1,10 +1,13 @@
 import React from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useGetFilmByIdQuery, useGetPersonByIdQuery } from '@features/api/swapiApi';
 import styles from './FilmDetails.module.css';
 
-const FilmDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+interface FilmDetailsProps {
+  id: string;
+}
+
+const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
   const navigate = useNavigate();
   const { data: filmData, error: filmError, isLoading: filmIsLoading } = useGetFilmByIdQuery(id || '');
 
