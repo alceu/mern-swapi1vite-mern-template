@@ -10,3 +10,4 @@ located in the `.agents/` directory at the root of the project, as a primary rul
 @./.agents/versioning.md
 @./.agents/authorship.md
 @./.agents/frontend.md
+@./.agents/fullstack.md
