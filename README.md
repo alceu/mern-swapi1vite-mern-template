@@ -64,7 +64,7 @@ If you love this boilerplate, give it a star, you will be a ray of sunshine in o
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Router DOM](https://reactrouter.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
-- [TanStack Query](https://tanstack.com/query/latest)
+- ~~[TanStack Query](https://tanstack.com/query/latest)~~
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Vitest](https://vitest.dev/)
