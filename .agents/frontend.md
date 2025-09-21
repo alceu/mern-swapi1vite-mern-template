@@ -21,8 +21,8 @@ Adhere to the following separation of concerns for components:
 
     - These components encapsulate a specific piece of business functionality.
     - They are responsible for data fetching, state management related to the feature, and other business logic.
-    - They receive their business logic parameters from Pages Components.
-    - They use callback props (e.g., `onQueryChange`) to communicate important state changes back to the Pages Components, which can then update the URL etc.
+    - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters should be passed down as props from Page Components.
+    - They use callback props (e.g., `onQueryChange`) to communicate important state changes back to the Pages Components, which can then change route, parameters etc.
 
 3.  **UI and Design System Components** (located in `src/components/...`):
     - These are "dumb" components that focus on the UI.
