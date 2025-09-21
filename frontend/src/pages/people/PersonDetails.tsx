@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetPersonByIdQuery } from '../features/api/swapiApi';
+import { useGetPersonByIdQuery } from '@features/api/swapiApi';
 import styles from './PersonDetails.module.css';
 
 const PersonDetails: React.FC = () => {

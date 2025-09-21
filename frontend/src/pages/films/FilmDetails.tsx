@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useGetFilmByIdQuery, useGetPersonByIdQuery } from '../features/api/swapiApi';
+import { useGetFilmByIdQuery, useGetPersonByIdQuery } from '@features/api/swapiApi';
 import styles from './FilmDetails.module.css';
 
 const FilmDetails: React.FC = () => {

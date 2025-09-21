@@ -5,6 +5,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import svgrPlugin from "vite-plugin-svgr";
 
+import path from 'node:path';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
@@ -21,6 +23,14 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      '@features': path.resolve(__dirname, './src/features'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@api': path.resolve(__dirname, './src/features/api'),
+    },
+  },
   build: {
     outDir: "./build",
   },

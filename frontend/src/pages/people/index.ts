@@ -1,8 +1,8 @@
-import PersonDetails from './PersonDetails';
+import PersonDetails from "./PersonDetails";
 
 export const peopleRoutes = [
   {
-    path: ":id", // Relative path for person details
-    element: <PersonDetails />,
+    path: ":id",
+    Component: PersonDetails,
   },
 ];
