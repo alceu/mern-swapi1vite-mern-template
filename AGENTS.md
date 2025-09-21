@@ -9,3 +9,4 @@ located in the `.agents/` directory at the root of the project, as a primary rul
 @./.agents/developer_assistant.md
 @./.agents/versioning.md
 @./.agents/authorship.md
+@./.agents/frontend.md

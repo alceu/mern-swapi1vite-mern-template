@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import Header from "../components/Header/Header";
 import SearchForm from "../features/search/components/SearchForm";
@@ -8,9 +9,16 @@ import { useGetPeopleQuery, useGetFilmsQuery } from "../features/api/swapiApi";
 import { usePostSearchQueryMutation } from "../features/api/searchesStatsApi";
 
 const SearchPage: React.FC = () => {
-  const [searchType, setSearchType] = useState<"people" | "films">("people");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchType, setSearchType] = useState<"people" | "films">(
+    searchParams.get("type") === "films" ? "films" : "people"
+  );
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get("query") || ""
+  );
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>(
+    searchQuery
+  );
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -21,6 +29,17 @@ const SearchPage: React.FC = () => {
       clearTimeout(handler);
     };
   }, [searchQuery]);
+
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    if (debouncedSearchQuery.length >= 2) {
+      newParams.set("query", debouncedSearchQuery);
+    }
+    if (searchType === "films") {
+      newParams.set("type", searchType);
+    }
+    setSearchParams(newParams);
+  }, [debouncedSearchQuery, searchType, setSearchParams]);
 
   const {
     data: peopleData,
