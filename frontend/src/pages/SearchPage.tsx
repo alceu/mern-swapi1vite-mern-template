@@ -50,6 +50,7 @@ const SearchPage: React.FC = () => {
   const isError = searchType === "people" ? peopleError : filmsError;
 
   const displayData = debouncedSearchQuery.length >= 2 ? data : undefined;
+  const isSearching = isLoading && debouncedSearchQuery.length >= 2;
 
   return (
     <div className={styles.container}>
@@ -60,10 +61,11 @@ const SearchPage: React.FC = () => {
           setSearchType={setSearchType}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          isLoading={isSearching}
         />
         <ResultsDisplay
           data={displayData}
-          isLoading={isLoading && debouncedSearchQuery.length >= 2}
+          isLoading={isSearching}
           isError={isError}
           searchType={searchType}
         />

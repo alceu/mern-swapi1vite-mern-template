@@ -6,6 +6,7 @@ interface SearchFormProps {
   setSearchType: (type: "people" | "films") => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  isLoading: boolean;
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
@@ -13,6 +14,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
   setSearchType,
   searchQuery,
   setSearchQuery,
+  isLoading,
 }) => {
   const peoplePlaceholder = "e.g. Luke Skywalker, C-3PO, R2-D2";
   const filmsPlaceholder =
@@ -69,8 +71,11 @@ const SearchForm: React.FC<SearchFormProps> = ({
           placeholder={currentPlaceholder}
         />
       </div>
-      <button className={styles.button} disabled={searchQuery.length < 2}>
-        SEARCH
+      <button
+        className={styles.button}
+        disabled={searchQuery.length < 2 || isLoading}
+      >
+        {isLoading ? "SEARCHING..." : "SEARCH"}
       </button>
     </div>
   );

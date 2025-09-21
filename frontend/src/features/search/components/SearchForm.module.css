@@ -65,7 +65,8 @@
 }
 
 .button:disabled {
-  background-color: #0ab463;
-  border: solid 0.5px #0ab463;
+  background-color: #cccccc;
+  color: #666666;
+  border: solid 0.5px #979797;
   cursor: not-allowed;
 }
