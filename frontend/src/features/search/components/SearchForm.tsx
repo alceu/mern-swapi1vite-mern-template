@@ -69,7 +69,9 @@ const SearchForm: React.FC<SearchFormProps> = ({
           placeholder={currentPlaceholder}
         />
       </div>
-      <button className={styles.button}>SEARCH</button>
+      <button className={styles.button} disabled={searchQuery.length < 2}>
+        SEARCH
+      </button>
     </div>
   );
 };

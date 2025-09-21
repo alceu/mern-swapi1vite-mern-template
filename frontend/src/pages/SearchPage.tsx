@@ -10,33 +10,46 @@ import { usePostSearchQueryMutation } from "../features/api/searchesStatsApi";
 const SearchPage: React.FC = () => {
   const [searchType, setSearchType] = useState<"people" | "films">("people");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
 
   const {
     data: peopleData,
     isLoading: peopleLoading,
     isError: peopleError,
-  } = useGetPeopleQuery(searchQuery, {
-    skip: searchType !== "people" || searchQuery.length < 1,
+  } = useGetPeopleQuery(debouncedSearchQuery, {
+    skip: searchType !== "people" || debouncedSearchQuery.length < 2,
   });
   const {
     data: filmsData,
     isLoading: filmsLoading,
     isError: filmsError,
-  } = useGetFilmsQuery(searchQuery, {
-    skip: searchType !== "films" || searchQuery.length < 1,
+  } = useGetFilmsQuery(debouncedSearchQuery, {
+    skip: searchType !== "films" || debouncedSearchQuery.length < 2,
   });
 
   const [postSearchQuery] = usePostSearchQueryMutation();
 
   useEffect(() => {
-    if (searchQuery.length > 0) {
-      postSearchQuery({ query: searchQuery, type: searchType });
+    if (debouncedSearchQuery.length >= 2) {
+      postSearchQuery({ query: debouncedSearchQuery, type: searchType });
     }
-  }, [searchQuery, searchType, postSearchQuery]);
+  }, [debouncedSearchQuery, searchType, postSearchQuery]);
 
   const data = searchType === "people" ? peopleData : filmsData;
   const isLoading = searchType === "people" ? peopleLoading : filmsLoading;
   const isError = searchType === "people" ? peopleError : filmsError;
+
+  const displayData = debouncedSearchQuery.length >= 2 ? data : undefined;
 
   return (
     <div className={styles.container}>
@@ -49,8 +62,8 @@ const SearchPage: React.FC = () => {
           setSearchQuery={setSearchQuery}
         />
         <ResultsDisplay
-          data={data}
-          isLoading={isLoading}
+          data={displayData}
+          isLoading={isLoading && debouncedSearchQuery.length >= 2}
           isError={isError}
           searchType={searchType}
         />
