@@ -4,11 +4,12 @@
 }
 
 .container {
-  height: 450px;
-  padding: 0 0 119px;
+  min-height: 100vh;
   background-color: #ededed;
 }
 
 .main {
   display: flex;
+  justify-content: center;
+  padding: 2rem;
 }

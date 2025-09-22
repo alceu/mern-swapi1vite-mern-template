@@ -1,30 +1,46 @@
 .detailsContainer {
-  padding: 20px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  margin: 20px;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  border: 1px solid var(--green-teal);
+  width: 100%;
+  max-width: 1200px;
 }
 
 .backButton {
-  background-color: #007bff;
+  background-color: var(--green-teal);
   color: white;
-  padding: 10px 15px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 20px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 .backButton:hover {
-  background-color: #0056b3;
+  opacity: 0.9;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem 2rem;
 }
 
 .detailItem {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.25rem;
 }
 
 .detailLabel {
   font-weight: bold;
-  margin-right: 5px;
+  margin-right: 0.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--green-teal);
 }

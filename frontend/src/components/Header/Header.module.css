@@ -1,22 +1,18 @@
 .header {
-  width: 720px;
-  height: 25px;
-  margin: 0 0 15px;
-  padding: 7px 335.5px;
+  width: 100%;
+  padding: 1rem;
   box-shadow: 0 1px 0 0 var(--green-teal);
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+
 .title {
-  width: 49px;
-  height: 11px;
-  font-family: Montserrat;
-  font-size: 9px;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.5rem;
   font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
   color: var(--green-teal);
 }
 

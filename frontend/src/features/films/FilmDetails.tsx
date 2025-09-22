@@ -19,14 +19,16 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
   return (
     <div className={styles.detailsContainer}>
       <button onClick={() => navigate(-1)} className={styles.backButton}>Back</button>
-      <h2>Film Details</h2>
+      <h2>{filmData?.result.properties.title}</h2>
       {filmData && (
-        <>
-          <p className={styles.detailItem}><span className={styles.detailLabel}>Title:</span> {filmData.result.properties.title}</p>
-          <p className={styles.detailItem}><span className={styles.detailLabel}>Episode ID:</span> {filmData.result.properties.episode_id}</p>
-          <p className={styles.detailItem}><span className={styles.detailLabel}>Opening Crawl:</span> {filmData.result.properties.opening_crawl}</p>
-          <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Characters:</span>
+        <div className={styles.detailsGrid}>
+          <div className={styles.mainDetails}>
+            <p className={styles.detailItem}><span className={styles.detailLabel}>Episode ID:</span> {filmData.result.properties.episode_id}</p>
+            <p className={styles.detailItem}><span className={styles.detailLabel}>Opening Crawl:</span></p>
+            <p>{filmData.result.properties.opening_crawl}</p>
+          </div>
+          <div className={styles.charactersList}>
+            <h3>Characters</h3>
             <ul>
               {characters.map((charUrl: string) => {
                 const charId = charUrl.split('/').filter(Boolean).pop();
@@ -34,7 +36,7 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
               })}
             </ul>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
