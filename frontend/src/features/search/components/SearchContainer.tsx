@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import styles from "./SearchContainer.module.css";
 import SearchForm from "./SearchForm";
 import ResultsDisplay from "./ResultsDisplay";
 import { useGetPeopleQuery, useGetFilmsQuery } from "@api/swapiApi";
@@ -41,7 +42,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
   const isSearching = isLoading && query.length >= 2;
 
   return (
-    <>
+    <div className={styles.container}>
       <SearchForm
         type={type}
         onTypeChange={onTypeChange}
@@ -55,7 +56,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
         isError={isError}
         searchType={type}
       />
-    </>
+    </div>
   );
 };
 

@@ -44,7 +44,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       ) : (
         <div className={styles.noResults}>
           <p className={styles.noResultsText}>There are zero matches.</p>
-          <p className={styles.noResultsSubtext}>
+          <p className={styles.noResultsText}>
             Use the form to search for People or Movies.
           </p>
         </div>

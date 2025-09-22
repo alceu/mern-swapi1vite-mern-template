@@ -1,6 +1,12 @@
+:root {
+  --green-teal: #0ab463;
+  --pinkish-grey: #c4c4c4;
+}
+
 .container {
-  background-color: #dedede;
-  padding: 0 8px 11px;
+  height: 450px;
+  padding: 0 0 119px;
+  background-color: #ededed;
 }
 
 .main {

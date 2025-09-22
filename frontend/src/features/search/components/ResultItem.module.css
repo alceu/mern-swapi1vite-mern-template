@@ -7,14 +7,44 @@
 }
 
 .name {
+  width: 74.5px;
+  height: 10px;
+  margin: 8.5px 119.5px 8.5px 0;
   font-family: Montserrat;
   font-size: 8px;
   font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   color: #000;
+
+  /* font-family: Montserrat;
+  font-size: 8px;
+  font-weight: bold;
+  color: #000; */
 }
 
 .button {
   width: 67px;
+  height: 17px;
+  margin: 5px 0 5px 119.5px;
+  padding: 4px 10px;
+  border-radius: 8.5px;
+  background-color: var(--green-teal);
+
+  /* width: 47px;
+  height: 9px; */
+  font-family: Montserrat;
+  font-size: 7px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #fff;
+
+  /* width: 67px;
   height: 17px;
   padding: 4px 10px;
   border: none;
@@ -27,5 +57,5 @@
   align-items: center;
   font-family: Montserrat;
   font-size: 7px;
-  font-weight: bold;
+  font-weight: bold; */
 }
