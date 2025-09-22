@@ -31,3 +31,12 @@ p {
   letter-spacing: normal;
   color: #000;
 }
+
+a {
+  color: var(--emerald); /* Use a consistent link color */
+  text-decoration: underline; /* Ensure links are underlined */
+}
+
+a:hover {
+  text-decoration: none; /* Remove underline on hover for better UX */
+}
