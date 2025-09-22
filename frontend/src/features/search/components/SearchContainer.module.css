@@ -1,7 +1,8 @@
 .container {
   display: flex;
-  gap: 2rem; /* Increased gap for more spacing */
+  gap: 2rem;
   width: 100%;
+  max-width: 1200px;
   align-items: flex-start;
 }
 

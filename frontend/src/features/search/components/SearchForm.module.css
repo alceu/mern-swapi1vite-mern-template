@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+  box-shadow: 0 0.1rem 0.2rem 0 var(--warm-grey-75);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--green-teal);
+  border: 0.01rem solid var(--green-teal);
   background-color: #fff;
   width: 400px;
   flex-shrink: 0;
@@ -17,10 +17,7 @@
 }
 
 .label {
-  margin-bottom: 0.5rem;
-  font-family: Montserrat, sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #383838;
 }
 
@@ -41,7 +38,7 @@
 }
 
 .radio {
-  accent-color: var(--green-teal);
+  accent-color: var(--emerald);
 }
 
 .inputGroup {
@@ -61,8 +58,8 @@
 
 .button {
   width: 100%;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
   border: 1px solid var(--green-teal);
   background-color: var(--green-teal);
   color: #fff;
