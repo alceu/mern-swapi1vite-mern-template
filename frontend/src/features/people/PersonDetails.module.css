@@ -5,6 +5,7 @@
   border: 1px solid var(--green-teal);
   width: 100%;
   max-width: 1200px;
+  overflow-y: auto;
 }
 
 .backButton {

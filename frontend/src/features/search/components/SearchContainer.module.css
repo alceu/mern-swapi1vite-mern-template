@@ -2,6 +2,7 @@
   display: flex;
   gap: 2rem; /* Increased gap for more spacing */
   width: 100%;
+  align-items: flex-start;
 }
 
 @media (max-width: 768px) {

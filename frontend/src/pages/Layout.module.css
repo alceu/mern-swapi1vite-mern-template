@@ -4,12 +4,16 @@
 }
 
 .container {
-  min-height: 100vh;
+  height: 100vh;
   background-color: #ededed;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
   display: flex;
   justify-content: center;
   padding: 2rem;
+  flex-grow: 1;
+  overflow-y: auto;
 }
