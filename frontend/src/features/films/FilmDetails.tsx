@@ -1,7 +1,10 @@
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useGetFilmByIdQuery, useGetPersonByIdQuery } from '@features/api/swapiApi';
-import styles from './FilmDetails.module.css';
+import React from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  useGetFilmByIdQuery,
+  useGetPersonByIdQuery,
+} from "@features/api/swapiApi";
+import styles from "./FilmDetails.module.css";
 
 interface FilmDetailsProps {
   id: string;
@@ -9,7 +12,11 @@ interface FilmDetailsProps {
 
 const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
   const navigate = useNavigate();
-  const { data: filmData, error: filmError, isLoading: filmIsLoading } = useGetFilmByIdQuery(id || '');
+  const {
+    data: filmData,
+    error: filmError,
+    isLoading: filmIsLoading,
+  } = useGetFilmByIdQuery(id);
 
   if (filmIsLoading) return <div>Loading film details...</div>;
   if (filmError) return <div>Error loading film details.</div>;
@@ -18,26 +25,32 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      <button onClick={() => navigate(-1)} className={styles.backButton}>Back</button>
-      <h2>{filmData?.result.properties.title}</h2>
+      {filmData && <h2>{filmData.result.properties.title}</h2>}
       {filmData && (
-        <div className={styles.detailsGrid}>
-          <div className={styles.mainDetails}>
-            <p className={styles.detailItem}><span className={styles.detailLabel}>Episode ID:</span> {filmData.result.properties.episode_id}</p>
-            <p className={styles.detailItem}><span className={styles.detailLabel}>Opening Crawl:</span></p>
+        <div className={styles.contentColumns}>
+          <div className={styles.openingCrawlColumn}>
+            <h3>Opening Crawl</h3>
             <p>{filmData.result.properties.opening_crawl}</p>
           </div>
-          <div className={styles.charactersList}>
+          <div className={styles.charactersColumn}>
             <h3>Characters</h3>
-            <ul>
-              {characters.map((charUrl: string) => {
-                const charId = charUrl.split('/').filter(Boolean).pop();
-                return <CharacterLink key={charId} charId={charId || ''} />;
+            <p>
+              {characters.map((charUrl: string, index: number) => {
+                const charId = charUrl.split("/").filter(Boolean).pop();
+                return (
+                  <React.Fragment key={charId}>
+                    <CharacterLink charId={charId || ""} />
+                    {index < characters.length - 1 && ", "}
+                  </React.Fragment>
+                );
               })}
-            </ul>
+            </p>
           </div>
         </div>
       )}
+      <button onClick={() => navigate(-1)} className={styles.backButton}>
+        BACK TO SEARCH
+      </button>
     </div>
   );
 };
@@ -47,15 +60,21 @@ interface CharacterLinkProps {
 }
 
 const CharacterLink: React.FC<CharacterLinkProps> = ({ charId }) => {
-  const { data: personData, isLoading: personIsLoading, error: personError } = useGetPersonByIdQuery(charId);
+  const {
+    data: personData,
+    isLoading: personIsLoading,
+    error: personError,
+  } = useGetPersonByIdQuery(charId);
 
-  if (personIsLoading) return <li>Loading character...</li>;
-  if (personError) return <li>Error loading character.</li>;
+  if (personIsLoading) return <span>Loading character...</span>;
+  if (personError) return <span>Error loading character.</span>;
 
   return (
-    <li>
-      <Link to={`/people/${charId}`}>{personData?.result?.properties?.name || 'Unknown Character'}</Link>
-    </li>
+    <span>
+      <Link to={`/people/${charId}`}>
+        {personData?.result?.properties?.name || "Unknown Character"}
+      </Link>
+    </span>
   );
 };
 
