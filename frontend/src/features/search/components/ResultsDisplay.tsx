@@ -16,7 +16,11 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   searchType,
 }) => {
   if (isLoading) {
-    return <div className={styles.resultsContainer}>Loading...</div>;
+    return (
+      <div className={styles.resultsPlaceholder}>
+        <p>Searching...</p>
+      </div>
+    );
   }
 
   if (isError) {
@@ -42,9 +46,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           ))}
         </div>
       ) : (
-        <div className={styles.noResults}>
-          <p className={styles.noResultsText}>There are zero matches.</p>
-          <p className={styles.noResultsText}>
+        <div className={styles.resultsPlaceholder}>
+          <p>
+            There are zero matches.
+            <br />
             Use the form to search for People or Movies.
           </p>
         </div>
