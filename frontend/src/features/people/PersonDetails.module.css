@@ -1,47 +1,50 @@
 .detailsContainer {
   padding: 1.5rem;
   background-color: #fff;
+  box-shadow: 0 0.1rem 0.2rem 0 var(--warm-grey-75);
   border-radius: 0.25rem;
-  border: 1px solid var(--green-teal);
+  border: 0.01rem solid var(--green-teal);
   width: 100%;
   max-width: 1200px;
   overflow-y: auto;
+  position: relative; /* For absolute positioning of back button */
+  min-height: 600px; /* Ensure enough space for content and button */
+}
+
+.contentColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .contentColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailsColumn,
+.filmsColumn {
+  padding: 1rem 0;
+  border-radius: 0.25rem;
 }
 
 .backButton {
   background-color: var(--green-teal);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   cursor: pointer;
   font-size: 1rem;
-  margin-bottom: 1.5rem;
   font-weight: bold;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
 }
 
 .backButton:hover {
   opacity: 0.9;
-}
-
-.detailsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem 2rem;
-}
-
-.detailItem {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  background-color: #f9f9f9;
-  padding: 1rem;
-  border-radius: 0.25rem;
-}
-
-.detailLabel {
-  font-weight: bold;
-  margin-right: 0.5rem;
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--green-teal);
 }

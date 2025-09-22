@@ -1,7 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useGetPersonByIdQuery } from '@features/api/swapiApi';
-import styles from './PersonDetails.module.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useGetPersonByIdQuery } from "@features/api/swapiApi";
+import styles from "./PersonDetails.module.css";
+import MovieLink from "./components/MovieLink";
 
 interface PersonDetailsProps {
   id: string;
@@ -9,27 +10,60 @@ interface PersonDetailsProps {
 
 const PersonDetails: React.FC<PersonDetailsProps> = ({ id }) => {
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetPersonByIdQuery(id || '');
+  const { data, error, isLoading } = useGetPersonByIdQuery(id);
 
-  if (isLoading) return <div>Loading person details...</div>;
-  if (error) return <div>Error loading person details.</div>;
+  const toTitleCase = (str: string) => {
+    return str
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  if (isLoading) return <div>Loading details...</div>;
+  if (error) return <div>Error loading details.</div>;
 
   return (
     <div className={styles.detailsContainer}>
-      <button onClick={() => navigate(-1)} className={styles.backButton}>Back</button>
-      <h2>Person Details</h2>
+      {data && <h2>{data.result.properties.name}</h2>}
       {data && (
-        <div className={styles.detailsGrid}>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Name:</span> {data.result.properties.name}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Height:</span> {data.result.properties.height}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Mass:</span> {data.result.properties.mass}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Hair Color:</span> {data.result.properties.hair_color}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Skin Color:</span> {data.result.properties.skin_color}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Eye Color:</span> {data.result.properties.eye_color}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Birth Year:</span> {data.result.properties.birth_year}</div>
-          <div className={styles.detailItem}><span className={styles.detailLabel}>Gender:</span> {data.result.properties.gender}</div>
+        <div className={styles.contentColumns}>
+          <div className={styles.detailsColumn}>
+            <h3>Details</h3>
+            <p>
+              {[
+                "birth_year",
+                "gender",
+                "eye_color",
+                "hair_color",
+                "height",
+                "mass",
+              ].map((key) => (
+                <React.Fragment key={key}>
+                  <span>{toTitleCase(key)}:</span> {data.result.properties[key]}
+                  <br />
+                </React.Fragment>
+              ))}
+            </p>
+          </div>
+          <div className={styles.filmsColumn}>
+            <h3>Movies</h3>
+            <p>
+              {data.result.properties.films.map((filmUrl: string) => {
+                const filmId = filmUrl.split("/").filter(Boolean).pop();
+                return (
+                  <React.Fragment key={filmId}>
+                    <MovieLink filmId={filmId || ""} />
+                    <br />
+                  </React.Fragment>
+                );
+              })}
+            </p>
+          </div>
         </div>
       )}
+      <button onClick={() => navigate(-1)} className={styles.backButton}>
+        BACK TO SEARCH
+      </button>
     </div>
   );
 };
