@@ -16,9 +16,9 @@ To maintain a clear and traceable commit history, follow these guidelines for pl
 
 ## Committing Workflow
 
-When asked to commit changes after successfully completing tasks that modifies the repository, you must:
+When asked to commit changes after successfully completing tasks that modify the repository, you must:
 
-1.  Analyse git changes.
+1.  Analyze git changes.
 1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines, ensuring it is 300 characters or less, and present it to the user for approval.
 1.  Stage only related changes for the current commit.
 1.  **Crucially, you must wait for explicit, affirmative confirmation from the user before proceeding with the commit.**

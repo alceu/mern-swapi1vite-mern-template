@@ -23,6 +23,7 @@ Adhere to the following separation of concerns for components:
     - They are responsible for data fetching, state management related to the feature, and other business logic.
     - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters should be passed down as props from Page Components.
     - Feature Components must expose business-driven event callback props (e.g., `onFilmSelected`, `onPersonViewDetails`, `onBackToSearch`) to communicate state changes. The parents Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
+    - The parent Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
 
 3.  **UI and Design System Components** (located in `src/components/...`):
     - These are "dumb" components that focus on the UI.
