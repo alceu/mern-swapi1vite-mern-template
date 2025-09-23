@@ -20,6 +20,16 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+      args:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+        MONGO_URI: mongodb://root:password@mongo:27017
+        NODE_ENV: production
+        FRONTEND_PORT: 8080
+        BACKEND_PORT: 3001
+        MONGO_PORT: 27017
+        VITE_SEARCHES_STATS_API_URL: http://localhost:3001
+        VITE_SWAPI_API_URL: https://www.swapi.tech/api/
     restart: always
     mem_limit: 512m
     ports:
@@ -27,19 +37,65 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_URI: mongodb://root:password@mongo:27017
+      NODE_ENV: production
+      FRONTEND_PORT: 8080
+      BACKEND_PORT: 3001
+      MONGO_PORT: 27017
+      VITE_SEARCHES_STATS_API_URL: http://localhost:3001
+      VITE_SWAPI_API_URL: https://www.swapi.tech/api/
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('net').createConnection({port: 3001}, () => process.exit(0)).on('error', () => process.exit(1))\"" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
 
   frontend:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-      target: production
+      args:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+        MONGO_URI: mongodb://root:password@mongo:27017
+        NODE_ENV: production
+        FRONTEND_PORT: 8080
+        BACKEND_PORT: 3001
+        MONGO_PORT: 27017
+        VITE_SEARCHES_STATS_API_URL: http://localhost:3001
+        VITE_SWAPI_API_URL: https://www.swapi.tech/api/
     restart: always
     mem_limit: 512m
     ports:
       - "${FRONTEND_PORT}:80"
-
+    depends_on:
+      backend:
+        condition: service_healthy
+    # env_file:
+    #   - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_URI: mongodb://root:password@mongo:27017
+      NODE_ENV: production
+      FRONTEND_PORT: 8080
+      BACKEND_PORT: 3001
+      MONGO_PORT: 27017
+      VITE_SEARCHES_STATS_API_URL: http://localhost:3001
+      VITE_SWAPI_API_URL: https://www.swapi.tech/api/
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://localhost:80 | grep 200"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+      
 volumes:
   mongo-data:
     name: "mern-swapi1vite-mern-template-mongo-data"

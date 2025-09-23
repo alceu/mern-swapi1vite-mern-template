@@ -13,14 +13,14 @@ interface TopSearchItem {
 // SEARCHES_STATS_API_URL must always be defined if the frontend is to make direct calls.
 if (!import.meta.env.SEARCHES_STATS_API_URL) {
   throw new Error(
-    "Missing required environment variable: SEARCHES_STATS_API_URL"
+    "Missing required environment variable: VITE_SEARCHES_STATS_API_URL"
   );
 }
 
 export const searchesStatsApi = createApi({
   reducerPath: "searchesStatsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.SEARCHES_STATS_API_URL}/searches/`,
+    baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/searches/`,
   }),
   endpoints: (builder) => ({
     postSearchQuery: builder.mutation<
