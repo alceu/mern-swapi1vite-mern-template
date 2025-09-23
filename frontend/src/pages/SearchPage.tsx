@@ -1,10 +1,12 @@
 import React, { useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import SearchContainer from "@features/search/components/SearchContainer";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   const type = searchParams.get("type") === "films" ? "films" : "people";
   const query = searchParams.get("query") || "";
@@ -39,12 +41,24 @@ const SearchPage: React.FC = () => {
     [setSearchParams]
   );
 
+  const handleResultClick = useCallback(
+    (id: string, type: "people" | "films") => {
+      if (type === "people") {
+        navigate(`/people/${id}`);
+      } else {
+        navigate(`/films/${id}`);
+      }
+    },
+    [navigate]
+  );
+
   return (
     <SearchContainer
       type={type}
       query={query}
       onTypeChange={handleTypeChange}
       onQueryChange={handleQueryChange}
+      onResultClick={handleResultClick}
     />
   );
 };

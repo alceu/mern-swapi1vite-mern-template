@@ -11,6 +11,7 @@ interface SearchContainerProps {
   query: string;
   onTypeChange: (type: "people" | "films") => void;
   onQueryChange: (query: string) => void;
+  onResultClick: (id: string, type: "people" | "films") => void;
 }
 
 const SearchContainer: React.FC<SearchContainerProps> = ({
@@ -18,6 +19,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
   query,
   onTypeChange,
   onQueryChange,
+  onResultClick,
 }) => {
   const { data: peopleData, isLoading: peopleLoading, isError: peopleError } = useGetPeopleQuery(query, {
     skip: type !== "people" || query.length < 2,
@@ -55,6 +57,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
         isLoading={isSearching}
         isError={isError}
         searchType={type}
+        onResultClick={onResultClick}
       />
     </div>
   );

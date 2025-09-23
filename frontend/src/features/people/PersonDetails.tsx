@@ -1,15 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useGetPersonByIdQuery } from "@features/api/swapiApi";
 import styles from "./PersonDetails.module.css";
 import MovieLink from "./components/MovieLink";
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 
 interface PersonDetailsProps {
   id: string;
+  onBackToSearch: () => void;
+  onMovieClick: (filmId: string) => void;
 }
 
-const PersonDetails: React.FC<PersonDetailsProps> = ({ id }) => {
-  const navigate = useNavigate();
+const PersonDetails: React.FC<PersonDetailsProps> = ({
+  id,
+  onBackToSearch,
+  onMovieClick,
+}) => {
   const { data, error, isLoading } = useGetPersonByIdQuery(id);
 
   const toTitleCase = (str: string) => {
@@ -19,8 +24,10 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id }) => {
       .join(" ");
   };
 
-  if (isLoading) return <div>Loading details...</div>;
+  if (isLoading) return <LoadingSpinner>Loading person details...</LoadingSpinner>;
   if (error) return <div>Error loading details.</div>;
+
+  const films = data?.result?.properties?.films || [];
 
   return (
     <div className={styles.detailsContainer}>
@@ -48,20 +55,31 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id }) => {
           <div className={styles.filmsColumn}>
             <h3>Movies</h3>
             <p>
-              {data.result.properties.films.map((filmUrl: string) => {
-                const filmId = filmUrl.split("/").filter(Boolean).pop();
-                return (
-                  <React.Fragment key={filmId}>
-                    <MovieLink filmId={filmId || ""} />
-                    <br />
-                  </React.Fragment>
-                );
-              })}
+              {!films.length ? (
+                <>None.</>
+              ) : (
+                films.map((filmUrl: string, index: number) => {
+                  const filmId = filmUrl.split("/").filter(Boolean).pop();
+                  const hasNext = index < films.length - 1;
+
+                  return (
+                    filmId && (
+                      <React.Fragment key={filmId}>
+                        <MovieLink
+                          filmId={filmId}
+                          onMovieClick={onMovieClick}
+                        />
+                        {hasNext && <br />}
+                      </React.Fragment>
+                    )
+                  );
+                })
+              )}
             </p>
           </div>
         </div>
       )}
-      <button onClick={() => navigate(-1)} className={styles.backButton}>
+      <button onClick={onBackToSearch} className={styles.backButton}>
         BACK TO SEARCH
       </button>
     </div>

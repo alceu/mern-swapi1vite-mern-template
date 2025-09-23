@@ -1,0 +1,24 @@
+.spinnerContainer {
+  display: inline-flex; /* Changed to inline-flex */
+  flex-direction: row;   /* Changed to row for inline content */
+  align-items: center;
+  justify-content: center;
+  /* Removed padding to make it more compact for inline use */
+  color: #ccc;
+  gap: 8px; /* Add some space between spinner and text */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 16px; /* Make spinner smaller for inline */
+  height: 16px; /* Make spinner smaller for inline */
+  animation: spin 1s linear infinite;
+  /* Removed margin-bottom */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

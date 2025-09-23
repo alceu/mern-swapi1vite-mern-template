@@ -7,6 +7,7 @@ interface ResultsDisplayProps {
   isLoading: boolean;
   isError: boolean;
   searchType: "people" | "films";
+  onResultClick: (id: string, type: "people" | "films") => void;
 }
 
 const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
@@ -14,6 +15,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   isLoading,
   isError,
   searchType,
+  onResultClick,
 }) => {
   if (isLoading) {
     return (
@@ -34,7 +36,15 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   return (
     <div className={styles.resultsContainer}>
       <h2 className={styles.title}>Results</h2>
-      {results.length > 0 ? (
+      {!results.length ? (
+        <div className={styles.resultsPlaceholder}>
+          <p>
+            There are zero matches.
+            <br />
+            Use the form to search for People or Movies.
+          </p>
+        </div>
+      ) : (
         <div>
           {results.map((result: any) => (
             <ResultItem
@@ -42,16 +52,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               id={result.uid}
               name={result.properties.name || result.properties.title}
               type={searchType}
+              onResultClick={onResultClick}
             />
           ))}
-        </div>
-      ) : (
-        <div className={styles.resultsPlaceholder}>
-          <p>
-            There are zero matches.
-            <br />
-            Use the form to search for People or Movies.
-          </p>
         </div>
       )}
     </div>

@@ -1,24 +1,29 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
 import {
   useGetFilmByIdQuery,
   useGetPersonByIdQuery,
 } from "@features/api/swapiApi";
 import styles from "./FilmDetails.module.css";
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 
 interface FilmDetailsProps {
   id: string;
+  onBackToSearch: () => void;
+  onCharacterClick: (charId: string) => void;
 }
 
-const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
-  const navigate = useNavigate();
+const FilmDetails: React.FC<FilmDetailsProps> = ({
+  id,
+  onBackToSearch,
+  onCharacterClick,
+}) => {
   const {
     data: filmData,
     error: filmError,
     isLoading: filmIsLoading,
   } = useGetFilmByIdQuery(id);
 
-  if (filmIsLoading) return <div>Loading film details...</div>;
+  if (filmIsLoading) return <LoadingSpinner>Loading film details...</LoadingSpinner>;
   if (filmError) return <div>Error loading film details.</div>;
 
   const characters = filmData?.result?.properties?.characters || [];
@@ -35,20 +40,30 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
           <div className={styles.charactersColumn}>
             <h3>Characters</h3>
             <p>
-              {characters.map((charUrl: string, index: number) => {
-                const charId = charUrl.split("/").filter(Boolean).pop();
-                return (
-                  <React.Fragment key={charId}>
-                    <CharacterLink charId={charId || ""} />
-                    {index < characters.length - 1 && ", "}
-                  </React.Fragment>
-                );
-              })}
+              {!characters.length ? (
+                <>None.</>
+              ) : (
+                characters.map((charUrl: string, index: number) => {
+                  const charId = charUrl.split("/").filter(Boolean).pop();
+                  const hasNext = index < characters.length - 1;
+                  return (
+                    charId && (
+                      <React.Fragment key={charId}>
+                        <CharacterLink
+                          charId={charId}
+                          onCharacterClick={onCharacterClick}
+                        />
+                        {hasNext && ", "}
+                      </React.Fragment>
+                    )
+                  );
+                })
+              )}
             </p>
           </div>
         </div>
       )}
-      <button onClick={() => navigate(-1)} className={styles.backButton}>
+      <button onClick={onBackToSearch} className={styles.backButton}>
         BACK TO SEARCH
       </button>
     </div>
@@ -57,23 +72,30 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ id }) => {
 
 interface CharacterLinkProps {
   charId: string;
+  onCharacterClick: (charId: string) => void;
 }
 
-const CharacterLink: React.FC<CharacterLinkProps> = ({ charId }) => {
+const CharacterLink: React.FC<CharacterLinkProps> = ({
+  charId,
+  onCharacterClick,
+}) => {
   const {
     data: personData,
     isLoading: personIsLoading,
     error: personError,
   } = useGetPersonByIdQuery(charId);
 
-  if (personIsLoading) return <span>Loading character...</span>;
+  if (personIsLoading) return <LoadingSpinner>Loading character...</LoadingSpinner>;
   if (personError) return <span>Error loading character.</span>;
 
   return (
     <span>
-      <Link to={`/people/${charId}`}>
+      <span
+        onClick={() => onCharacterClick(charId)}
+        style={{ cursor: "pointer", textDecoration: "underline" }}
+      >
         {personData?.result?.properties?.name || "Unknown Character"}
-      </Link>
+      </span>
     </span>
   );
 };
