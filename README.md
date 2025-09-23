@@ -1,37 +1,98 @@
-# mern-swapi1vite-mern-template
+# MERN SWAPI Project
 
-## Environment Setup
+This is a MERN stack project built using a Vite-based boilerplate. It features a React frontend and a Node.js backend, both using TypeScript. The original boilerplate's README is included at the bottom of this file for reference.
 
-This project uses `.env` files to manage environment variables. There are two sample files provided:
+## Getting Started
 
-- `sample-dev.env`: For local development.
-- `sample-prod.env`: For production (Docker) environment.
+Follow these instructions to set up and run the project.
 
-### Running with Docker
-
-```bash
-git clone
-
-docker compose up -d
-```
-
-### Local Development
+### 1. Clone the Repository
 
 ```bash
-git clone
-
-cp sample-dev.env .env
-
-npm install
-cd frontend
-npm install
-cd ..
-
-docker compose up mongo -d
-
-npm run dev:backend
-npm run dev:frontend
+git clone <repository-url>
+cd mern-swapi1vite-mern-template
 ```
+
+### 2. Environment Setup
+
+To get started, copy the appropriate sample environment file:
+
+- **For Local & Docker Development:**
+  ```bash
+  cp sample-dev.env .env
+  ```
+- **For Production:**
+  ```bash
+  cp sample-prod.env .env
+  ```
+
+**Note:** The `.env` file is ignored by Git, so your secrets are safe.
+
+### 3. Running the Application
+
+You can run this project in two ways: using Docker (recommended for a consistent environment) or running the services locally on your machine.
+
+#### A. Docker Development (Recommended)
+
+This is the easiest way to get started. With Docker, the entire application (frontend, backend, and database) runs in containers.
+
+**Prerequisites:**
+
+- Docker
+- Docker Compose
+
+**Instructions:**
+
+1.  **Build and run the containers:**
+    ```bash
+    docker compose up --build -d
+    ```
+
+#### B. Local Development
+
+If you prefer to run the services directly on your machine, follow these steps.
+
+**Prerequisites:**
+
+- Node.js 18+
+- npm (or your preferred package manager)
+- Docker (for the database)
+
+**Instructions:**
+
+1.  **Install dependencies:**
+
+    ```bash
+    npm install
+    cd frontend
+    npm install
+    cd ..
+    ```
+
+2.  **Start the database:**
+
+    ```bash
+    docker compose up mongo -d
+    ```
+
+3.  **Start the development servers:**
+    - **Backend (in one terminal):**
+      ```bash
+      npm run dev:backend
+      ```
+    - **Frontend (in another terminal):**
+      ```bash
+      npm run dev:frontend
+      ```
+
+**Accessing the Application:**
+
+The frontend application will be available on the host at the port specified by the `FRONTEND_PORT` variable in your `.env` file.
+
+- In **development**, this defaults to `http://localhost:3000`.
+- In **production**, this defaults to `http://localhost` (port 80).
+
+---
 
 # vite-mern-template
 
@@ -64,7 +125,6 @@ If you love this boilerplate, give it a star, you will be a ray of sunshine in o
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Router DOM](https://reactrouter.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
-- ~~[TanStack Query](https://tanstack.com/query/latest)~~
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Vitest](https://vitest.dev/)
