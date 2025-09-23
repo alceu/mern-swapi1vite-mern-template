@@ -22,7 +22,7 @@ Adhere to the following separation of concerns for components:
     - These components encapsulate a specific piece of business functionality.
     - They are responsible for data fetching, state management related to the feature, and other business logic.
     - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters should be passed down as props from Page Components.
-    - They use callback props (e.g., `onQueryChange`) to communicate important state changes back to the Pages Components, which can then change route, parameters etc.
+    - Feature Components must expose business-driven event callback props (e.g., `onFilmSelected`, `onPersonViewDetails`, `onBackToSearch`) to communicate state changes. The parents Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
 
 3.  **UI and Design System Components** (located in `src/components/...`):
     - These are "dumb" components that focus on the UI.
@@ -45,16 +45,19 @@ To maintain a scalable and organized frontend, adhere to the following principle
 To ensure a consistent and accessible user experience across a wide range of devices, from mobile phones to desktops, all frontend components must be built with responsiveness as a primary consideration.
 
 1.  **Use Relative Units**:
-    -   Prefer `rem` units for `font-size`, `padding`, `margin`, and other dimensions. This allows the entire UI to scale proportionally based on the root font size.
-    -   Avoid using fixed `px` units, as they do not adapt to user preferences or different screen resolutions.
+
+    - Prefer `rem` units for `font-size`, `padding`, `margin`, and other dimensions. This allows the entire UI to scale proportionally based on the root font size.
+    - Avoid using fixed `px` units, as they do not adapt to user preferences or different screen resolutions.
 
 2.  **Fluid Layouts**:
-    -   Utilize CSS Flexbox and Grid to create flexible and adaptive layouts.
-    -   Design components to occupy the available space (`width: 100%`) and use `max-width` to constrain them on larger screens, preventing overly wide and hard-to-read content.
+
+    - Utilize CSS Flexbox and Grid to create flexible and adaptive layouts.
+    - Design components to occupy the available space (`width: 100%`) and use `max-width` to constrain them on larger screens, preventing overly wide and hard-to-read content.
 
 3.  **Responsive Breakpoints**:
-    -   Use CSS media queries to adjust layouts at common breakpoints (e.g., for mobile, tablet, and desktop).
-    -   Common adjustments include stacking columns vertically on smaller screens, changing font sizes, or hiding non-essential elements.
+
+    - Use CSS media queries to adjust layouts at common breakpoints (e.g., for mobile, tablet, and desktop).
+    - Common adjustments include stacking columns vertically on smaller screens, changing font sizes, or hiding non-essential elements.
 
 4.  **Scalable Components**:
-    -   Components should be designed to be intrinsically scalable. For example, a card component should gracefully handle varying amounts of text, and a form should be usable on both narrow and wide viewports.
+    - Components should be designed to be intrinsically scalable. For example, a card component should gracefully handle varying amounts of text, and a form should be usable on both narrow and wide viewports.
