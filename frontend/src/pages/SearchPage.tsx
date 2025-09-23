@@ -42,14 +42,17 @@ const SearchPage: React.FC = () => {
   );
 
   const handleResultClick = useCallback(
-    (id: string, type: "people" | "films") => {
-      if (type === "people") {
-        navigate(`/people/${id}`);
+    (id: string, resultType: "people" | "films") => {
+      const currentQuery = searchParams.get("query") || "";
+      const currentType = searchParams.get("type") || "people"; // Default to 'people' if not set
+
+      if (resultType === "people") {
+        navigate(`/people/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
       } else {
-        navigate(`/films/${id}`);
+        navigate(`/films/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
       }
     },
-    [navigate]
+    [navigate, searchParams]
   );
 
   return (
