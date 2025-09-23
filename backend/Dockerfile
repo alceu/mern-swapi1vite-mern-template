@@ -1,18 +1,19 @@
-FROM node:18-alpine
-
+# Base stage for dependencies
+FROM node:18-alpine as base
 WORKDIR /app
-
 COPY package*.json ./
-COPY tsconfig.json ./
-
 RUN npm install
 
-COPY backend/ ./backend
+# Development stage
+FROM base as development
+COPY tsconfig.json .
+COPY backend ./backend
+CMD ["npm", "run", "dev:backend"]
 
-COPY sample-prod.env .env
-
+# Production stage
+FROM base as production
+COPY tsconfig.json .
+COPY backend ./backend
 RUN npm run build:backend
-
 EXPOSE 3001
-
 CMD ["node", "build/index.js"]
