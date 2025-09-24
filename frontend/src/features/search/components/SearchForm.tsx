@@ -1,20 +1,19 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useSelector } from "react-redux";
-import { selectQuery, selectSearchType } from "@features/search";
+import { selectQuery, selectSearchType, selectIsSearching } from "@features/search";
 import styles from "./SearchForm.module.css";
 
 interface SearchFormProps {
   onSearch: (values: { searchType: "people" | "films"; searchQuery: string }) => void;
-  isLoading: boolean;
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
   onSearch,
-  isLoading,
 }) => {
   const type = useSelector(selectSearchType);
   const query = useSelector(selectQuery);
+  const isSearching = useSelector(selectIsSearching);
 
   const peoplePlaceholder = "e.g. Luke Skywalker, C-3PO, R2-D2";
   const filmsPlaceholder =
@@ -66,9 +65,9 @@ const SearchForm: React.FC<SearchFormProps> = ({
             <button
               type="submit"
               className={styles.button}
-              disabled={values.searchQuery.length < 2 || isLoading}
+              disabled={values.searchQuery.length < 2 || isSearching}
             >
-              {isLoading ? "Searching..." : "Search"}
+              {isSearching ? "Searching..." : "Search"}
             </button>
           </Form>
         );

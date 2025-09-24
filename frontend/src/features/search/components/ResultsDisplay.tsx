@@ -1,25 +1,59 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectSearchType } from "@features/search";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetPeopleQuery, useGetFilmsQuery } from "@api/swapiApi";
+import { usePostSearchQueryMutation } from "@api/searchesStatsApi";
+import {
+  selectQuery,
+  selectSearchType,
+  setIsSearching,
+} from "@features/search";
 
 import ResultItem from "./ResultItem";
 
 import styles from "./ResultsDisplay.module.css";
 
 interface ResultsDisplayProps {
-  data: any;
-  isLoading: boolean;
-  isError: boolean;
   onResultClick: (id: string, type: "people" | "films") => void;
 }
 
-const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
-  data,
-  isLoading,
-  isError,
-  onResultClick,
-}) => {
-  const searchType = useSelector(selectSearchType);
+const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
+  const dispatch = useDispatch();
+  const query = useSelector(selectQuery);
+  const type = useSelector(selectSearchType);
+
+  const {
+    data: peopleData,
+    isLoading: peopleLoading,
+    isError: peopleError,
+  } = useGetPeopleQuery(query, {
+    skip: type !== "people" || query.length < 2,
+  });
+  const {
+    data: filmsData,
+    isLoading: filmsLoading,
+    isError: filmsError,
+  } = useGetFilmsQuery(query, {
+    skip: type !== "films" || query.length < 2,
+  });
+
+  const [postSearchQuery] = usePostSearchQueryMutation();
+
+  useEffect(() => {
+    if (query.length >= 2) {
+      postSearchQuery({ query: query, type: type });
+    }
+  }, [query, type, postSearchQuery]);
+
+  const data = type === "people" ? peopleData : filmsData;
+  const isLoading = type === "people" ? peopleLoading : filmsLoading;
+  const isError = type === "people" ? peopleError : filmsError;
+
+  const displayData = query.length >= 2 ? data : undefined;
+  const isSearching = isLoading && query.length >= 2;
+
+  useEffect(() => {
+    dispatch(setIsSearching(isSearching));
+  }, [dispatch, isSearching]);
 
   let content;
 
@@ -30,7 +64,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   } else if (isLoading) {
     content = <div className={styles.resultsPlaceholder}>Searching...</div>;
   } else {
-    const results = data?.result || [];
+    const results = displayData?.result || [];
 
     if (!results.length) {
       content = (
@@ -48,7 +82,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               key={result.uid}
               id={result.uid}
               name={result.properties.name || result.properties.title}
-              type={searchType}
               onResultClick={onResultClick}
             />
           ))}
