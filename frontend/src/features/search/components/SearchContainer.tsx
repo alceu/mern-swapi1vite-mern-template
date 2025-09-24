@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-
-import styles from "./SearchContainer.module.css";
-import SearchForm from "./SearchForm";
-import ResultsDisplay from "./ResultsDisplay";
 import { useGetPeopleQuery, useGetFilmsQuery } from "@api/swapiApi";
 import { usePostSearchQueryMutation } from "@api/searchesStatsApi";
+
+import SearchForm from "./SearchForm";
+import ResultsDisplay from "./ResultsDisplay";
+
+import styles from "./SearchContainer.module.css";
 
 interface SearchContainerProps {
   type: "people" | "films";
@@ -21,10 +22,18 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
   onQueryChange,
   onResultClick,
 }) => {
-  const { data: peopleData, isLoading: peopleLoading, isError: peopleError } = useGetPeopleQuery(query, {
+  const {
+    data: peopleData,
+    isLoading: peopleLoading,
+    isError: peopleError,
+  } = useGetPeopleQuery(query, {
     skip: type !== "people" || query.length < 2,
   });
-  const { data: filmsData, isLoading: filmsLoading, isError: filmsError } = useGetFilmsQuery(query, {
+  const {
+    data: filmsData,
+    isLoading: filmsLoading,
+    isError: filmsError,
+  } = useGetFilmsQuery(query, {
     skip: type !== "films" || query.length < 2,
   });
 

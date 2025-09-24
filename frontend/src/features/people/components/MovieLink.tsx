@@ -1,6 +1,8 @@
-import React from 'react';
-import { useGetFilmByIdQuery } from '@features/api/swapiApi';
-import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+import React from "react";
+import { useGetFilmByIdQuery } from "@features/api/swapiApi";
+import LoadingSpinner from "@components/LoadingSpinner/LoadingSpinner";
+
+import styles from "./MovieLink.module.css";
 
 interface MovieLinkProps {
   filmId: string;
@@ -20,7 +22,7 @@ const MovieLink: React.FC<MovieLinkProps> = ({ filmId, onMovieClick }) => {
   return (
     <span>
       {filmData && (
-        <span onClick={() => onMovieClick(filmId)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+        <span onClick={() => onMovieClick(filmId)} className={styles.movieLink}>
           {filmData.result.properties.title || "Unknown Movie"}
         </span>
       )}

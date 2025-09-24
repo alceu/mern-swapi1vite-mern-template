@@ -104,7 +104,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
         className={styles.button}
         disabled={internalSearchQuery.length < 2 || isLoading}
       >
-        {isLoading ? "SEARCHING..." : "SEARCH"}
+        {isLoading ? "Searching..." : "Search"}
       </button>
     </div>
   );
