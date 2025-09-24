@@ -21,7 +21,8 @@
       "@features/*": ["./src/features/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
-      "@api/*": ["./src/features/api/*"]
+      "@api/*": ["./src/features/api/*"],
+      "@store/*": ["./src/store/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

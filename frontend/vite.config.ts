@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
         "@pages": path.resolve(__dirname, "./src/pages"),
         "@components": path.resolve(__dirname, "./src/components"),
         "@api": path.resolve(__dirname, "./src/features/api"),
+        "@store": path.resolve(__dirname, "./src/store"),
       },
     },
     build: {

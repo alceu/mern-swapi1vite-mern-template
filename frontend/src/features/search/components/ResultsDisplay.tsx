@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectSearchType } from "@features/search";
 
 import ResultItem from "./ResultItem";
 
@@ -8,7 +10,6 @@ interface ResultsDisplayProps {
   data: any;
   isLoading: boolean;
   isError: boolean;
-  searchType: "people" | "films";
   onResultClick: (id: string, type: "people" | "films") => void;
 }
 
@@ -16,9 +17,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   data,
   isLoading,
   isError,
-  searchType,
   onResultClick,
 }) => {
+  const searchType = useSelector(selectSearchType);
+
   let content;
 
   if (isError) {

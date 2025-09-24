@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useGetPeopleQuery, useGetFilmsQuery } from "@api/swapiApi";
 import { usePostSearchQueryMutation } from "@api/searchesStatsApi";
+import { setQuery, setSearchType } from "@features/search";
 
 import SearchForm from "./SearchForm";
 import ResultsDisplay from "./ResultsDisplay";
@@ -22,6 +24,21 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
   onQueryChange,
   onResultClick,
 }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSearchType(type));
+    dispatch(setQuery(query));
+  }, [dispatch, type, query]);
+
+  const handleSearch = (values: {
+    searchType: "people" | "films";
+    searchQuery: string;
+  }) => {
+    onTypeChange(values.searchType);
+    onQueryChange(values.searchQuery);
+  };
+
   const {
     data: peopleData,
     isLoading: peopleLoading,
@@ -54,18 +71,11 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
 
   return (
     <div className={styles.container}>
-      <SearchForm
-        type={type}
-        onTypeChange={onTypeChange}
-        query={query}
-        onQueryChange={onQueryChange}
-        isLoading={isSearching}
-      />
+      <SearchForm onSearch={handleSearch} isLoading={isSearching} />
       <ResultsDisplay
         data={displayData}
         isLoading={isSearching}
         isError={isError}
-        searchType={type}
         onResultClick={onResultClick}
       />
     </div>
