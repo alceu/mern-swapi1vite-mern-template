@@ -1,0 +1,32 @@
+# Production Dockerfile for Backend
+
+# Stage 1: Build the application
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build:backend
+
+# Stage 2: Run the application
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy only production dependencies
+COPY --from=builder /app/package*.json ./
+RUN npm install --only=production
+
+# Copy the built application from the builder stage
+COPY --from=builder /app/build ./build
+
+# Expose the port the backend runs on
+RUN apk add --no-cache curl
+
+EXPOSE 5000
+
+# Command to run the backend in production mode
+CMD ["node", "build/index.js"]

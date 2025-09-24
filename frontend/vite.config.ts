@@ -5,19 +5,22 @@ import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite";
 import svgrPlugin from "vite-plugin-svgr";
 
-import path from 'node:path';
+import path from "node:path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, process.cwd(), "");
 
-  if (!env.FRONTEND_PORT) {
-    throw new Error("Missing required environment variable: FRONTEND_PORT");
+  if (!env.VITE_FRONTEND_PORT) {
+    throw new Error(
+      "Missing required environment variable: VITE_FRONTEND_PORT"
+    );
   }
 
   return {
     server: {
-      port: Number(env.FRONTEND_PORT),
+      port: Number(env.VITE_FRONTEND_PORT),
+      host: true,
     },
     plugins: [
       react(),
@@ -29,10 +32,10 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@features': path.resolve(__dirname, './src/features'),
-        '@pages': path.resolve(__dirname, './src/pages'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@api': path.resolve(__dirname, './src/features/api'),
+        "@features": path.resolve(__dirname, "./src/features"),
+        "@pages": path.resolve(__dirname, "./src/pages"),
+        "@components": path.resolve(__dirname, "./src/components"),
+        "@api": path.resolve(__dirname, "./src/features/api"),
       },
     },
     build: {
@@ -44,5 +47,5 @@ export default defineConfig(({ mode }) => {
       css: true,
       setupFiles: "./src/test/setup.ts",
     },
-  }
+  };
 });

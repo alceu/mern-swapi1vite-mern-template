@@ -15,18 +15,20 @@ cd mern-swapi1vite-mern-template
 
 ### 2. Environment Setup
 
-To get started, copy the appropriate sample environment file:
+To get started, you need to create `.env` files from the provided samples for both the backend and frontend. These files will hold your environment-specific variables.
 
-- **For Local & Docker Development:**
+- **For Development:**
   ```bash
-  cp sample-dev.env .env
+  cp sample-development.env .env
+  cp frontend/sample-development.env frontend/.env
   ```
 - **For Production:**
   ```bash
-  cp sample-prod.env .env
+  cp sample-production.env .env
+  cp frontend/sample-production.env frontend/.env
   ```
 
-**Note:** The `.env` file is ignored by Git, so your secrets are safe.
+**Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
 
 ### 3. Running the Application
 
@@ -43,12 +45,29 @@ This is the easiest way to get started. With Docker, the entire application (fro
 
 **Instructions:**
 
-1.  **Build and run the containers:**
+1.  **Build and run the development containers:**
+
     ```bash
-    docker compose up --build -d
+    docker compose --profile development up --build
     ```
 
-#### B. Local Development
+    The `-d` flag can be added to run in detached mode (in the background).
+
+#### B. Docker Production
+
+To run the optimized production build of the application using Docker:
+
+**Instructions:**
+
+1.  **Build and run the production containers:**
+
+    ```bash
+    docker compose --profile production up --build
+    ```
+
+    The `-d` flag can be added to run in detached mode (in the background).
+
+#### C. Local Development
 
 If you prefer to run the services directly on your machine, follow these steps.
 
@@ -87,10 +106,19 @@ If you prefer to run the services directly on your machine, follow these steps.
 
 **Accessing the Application:**
 
-The frontend application will be available on the host at the port specified by the `FRONTEND_PORT` variable in your `.env` file.
+- **Docker Development:**
 
-- In **development**, this defaults to `http://localhost:3000`.
-- In **production**, this defaults to `http://localhost` (port 80).
+  - Backend: `http://localhost:5000`
+  - Frontend: `http://localhost:3000`
+
+- **Docker Production:**
+
+  - Backend: `http://localhost:5000`
+  - Frontend: `http://localhost:80`
+
+- **Local Development:**
+  - Backend: `http://localhost:5000` (default, check your `.env`)
+  - Frontend: `http://localhost:3000` (default, check your `frontend/.env`)
 
 ---
 
