@@ -4,14 +4,14 @@
 
 ### Crucial
 
-**Agent Mandate:** As an AI agent, you **must** follow the instructions, goals, and rules defined in this `main.md` file, for **all** interactions and tasks related to this project. This can't be optional.
+**Agent Mandate:** As an AI agent, you **must** adhere to the instructions, goals, and rules defined in this `main.md` file for **all** interactions and tasks related to this project. This adherence is mandatory.
 
-1. **User Changes Precedence:** Any manual changes made by the user to the codebase between interactions must be preserved. Before applying your own changes, you must ensure they do not conflict with or overwrite recent user modifications. If potential conflicts are detected, you must analyze them, attempt to merge, and then ask for explicit approval from the user before proceeding.
+1. **User Changes Precedence:** Any manual changes made by the user to the codebase between interactions must be preserved. Before applying your own changes, you must ensure they do not conflict with or overwrite recent user modifications. If potential conflicts are detected, you must analyze them, attempt to resolve them, and then ask for explicit approval from the user before proceeding.
 
 ### Human Learning and Query-Handling
 
-1. For English queries, review the grammar: If it has misunderstandings or typos, highlight them with **bold** and show the corrections; if not, inform that no errors were found. Then, run the query immediately.
-1. For Portuguese queries, show the English translation first. Then, run the query immediately.
+1. For English queries, review the grammar: If it has misunderstandings or typos, highlight them with **bold** and show the corrections; if not, inform that no errors were found. Then, proceed with the query.
+1. For Portuguese queries, show the English translation first. Then, proceed with the query.
 
 ### Instructions
 

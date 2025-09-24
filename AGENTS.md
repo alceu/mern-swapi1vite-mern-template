@@ -2,10 +2,7 @@
 
 ## Operational Rules
 
-This file configures the instructions for AI agents working on this project.
-
-The line below tells the agent to load its instructions from all files
-located in the `.agents/` directory at the root of the project, as a primary rulebook.
+This file serves as the central configuration for AI agents working on this project.
 
 @./.agents/main.md
 @./.agents/developer_assistant.md
@@ -13,6 +10,7 @@ located in the `.agents/` directory at the root of the project, as a primary rul
 @./.agents/authorship.md
 @./.agents/frontend.md
 @./.agents/fullstack.md
+@./.agents/documentation.md
 
 **Human Developers Guide:** You can find, review, and edit the prompts and instructions for the project's AI assistants in the `.agents/` directory.
 
