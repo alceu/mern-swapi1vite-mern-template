@@ -23,10 +23,8 @@ RUN npm install --only=production
 # Copy the built application from the builder stage
 COPY --from=builder /app/build ./build
 
-# Expose the port the backend runs on
+# Expose the port the backend runs on using env var
 RUN apk add --no-cache curl
-
-EXPOSE 5000
 
 # Command to run the backend in production mode
 CMD ["node", "build/index.js"]

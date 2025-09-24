@@ -1,6 +1,7 @@
 services:
   mongo:
     image: mongo
+    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-mongo"
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
@@ -18,11 +19,12 @@ services:
       start_period: 5s
 
   backend:
+    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-backend"
     build:
       context: .
-      dockerfile: backend/Dockerfile.dev
+      dockerfile: backend/Dockerfile.${NODE_ENV}
     ports:
-      - "5000:5000"
+      - "${BACKEND_PORT}:5000"
     volumes:
       - .:/app
     env_file:
@@ -30,41 +32,24 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-    profiles:
-      - development
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 3s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-
-  backend-prod:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile.prod
-    ports:
-      - "5000:5000"
-    env_file:
-      - .env
-    depends_on:
-      mongo:
-        condition: service_healthy
-    profiles:
-      - production
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "${VITE_SEARCHES_STATS_API_URL}/health"]
       interval: 3s
       timeout: 10s
       retries: 5
       start_period: 10s
 
   frontend:
+    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-frontend"
     build:
       context: .
-      dockerfile: frontend/Dockerfile.dev
+      dockerfile: frontend/Dockerfile.${NODE_ENV}
+      args:
+        - VITE_FRONTEND_PORT=${VITE_FRONTEND_PORT}
+        - VITE_SEARCHES_STATS_API_URL=${VITE_SEARCHES_STATS_API_URL}
+        - VITE_SWAPI_API_URL=${VITE_SWAPI_API_URL}
     ports:
-      - "3000:3000"
+      - "${VITE_FRONTEND_PORT}:${FRONTEND_CONTAINER_PORT}"
     volumes:
       - ./frontend:/app/frontend
     env_file:
@@ -72,35 +57,13 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-    profiles:
-      - development
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ["CMD", "curl", "-f", "${FRONTEND_URL}"]
       interval: 3s
       timeout: 10s 
       retries: 5
       start_period: 10s
 
-  frontend-prod:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile.prod
-    ports:
-      - "80:80"
-    env_file:
-      - frontend/.env
-    depends_on:
-      backend-prod:
-        condition: service_healthy
-    profiles:
-      - production
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 3s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-
 volumes:
   mongo-data:
-    name: "mern-swapi1vite-mern-template-mongo-data"
+    name: "mern-swapi1vite-mern-template-${NODE_ENV}-mongo-data"

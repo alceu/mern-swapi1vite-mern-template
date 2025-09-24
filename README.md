@@ -45,26 +45,9 @@ This is the easiest way to get started. With Docker, the entire application (fro
 
 **Instructions:**
 
-1.  **Build and run the development containers:**
-
     ```bash
-    docker compose --profile development up --build
+    docker compose up --build
     ```
-
-    The `-d` flag can be added to run in detached mode (in the background).
-
-#### B. Docker Production
-
-To run the optimized production build of the application using Docker:
-
-**Instructions:**
-
-1.  **Build and run the production containers:**
-
-    ```bash
-    docker compose --profile production up --build
-    ```
-
     The `-d` flag can be added to run in detached mode (in the background).
 
 #### C. Local Development

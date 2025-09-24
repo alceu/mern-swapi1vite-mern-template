@@ -9,6 +9,15 @@ COPY frontend/package*.json ./
 RUN npm install
 
 COPY frontend/ ./
+
+ARG VITE_FRONTEND_PORT
+ARG VITE_SEARCHES_STATS_API_URL
+ARG VITE_SWAPI_API_URL
+
+ENV VITE_FRONTEND_PORT=$VITE_FRONTEND_PORT
+ENV VITE_SEARCHES_STATS_API_URL=$VITE_SEARCHES_STATS_API_URL
+ENV VITE_SWAPI_API_URL=$VITE_SWAPI_API_URL
+
 RUN npm run build
 
 # Stage 2: Serve the application with Nginx
@@ -16,9 +25,6 @@ FROM nginx:alpine
 
 # Copy the built files from the builder stage to Nginx's public directory
 COPY --from=builder /app/frontend/build /usr/share/nginx/html
-
-# Expose the port Nginx runs on
-EXPOSE 80
 
 # Command to start Nginx
 CMD ["nginx", "-g", "daemon off;"]
