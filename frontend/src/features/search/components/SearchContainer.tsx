@@ -12,16 +12,14 @@ import styles from "./SearchContainer.module.css";
 interface SearchContainerProps {
   type: "people" | "films";
   query: string;
-  onTypeChange: (type: "people" | "films") => void;
-  onQueryChange: (query: string) => void;
+  onSearchSubmit: (values: { searchType: "people" | "films"; searchQuery: string }) => void;
   onResultClick: (id: string, type: "people" | "films") => void;
 }
 
 const SearchContainer: React.FC<SearchContainerProps> = ({
   type,
   query,
-  onTypeChange,
-  onQueryChange,
+  onSearchSubmit,
   onResultClick,
 }) => {
   const dispatch = useDispatch();
@@ -35,8 +33,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
     searchType: "people" | "films";
     searchQuery: string;
   }) => {
-    onTypeChange(values.searchType);
-    onQueryChange(values.searchQuery);
+    onSearchSubmit(values);
   };
 
   const {

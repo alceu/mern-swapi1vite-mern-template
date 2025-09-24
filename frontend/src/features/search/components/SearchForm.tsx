@@ -40,6 +40,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                   name="searchType"
                   value="people"
                   className={styles.radio}
+                  checked={values.searchType === "people"}
                 />
                 People
               </label>
@@ -49,6 +50,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                   name="searchType"
                   value="films"
                   className={styles.radio}
+                  checked={values.searchType === "films"}
                 />
                 Movies
               </label>
