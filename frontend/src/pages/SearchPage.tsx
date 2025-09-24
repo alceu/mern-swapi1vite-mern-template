@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import SearchContainer from "@features/search/components/SearchContainer";
+import SearchContainer from "@features/search/SearchContainer";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,9 +37,13 @@ const SearchPage: React.FC = () => {
       const currentType = searchParams.get("type") || "people"; // Default to 'people' if not set
 
       if (resultType === "people") {
-        navigate(`/people/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
+        navigate(`/people/${id}`, {
+          state: { fromSearch: true, query: currentQuery, type: currentType },
+        });
       } else {
-        navigate(`/films/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
+        navigate(`/films/${id}`, {
+          state: { fromSearch: true, query: currentQuery, type: currentType },
+        });
       }
     },
     [navigate, searchParams]

@@ -3,6 +3,8 @@ import { filmRoutes } from "./films";
 import { peopleRoutes } from "./people";
 import Layout from "./Layout";
 
+import "./index.css";
+
 export const routes = [
   {
     path: "/",
