@@ -1,8 +1,8 @@
 import React from "react";
 import { useGetFilmByIdQuery } from "@features/api/swapiApi";
-import LoadingSpinner from "@components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "@components/LoadingSpinner";
 
-import CharacterLink from "./components/CharacterLink";
+import CharacterLink from "./CharacterLink";
 
 import styles from "./FilmDetails.module.css";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { useGetPersonByIdQuery } from "@features/api/swapiApi";
-import LoadingSpinner from "@components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "@components/LoadingSpinner";
 
-import MovieLink from "./components/MovieLink";
+import MovieLink from "./MovieLink";
 
 import styles from "./PersonDetails.module.css";
 

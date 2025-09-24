@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import SearchContainer from "@features/search/components/SearchContainer";
+import SearchContainer from "@features/search/SearchContainer";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -11,27 +11,17 @@ const SearchPage: React.FC = () => {
   const type = searchParams.get("type") === "films" ? "films" : "people";
   const query = searchParams.get("query") || "";
 
-  const handleTypeChange = useCallback(
-    (newType: "people" | "films") => {
+  const onSearchSubmit = useCallback(
+    (values: { searchType: "people" | "films"; searchQuery: string }) => {
       setSearchParams((prevParams) => {
         const newParams = new URLSearchParams(prevParams);
-        if (newType === "films") {
-          newParams.set("type", newType);
+        if (values.searchType === "films") {
+          newParams.set("type", values.searchType);
         } else {
           newParams.delete("type");
         }
-        return newParams;
-      });
-    },
-    [setSearchParams]
-  );
-
-  const handleQueryChange = useCallback(
-    (newQuery: string) => {
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams);
-        if (newQuery.length >= 2) {
-          newParams.set("query", newQuery);
+        if (values.searchQuery.length >= 2) {
+          newParams.set("query", values.searchQuery);
         } else {
           newParams.delete("query");
         }
@@ -47,9 +37,13 @@ const SearchPage: React.FC = () => {
       const currentType = searchParams.get("type") || "people"; // Default to 'people' if not set
 
       if (resultType === "people") {
-        navigate(`/people/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
+        navigate(`/people/${id}`, {
+          state: { fromSearch: true, query: currentQuery, type: currentType },
+        });
       } else {
-        navigate(`/films/${id}`, { state: { fromSearch: true, query: currentQuery, type: currentType } });
+        navigate(`/films/${id}`, {
+          state: { fromSearch: true, query: currentQuery, type: currentType },
+        });
       }
     },
     [navigate, searchParams]
@@ -59,8 +53,7 @@ const SearchPage: React.FC = () => {
     <SearchContainer
       type={type}
       query={query}
-      onTypeChange={handleTypeChange}
-      onQueryChange={handleQueryChange}
+      onSearchSubmit={onSearchSubmit}
       onResultClick={handleResultClick}
     />
   );

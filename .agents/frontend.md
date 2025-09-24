@@ -6,6 +6,10 @@
 
     - When developing the frontend, the URL, including the route path and query parameters, should be considered the primary source of truth for any persistent UI state. This ensures that the application state is bookmarkable and shareable, and allows the UI to return to its original state upon reload.
 
+1.  **Active Features Store**:
+
+    - For complex features with internal state that doesn't need to be directly reflected in the URL (e.g., form input values before submission, loading indicators), features store should be used as a global state. This allows feature components to manage and share their state efficiently.
+
 ## Component Architecture
 
 Adhere to the following separation of concerns for components:
@@ -16,14 +20,15 @@ Adhere to the following separation of concerns for components:
     - They manage URL state.
     - They orchestrate the layout of feature components.
     - They should not contain business logic directly.
+    - Pages Components are responsible for translating URL parameters into props for Feature Components and handling callbacks from Feature Components to update the URL.
 
 2.  **Features Components** (located in `src/features/...`):
 
     - These components encapsulate a specific piece of business functionality.
-    - They are responsible for data fetching, state management related to the feature, and other business logic.
-    - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters should be passed down as props from Page Components.
-    - Feature Components must expose business-driven event callback props (e.g., `onFilmSelected`, `onPersonViewDetails`, `onBackToSearch`) to communicate state changes. The parents Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
-    - The parent Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
+    - They are responsible for data fetching, state and features store management related to the feature and other business logic.
+    - Feature Components must expose business-driven event callback props (e.g., `onPersonViewDetails`, `onBackToSearch`) to communicate state changes. The parents Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
+    - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters and event functions should be passed down as props from Page Components.
+    - To avoid prop drilling, Feature Components can directly access their relevant state from features store using selectors and dispatch actions to update it. However, they should still receive parameters that are directly tied to the URL or routing from their parent Page Components as props.
 
 3.  **UI and Design System Components** (located in `src/components/...`):
     - These are "dumb" components that focus on the UI.
@@ -62,3 +67,24 @@ To ensure a consistent and accessible user experience across a wide range of dev
 
 4.  **Scalable Components**:
     - Components should be designed to be intrinsically scalable. For example, a card component should gracefully handle varying amounts of text, and a form should be usable on both narrow and wide viewports.
+
+## Styling and CSS
+
+To maintain a clean separation of concerns and promote reusability, adhere to the following guidelines for styling and CSS:
+
+1.  **Semantic Class Naming**:
+
+    - CSS class names should reflect the purpose or content of the element (business-driven) or its UI state, rather than its presentational appearance or layout.
+    - **Good Example**: `.product-card`, `.user-profile-avatar`, `.is-active`, `.has-error`.
+    - **Bad Example**: `.red-text`, `.left-column`, `.big-button`.
+
+2.  **Presentation via CSS**:
+
+    - All presentational styling (colors, fonts, spacing, layout, etc.) should be handled exclusively through CSS.
+    - Avoid using HTML elements or content manipulation (e.g., `&nbsp;`, `<br>`, `UPPERCASE TEXT`) solely for visual presentation.
+    - **Good Example**: Use `text-transform: uppercase;` in CSS for uppercase text.
+    - **Bad Example**: Writing text in all caps directly in HTML to make it uppercase.
+
+3.  **Avoid Layout-Approached HTML Content**:
+    - HTML should define the structure and meaning of content. CSS should define its layout and appearance.
+    - Do not use HTML elements or their content to dictate layout (e.g., using empty `div`s for spacing, or relying on text content to create visual breaks).

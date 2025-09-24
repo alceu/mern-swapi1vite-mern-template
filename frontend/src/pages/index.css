@@ -33,10 +33,10 @@ p {
 }
 
 a {
-  color: var(--emerald); /* Use a consistent link color */
-  text-decoration: underline; /* Ensure links are underlined */
+  color: var(--emerald) !important;
+  text-decoration: underline;
 }
 
 a:hover {
-  text-decoration: none; /* Remove underline on hover for better UX */
+  text-decoration: none;
 }
