@@ -22,7 +22,7 @@ Adhere to the following separation of concerns for components:
     - They should not contain business logic directly.
     - Pages Components are responsible for translating URL parameters into props for Feature Components and handling callbacks from Feature Components to update the URL.
 
-2.  **Features Components** (located in `src/features/...`):
+1.  **Features Components** (located in `src/features/...`):
 
     - These components encapsulate a specific piece of business functionality.
     - They are responsible for data fetching, state and features store management related to the feature and other business logic.
@@ -30,7 +30,7 @@ Adhere to the following separation of concerns for components:
     - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters and event functions should be passed down as props from Page Components.
     - To avoid prop drilling, Feature Components can directly access their relevant state from features store using selectors and dispatch actions to update it. However, they should still receive parameters that are directly tied to the URL or routing from their parent Page Components as props.
 
-3.  **UI and Design System Components** (located in `src/components/...`):
+1.  **UI and Design System Components** (located in `src/components/...`):
     - These are "dumb" components that focus on the UI.
     - They receive all data and functions they need as props.
     - They do not have their own state related to business logic.
@@ -42,9 +42,9 @@ To maintain a scalable and organized frontend, adhere to the following principle
 1.  **Modular Route Definition**:
     - **Principle**: The `frontend/src/pages/` directory structure should mirror the application's URL paths. This organization enhances discoverability, maintainability, and scalability by co-locating route-related files (components, loaders, actions) with their corresponding URL segments.
     - **Implementation**:
-      - The primary route configuration resides in `frontend/src/pages/index.ts`, exporting an array of route objects.
-      - For each distinct URL segment and subsegment, create a dedicated subfolder. This subfolder must contain an `index.ts` file that exports its specific route definitions.
-      - These feature-specific route arrays are then imported and nested within the main `frontend/src/pages/index.ts` configuration using the `children` property, ensuring a clear hierarchy and modularity that directly reflects the URL structure.
+      1. The primary route configuration resides in `frontend/src/pages/index.ts`, exporting an array of route objects.
+      1. For each distinct URL segment and subsegment, create a dedicated subfolder. This subfolder must contain an `index.ts` file that exports its specific route definitions.
+      1. These feature-specific route arrays are then imported and nested within the main `frontend/src/pages/index.ts` configuration using the `children` property, ensuring a clear hierarchy and modularity that directly reflects the URL structure.
 
 ## Responsive Design
 
@@ -55,17 +55,17 @@ To ensure a consistent and accessible user experience across a wide range of dev
     - Prefer `rem` units for `font-size`, `padding`, `margin`, and other dimensions. This allows the entire UI to scale proportionally based on the root font size.
     - Avoid using fixed `px` units, as they do not adapt to user preferences or different screen resolutions.
 
-2.  **Fluid Layouts**:
+1.  **Fluid Layouts**:
 
     - Utilize CSS Flexbox and Grid to create flexible and adaptive layouts.
     - Design components to occupy the available space (`width: 100%`) and use `max-width` to constrain them on larger screens, preventing overly wide and hard-to-read content.
 
-3.  **Responsive Breakpoints**:
+1.  **Responsive Breakpoints**:
 
     - Use CSS media queries to adjust layouts at common breakpoints (e.g., for mobile, tablet, and desktop).
     - Common adjustments include stacking columns vertically on smaller screens, changing font sizes, or hiding non-essential elements.
 
-4.  **Scalable Components**:
+1.  **Scalable Components**:
     - Components should be designed to be intrinsically scalable. For example, a card component should gracefully handle varying amounts of text, and a form should be usable on both narrow and wide viewports.
 
 ## Styling and CSS
@@ -78,13 +78,13 @@ To maintain a clean separation of concerns and promote reusability, adhere to th
     - **Good Example**: `.product-card`, `.user-profile-avatar`, `.is-active`, `.has-error`.
     - **Bad Example**: `.red-text`, `.left-column`, `.big-button`.
 
-2.  **Presentation via CSS**:
+1.  **Presentation via CSS**:
 
     - All presentational styling (colors, fonts, spacing, layout, etc.) should be handled exclusively through CSS.
     - Avoid using HTML elements or content manipulation (e.g., `&nbsp;`, `<br>`, `UPPERCASE TEXT`) solely for visual presentation.
     - **Good Example**: Use `text-transform: uppercase;` in CSS for uppercase text.
     - **Bad Example**: Writing text in all caps directly in HTML to make it uppercase.
 
-3.  **Avoid Layout-Approached HTML Content**:
+1.  **Avoid Layout-Approached HTML Content**:
     - HTML should define the structure and meaning of content. CSS should define its layout and appearance.
     - Do not use HTML elements or their content to dictate layout (e.g., using empty `div`s for spacing, or relying on text content to create visual breaks).
