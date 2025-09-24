@@ -13,7 +13,22 @@ git clone <repository-url>
 cd mern-swapi1vite-mern-template
 ```
 
-### 2. Environment Setup
+### 2. **Install dependencies:**
+
+    ```bash
+    npm install
+    cd frontend
+    npm install
+    cd ..
+    ```
+
+### 3. Optional:
+
+    ```bash
+    cp -r sample-.vscode .vscode
+    ```
+
+### 4. Environment Setup
 
 To get started, you need to create `.env` files from the provided samples for both the backend and frontend. These files will hold your environment-specific variables.
 
@@ -25,14 +40,14 @@ To get started, you need to create `.env` files from the provided samples for bo
   ```bash
   cp sample-production.env .env
   ```
-- **Then:**
+- **Finally, create a symbolic link for the frontend:**
   ```bash
-  ln -s .env frontend/.env
+  ln -s ../.env frontend/.env
   ```
 
 **Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
 
-### 3. Running the Application
+### 5. Running the Application
 
 You can run this project in two ways: using Docker (recommended for a consistent environment) or running the services locally on your machine.
 
@@ -64,22 +79,13 @@ If you prefer to run the services directly on your machine, follow these steps.
 
 **Instructions:**
 
-1.  **Install dependencies:**
-
-    ```bash
-    npm install
-    cd frontend
-    npm install
-    cd ..
-    ```
-
 1.  **Start the database:**
 
     ```bash
     docker compose up mongo -d
     ```
 
-1.  **Inside `.env`, replace `mongodb` with `localhost`.**
+1.  **IMPORTANT:** In your `.env` file, update the `MONGO_URI` to replace `mongo:27017` with `localhost:27017`.
 
 1.  **Start the development servers:**
     - **Backend (in one terminal):**
@@ -130,7 +136,7 @@ This project extends the base `vite-mern-template` with several key enhancements
 - [ ] Add testing framework.
 - [ ] Implement monorepo structure for better project organization and sharing resources and strong type definitions.
 - [ ] Achieve code coverage above 90% across the codebase.
-- [ ] Improve data normalization and caching strategies between frontend and backend.
+- [ ] Improve data normalization and caching strategies between frontend and backend, using Frontend Top Search Queries Chart feature as example.
 
 ---
 
@@ -171,7 +177,6 @@ npm install
 - Frontend
 
 ```bash
-cd frontend
 npm install
 ```
 
