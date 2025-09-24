@@ -1,6 +1,6 @@
 # MERN SWAPI Project
 
-This is a MERN stack project built using a Vite-based boilerplate. It features a React frontend and a Node.js backend, both using TypeScript. The original boilerplate's README is included at the bottom of this file for reference.
+This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application, leveraging a Vite-based build system for the frontend. Both the frontend and backend are developed using TypeScript, ensuring type safety and improved code quality.
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ This is the easiest way to get started. With Docker, the entire application (fro
     ```
     The `-d` flag can be added to run in detached mode (in the background).
 
-#### C. Local Development
+#### B. Local Development
 
 If you prefer to run the services directly on your machine, follow these steps.
 
@@ -71,13 +71,13 @@ If you prefer to run the services directly on your machine, follow these steps.
     cd ..
     ```
 
-2.  **Start the database:**
+1.  **Start the database:**
 
     ```bash
     docker compose up mongo -d
     ```
 
-3.  **Start the development servers:**
+1.  **Start the development servers:**
     - **Backend (in one terminal):**
       ```bash
       npm run dev:backend
@@ -103,58 +103,42 @@ If you prefer to run the services directly on your machine, follow these steps.
   - Backend: `http://localhost:5000` (default, check your `.env`)
   - Frontend: `http://localhost:3000` (default, check your `frontend/.env`)
 
+## Project Enhancements and Custom Development
+
+This project extends the base `vite-mern-template` with several key enhancements and custom development tailored for the MERN SWAPI application. These additions focus on implementing specific features, improving code organization, and adhering to modern development practices.
+
+### Key Solutions and Features Implemented:
+
+1.  **[x] State Management with Redux Toolkit**:
+
+    - Utilized Redux Toolkit for centralized and predictable state management across the frontend application.
+
+1.  **[x] Modular Component Architecture**:
+
+    - Organized frontend components into `pages`, `features`, and `components` directories, following a clear separation of concerns.
+    - `Pages` handle routing and layout, `Features` encapsulate business logic and data fetching, and `Components` are reusable UI elements.
+
+1.  **[x] Responsive Design**:
+
+    - All frontend components are designed with responsiveness in mind, utilizing `rem` units, Flexbox, Grid, and media queries to ensure optimal viewing across various devices.
+
+1.  **[x] Code Quality and Development Experience**:
+    - Integrated Prettier and ESLint for consistent code formatting and linting across both frontend and backend.
+
+## TODO
+
+- [ ] Add testing framework.
+- [ ] Implement monorepo structure for better project organization and sharing resources and strog type deffinitions.
+- [ ] Achieve code coverage above 90% across the codebase.
+- [ ] Improve data normalization and caching strategies between frontend and backend.
+
+---
+
 ---
 
 # vite-mern-template
 
 **(Original template readme content)**
-
-[![Depfu](https://badges.depfu.com/badges/1b70410a7764005553d576dd171dce8d/status.svg)](https://depfu.com)
-[![Depfu](https://badges.depfu.com/badges/1b70410a7764005553d576dd171dce8d/count.svg)](https://depfu.com/github/apicgg/vite-mern-template?project_id=38988)
-
-> Simple opinionated boilerplate for MERN stack with Vite, Redux Toolkit and TypeScript.
-
-> This includes React+TypeScript with familiar configuration for vite.config.ts for front-end and Express+TypeScript for back-end.
-
-Feel free to add or tweak the setup as needed.
-
-This has been created with the official [Vite](https://vitejs.dev/) template (`npm create vite@latest`) and some extended setup. There are two separate folders called `backend` and `frontend`. The entry point for the backend is `backend/src/index.js`.
-
-Any package manager can be used with this project (e.g. npm or yarn or pnpm).
-
-```
-If you love this boilerplate, give it a star, you will be a ray of sunshine in our lives :)
-```
-
-> Thanks to [awesome-vite](https://github.com/vitejs/awesome-vite) for publishing this project.
-
-## Tools & Technology
-
-### Front-end
-
-- [React](https://reactjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [React Router DOM](https://reactrouter.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Vitest](https://vitest.dev/)
-- [Prettier](https://prettier.io/)
-- [Eslint](https://eslint.org/)
-
-### Back-end
-
-- [Node.js](https://nodejs.org/en)
-- [Express](https://expressjs.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [express-async-handler](https://www.npmjs.com/package/express-async-handler)
-- [mongoose](https://mongoosejs.com/)
-- [argon2](https://www.npmjs.com/package/argon2)
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [Prettier](https://prettier.io/)
-- [Eslint](https://eslint.org/)
-
-#### The dependency versions are managed by [depfu](https://depfu.com/).
 
 ## Requirements
 
