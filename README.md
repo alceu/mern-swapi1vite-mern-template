@@ -128,7 +128,7 @@ This project extends the base `vite-mern-template` with several key enhancements
 ## TODO
 
 - [ ] Add testing framework.
-- [ ] Implement monorepo structure for better project organization and sharing resources and strog type deffinitions.
+- [ ] Implement monorepo structure for better project organization and sharing resources and strong type definitions.
 - [ ] Achieve code coverage above 90% across the codebase.
 - [ ] Improve data normalization and caching strategies between frontend and backend.
 
