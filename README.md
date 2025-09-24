@@ -20,12 +20,14 @@ To get started, you need to create `.env` files from the provided samples for bo
 - **For Development:**
   ```bash
   cp sample-development.env .env
-  cp frontend/sample-development.env frontend/.env
   ```
 - **For Production:**
   ```bash
   cp sample-production.env .env
-  cp frontend/sample-production.env frontend/.env
+  ```
+- **Then:**
+  ```bash
+  ln -s .env frontend/.env
   ```
 
 **Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
@@ -77,6 +79,8 @@ If you prefer to run the services directly on your machine, follow these steps.
     docker compose up mongo -d
     ```
 
+1.  **Inside `.env`, replace `mongodb` with `localhost`.**
+
 1.  **Start the development servers:**
     - **Backend (in one terminal):**
       ```bash
@@ -87,9 +91,9 @@ If you prefer to run the services directly on your machine, follow these steps.
       npm run dev:frontend
       ```
 
-**Accessing the Application:**
+**Accessing the Application (default, check your `.env`):**
 
-- **Docker Development:**
+- **Docker and Local Development:**
 
   - Backend: `http://localhost:5000`
   - Frontend: `http://localhost:3000`
@@ -97,11 +101,7 @@ If you prefer to run the services directly on your machine, follow these steps.
 - **Docker Production:**
 
   - Backend: `http://localhost:5000`
-  - Frontend: `http://localhost:80`
-
-- **Local Development:**
-  - Backend: `http://localhost:5000` (default, check your `.env`)
-  - Frontend: `http://localhost:3000` (default, check your `frontend/.env`)
+  - Frontend: `http://localhost`
 
 ## Project Enhancements and Custom Development
 
@@ -136,9 +136,9 @@ This project extends the base `vite-mern-template` with several key enhancements
 
 ---
 
-# vite-mern-template
+# **(Original template readme content bellow)**
 
-**(Original template readme content)**
+# vite-mern-template
 
 ## Requirements
 
