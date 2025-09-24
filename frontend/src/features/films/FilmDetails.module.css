@@ -53,3 +53,15 @@
 .backButton:hover {
   opacity: 0.9;
 }
+
+.mainSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mainSpinner .spinner {
+  width: 48px;
+  height: 48px;
+}

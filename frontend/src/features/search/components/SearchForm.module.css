@@ -68,6 +68,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  text-transform: uppercase;
 }
 
 .button:disabled {

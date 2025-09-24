@@ -43,8 +43,18 @@
   bottom: 1.5rem;
   left: 1.5rem;
   z-index: 10;
+  text-transform: uppercase;
 }
 
 .backButton:hover {
   opacity: 0.9;
+}
+
+.mainSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: bold;
 }

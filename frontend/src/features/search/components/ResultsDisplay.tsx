@@ -1,6 +1,8 @@
 import React from "react";
-import styles from "./ResultsDisplay.module.css";
+
 import ResultItem from "./ResultItem";
+
+import styles from "./ResultsDisplay.module.css";
 
 interface ResultsDisplayProps {
   data: any;
@@ -17,35 +19,28 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   searchType,
   onResultClick,
 }) => {
-  if (isLoading) {
-    return (
-      <div className={styles.resultsPlaceholder}>
-        <p>Searching...</p>
-      </div>
-    );
-  }
+  let content;
 
   if (isError) {
-    return (
-      <div className={styles.resultsContainer}>Error loading results.</div>
+    content = (
+      <div className={styles.resultsPlaceholder}>Error loading results.</div>
     );
-  }
+  } else if (isLoading) {
+    content = <div className={styles.resultsPlaceholder}>Searching...</div>;
+  } else {
+    const results = data?.result || [];
 
-  const results = data?.result || [];
-
-  return (
-    <div className={styles.resultsContainer}>
-      <h2 className={styles.title}>Results</h2>
-      {!results.length ? (
+    if (!results.length) {
+      content = (
         <div className={styles.resultsPlaceholder}>
-          <p>
-            There are zero matches.
-            <br />
-            Use the form to search for People or Movies.
-          </p>
+          There are zero matches.
+          <br />
+          Use the form to search for People or Movies.
         </div>
-      ) : (
-        <div>
+      );
+    } else {
+      content = (
+        <>
           {results.map((result: any) => (
             <ResultItem
               key={result.uid}
@@ -55,8 +50,15 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               onResultClick={onResultClick}
             />
           ))}
-        </div>
-      )}
+        </>
+      );
+    }
+  }
+
+  return (
+    <div className={styles.resultsContainer}>
+      <h2 className={styles.title}>Results</h2>
+      {content}
     </div>
   );
 };
