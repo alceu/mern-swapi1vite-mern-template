@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 
-const port = 3001; // Hardcoded internal port
+const port = 5000; // Hardcoded internal port
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
@@ -33,6 +33,10 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(routes);
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

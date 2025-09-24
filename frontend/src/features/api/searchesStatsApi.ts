@@ -10,8 +10,7 @@ interface TopSearchItem {
   timestamp: string;
 }
 
-// SEARCHES_STATS_API_URL must always be defined if the frontend is to make direct calls.
-if (!import.meta.env.SEARCHES_STATS_API_URL) {
+if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
     "Missing required environment variable: VITE_SEARCHES_STATS_API_URL"
   );
