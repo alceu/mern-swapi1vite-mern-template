@@ -31,8 +31,8 @@ const searchSlice = createSlice({
 
 export const { setQuery, setSearchType, setIsSearching } = searchSlice.actions;
 
-export const selectQuery = (state: RootState) => state.search.query;
-export const selectSearchType = (state: RootState) => state.search.searchType;
-export const selectIsSearching = (state: RootState) => state.search.isSearching;
+export const selectQuery = (state: RootState) => state.features.search.query;
+export const selectSearchType = (state: RootState) => state.features.search.searchType;
+export const selectIsSearching = (state: RootState) => state.features.search.isSearching;
 
 export default searchSlice.reducer;

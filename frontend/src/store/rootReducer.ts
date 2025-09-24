@@ -1,12 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { swapiApi } from "@features/api/swapiApi";
 import { searchesStatsApi } from "@features/api/searchesStatsApi";
-import searchReducer from "@features/search";
+import featuresReducer from "@features";
 
 const rootReducer = combineReducers({
   [swapiApi.reducerPath]: swapiApi.reducer,
   [searchesStatsApi.reducerPath]: searchesStatsApi.reducer,
-  search: searchReducer,
+  features: featuresReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
