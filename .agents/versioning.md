@@ -1,5 +1,15 @@
 # Versioning and Committing Instructions
 
+## Branch Naming Conventions
+
+To ensure consistency across the repository, all branches that are not `develop` or `main` must be prefixed according to their purpose. This avoids confusion and helps to categorize branches at a glance.
+
+-   **feature/**: For new features (e.g., `feature/add-user-authentication`).
+-   **fix/**: For bug fixes (e.g., `fix/resolve-login-issue`).
+-   **docs/**: For documentation changes (e.g., `docs/update-readme`).
+-   **chore/**: For maintenance tasks, such as dependency updates (e.g., `chore/update-react-version`).
+-   **refactor/**: For code refactoring without changing functionality (e.g., `refactor/simplify-user-model`).
+
 ## Commit Planning and Best Practices
 
 To maintain a clear and traceable commit history, follow these guidelines for planning and structuring your commits:
@@ -22,4 +32,22 @@ When asked to commit changes after successfully completing tasks that modify the
 1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines, ensuring it is 300 characters or less, and present it to the user for approval.
 1.  Stage only related changes for the current commit.
 1.  **Crucially, you must wait for explicit, affirmative confirmation from the user before proceeding with the commit.**
+1.  If a technical limitation prevents adhering to an approved commit message (e.g., due to tool constraints), you **must** immediately communicate this limitation to the user, explain the reason, and propose an alternative before proceeding.
 1.  Commit the changes only once explicit approval has been received.
+
+## Merging and Cleanup Workflow
+
+When the user confirms that a feature branch is ready to be merged, follow these steps:
+
+1.  Checkout the target branch (usually `develop` or `main`).
+2.  Merge the feature branch into the target branch.
+3.  After the merge is complete and any conflicts are resolved, ask the user for confirmation to delete the feature branch.
+4.  If confirmed, delete the local feature branch using `git branch -d <branch-name>`.
+
+## Pushing Workflow
+
+When merging changes into `develop` or `main`, and after the merge is complete:
+
+1.  Ask the user if they want to push the changes to the remote repository.
+2.  If confirmed, push the changes to the remote.
+3.  After a successful push, checkout the default HEAD branch (as indicated by `origin/HEAD`).
