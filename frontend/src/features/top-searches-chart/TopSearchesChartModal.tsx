@@ -4,12 +4,24 @@ import { RootState } from "@store/rootReducer";
 import { closeModal } from "./index";
 import TopSearchesChart from "./TopSearchesChart";
 import styles from "./TopSearchesChartModal.module.css";
+import { useGetTopSearchesQuery } from "@features/api/searchesStatsApi";
 
 const TopSearchesChartModal: React.FC = () => {
   const dispatch = useDispatch();
   const { isModalOpen } = useSelector(
     (state: RootState) => state.features.topSearchesChart
   );
+
+  const {
+    data: filmSearches,
+    isLoading: isLoadingFilms,
+    error: errorFilms,
+  } = useGetTopSearchesQuery({ type: "films" });
+  const {
+    data: peopleSearches,
+    isLoading: isLoadingPeople,
+    error: errorPeople,
+  } = useGetTopSearchesQuery({ type: "people" });
 
   if (!isModalOpen) {
     return null;
@@ -28,7 +40,20 @@ const TopSearchesChartModal: React.FC = () => {
           </button>
         </div>
         <div className={styles.modalBody}>
-          <TopSearchesChart />
+          <div className={styles.chartsContainer}>
+            <TopSearchesChart
+              title="Movies"
+              data={filmSearches}
+              isLoading={isLoadingFilms}
+              error={errorFilms}
+            />
+            <TopSearchesChart
+              title="People"
+              data={peopleSearches}
+              isLoading={isLoadingPeople}
+              error={errorPeople}
+            />
+          </div>
         </div>
       </div>
     </div>

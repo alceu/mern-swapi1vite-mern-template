@@ -13,8 +13,11 @@
 .modalOverlay .modalContent {
   background-color: white;
   border-radius: 0.5rem;
-  width: 500px;
-  max-width: 90%;
+  width: 40%;
+  height: 50%;
+  min-width: 45rem;
+  min-height: 30rem;
+  overflow-y: auto;
 }
 
 .modalOverlay .modalHeader {
@@ -43,5 +46,12 @@
 }
 
 .modalOverlay .modalBody {
-    padding: 1rem;
+  padding: 1rem;
+}
+
+.chartsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
 }
