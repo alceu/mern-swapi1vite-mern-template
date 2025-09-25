@@ -4,13 +4,18 @@ import { ISearchQuery } from "./SearchQuery"; // Import ISearchQuery for populat
 export interface ITopSearch extends Document {
   searchQuery: mongoose.Schema.Types.ObjectId | ISearchQuery; // Reference to SearchQuery
   percentage: number;
-  timestamp: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const TopSearchSchema: Schema = new Schema({
-  searchQuery: { type: mongoose.Schema.Types.ObjectId, ref: 'SearchQuery', required: true, unique: true },
+  searchQuery: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "SearchQuery",
+    required: true,
+    unique: true,
+  },
   percentage: { type: Number, required: true },
-  timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 export default mongoose.model<ITopSearch>("TopSearch", TopSearchSchema);

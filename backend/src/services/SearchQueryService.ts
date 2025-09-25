@@ -9,6 +9,6 @@ export async function registerSearchQuery(query: string, type: 'films' | 'people
   await SearchQuery.findOneAndUpdate(
     { query, type },
     { $inc: { count: 1 } },
-    { upsert: true, new: true }
+    { upsert: true, new: true, runValidators: true }
   );
 }
