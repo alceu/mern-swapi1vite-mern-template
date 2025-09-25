@@ -28,6 +28,7 @@ To maintain a clear and traceable commit history, follow these guidelines for pl
 
 When asked to commit changes after successfully completing tasks that modify the repository, you must:
 
+1.  **Verify Changes and Respect User Precedence**: Before proceeding, always check `git status` and `git diff HEAD` to review all current changes. If any changes previously made by the agent are no longer present, assume the user has either committed or discarded them. In such cases, strictly respect the user's actions and proceed only with the changes currently reflected in the repository.
 1.  Analyze git changes.
 1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines, ensuring it is 300 characters or less, and present it to the user for approval.
 1.  Stage only related changes for the current commit.
