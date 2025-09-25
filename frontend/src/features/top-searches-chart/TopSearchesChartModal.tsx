@@ -1,29 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store/rootReducer";
-import { closeModal } from "./index";
 import TopSearchesChart from "./TopSearchesChart";
 import styles from "./TopSearchesChartModal.module.css";
-import { useGetTopSearchesQuery } from "@features/api/searchesStatsApi";
 
-const TopSearchesChartModal: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isModalOpen } = useSelector(
-    (state: RootState) => state.features.topSearchesChart
-  );
+interface TopSearchesChartModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-  const {
-    data: filmSearches,
-    isLoading: isLoadingFilms,
-    error: errorFilms,
-  } = useGetTopSearchesQuery({ type: "films" });
-  const {
-    data: peopleSearches,
-    isLoading: isLoadingPeople,
-    error: errorPeople,
-  } = useGetTopSearchesQuery({ type: "people" });
-
-  if (!isModalOpen) {
+const TopSearchesChartModal: React.FC<TopSearchesChartModalProps> = ({ isOpen, onClose }) => {
+  if (!isOpen) {
     return null;
   }
 
@@ -34,7 +19,7 @@ const TopSearchesChartModal: React.FC = () => {
           <h2 className={styles.modalTitle}>Top Searches Chart</h2>
           <button
             className={styles.closeButton}
-            onClick={() => dispatch(closeModal())}
+            onClick={onClose}
           >
             Close
           </button>
@@ -42,16 +27,12 @@ const TopSearchesChartModal: React.FC = () => {
         <div className={styles.modalBody}>
           <div className={styles.chartsContainer}>
             <TopSearchesChart
-              title="Movies"
-              data={filmSearches}
-              isLoading={isLoadingFilms}
-              error={errorFilms}
+              title="Top Film Searches"
+              type="films"
             />
             <TopSearchesChart
-              title="People"
-              data={peopleSearches}
-              isLoading={isLoadingPeople}
-              error={errorPeople}
+              title="Top People Searches"
+              type="people"
             />
           </div>
         </div>
@@ -61,3 +42,4 @@ const TopSearchesChartModal: React.FC = () => {
 };
 
 export default TopSearchesChartModal;
+
