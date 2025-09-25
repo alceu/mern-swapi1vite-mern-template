@@ -8,9 +8,9 @@ import TopSearch, { ITopSearch } from "../models/TopSearch";
  * @returns An array of objects, each containing the SearchQuery _id and its percentage.
  */
 async function _calculateTopQueries(
-  type: 'films' | 'people',
+  type: "films" | "people",
   limit: number = 5
-): Promise<{ searchQuery: ISearchQuery['_id']; percentage: number }[]> {
+): Promise<{ searchQuery: ISearchQuery["_id"]; percentage: number }[]> {
   const topQueriesWithPercentage = await SearchQuery.aggregate([
     { $match: { type: type } }, // Filter by type
     {
@@ -25,10 +25,8 @@ async function _calculateTopQueries(
       $project: {
         _id: 0,
         searchQuery: "$queries._id",
-        count: "$queries.count",
-        totalCount: "$totalCount",
         percentage: {
-          $multiply: [{ $divide: ["$queries.count", "$totalCount"] }, 100],
+          $divide: ["$queries.count", "$totalCount"],
         },
       },
     },
@@ -49,9 +47,9 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
   console.log("Calculating and persisting top queries...");
 
   // Calculate for films
-  const topFilmQueries = await _calculateTopQueries('films');
+  const topFilmQueries = await _calculateTopQueries("films");
   // Calculate for people
-  const topPeopleQueries = await _calculateTopQueries('people');
+  const topPeopleQueries = await _calculateTopQueries("people");
 
   // Clear existing top queries and insert new ones
   await TopSearch.deleteMany({});
@@ -72,20 +70,38 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
  */
 export async function getTopQueries(
   limit: number = 5,
-  type?: 'films' | 'people'
+  type?: "films" | "people"
 ): Promise<Array<ITopSearch & { searchQuery: ISearchQuery }>> {
   const matchStage: any = {};
   if (type) {
-    matchStage['searchQuery.type'] = type; // Filter by the type in the populated SearchQuery
+    matchStage["searchQuery.type"] = type; // Filter by the type in the populated SearchQuery
   }
 
   const topQueries = await TopSearch.aggregate([
-    { $lookup: { from: 'searchqueries', localField: 'searchQuery', foreignField: '_id', as: 'searchQuery' } },
-    { $unwind: '$searchQuery' },
+    {
+      $lookup: {
+        from: "searchqueries",
+        localField: "searchQuery",
+        foreignField: "_id",
+        as: "searchQuery",
+      },
+    },
+    { $unwind: "$searchQuery" },
     { $match: matchStage },
     { $sort: { percentage: -1 } },
     { $limit: limit },
-    { $project: { _id: 0, searchQuery: { _id: '$searchQuery._id', query: '$searchQuery.query', type: '$searchQuery.type' }, percentage: 1, timestamp: 1 } }
+    {
+      $project: {
+        _id: 0,
+        searchQuery: {
+          _id: "$searchQuery._id",
+          query: "$searchQuery.query",
+          type: "$searchQuery.type",
+        },
+        percentage: 1,
+        timestamp: 1,
+      },
+    },
   ]);
 
   return topQueries as Array<ITopSearch & { searchQuery: ISearchQuery }>;
