@@ -8,7 +8,7 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   const handleOpenTopSearches = () => {
-    navigate({ pathname: location.pathname, search: location.search, hash: "#top-searches" });
+    navigate({ pathname: location.pathname, search: location.search, hash: "#top-searches" }, { state: location.state });
   };
 
   return (

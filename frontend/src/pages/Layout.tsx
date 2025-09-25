@@ -16,7 +16,7 @@ const Layout: React.FC = () => {
   }, [location.hash]);
 
   const onCloseTopSearches = () => {
-    navigate({ pathname: location.pathname, search: location.search, hash: "" });
+    navigate({ pathname: location.pathname, search: location.search, hash: "" }, { state: location.state });
   };
 
   return (

@@ -34,7 +34,7 @@ const SearchPage: React.FC = () => {
   const handleResultClick = useCallback(
     (id: string, resultType: "people" | "films") => {
       const currentQuery = searchParams.get("query") || "";
-      const currentType = searchParams.get("type") || "people"; // Default to 'people' if not set
+      const currentType = searchParams.get("type") || "people";
 
       if (resultType === "people") {
         navigate(`/people/${id}`, {
