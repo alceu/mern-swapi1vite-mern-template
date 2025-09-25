@@ -26,6 +26,7 @@ Adhere to the following separation of concerns for components:
 
     - These components encapsulate a specific piece of business functionality.
     - They are responsible for data fetching, state and features store management related to the feature and other business logic.
+    - **Business Listing Data Handling**: Feature components responsible for displaying lists of business data (e.g., search results, product lists) should handle the data fetching and management for that listing internally as much as possible. This minimizes prop drilling and keeps the data logic co-located with the component responsible for rendering it.
     - Feature Components must expose business-driven event callback props (e.g., `onPersonViewDetails`, `onBackToSearch`) to communicate state changes. The parents Page Components are responsible for implementing these callbacks and translating them into actual routing operations and updating other page-level parameters. This ensures Feature Components remain decoupled from page structures and routing concerns.
     - They should not directly interact with route-related logic or libraries to derive their operational parameters. Instead, all necessary parameters and event functions should be passed down as props from Page Components.
     - To avoid prop drilling, Feature Components can directly access their relevant state from features store using selectors and dispatch actions to update it. However, they should still receive parameters that are directly tied to the URL or routing from their parent Page Components as props.
@@ -43,8 +44,8 @@ To maintain a scalable and organized frontend, adhere to the following principle
     - **Principle**: The `frontend/src/pages/` directory structure should mirror the application's URL paths. This organization enhances discoverability, maintainability, and scalability by co-locating route-related files (components, loaders, actions) with their corresponding URL segments.
     - **Implementation**:
       1. The primary route configuration resides in `frontend/src/pages/index.ts`, exporting an array of route objects.
-      1. For each distinct URL segment and subsegment, create a dedicated subfolder. This subfolder must contain an `index.ts` file that exports its specific route definitions.
-      1. These feature-specific route arrays are then imported and nested within the main `frontend/src/pages/index.ts` configuration using the `children` property, ensuring a clear hierarchy and modularity that directly reflects the URL structure.
+      1. For each distinct URL segment and subsegment, create a dedicated subfolder (e.g., `pages/films/`). This subfolder must contain an `index.ts` file that exports an array of route objects representing the children routes for that segment.
+      1. Each `index.ts` will then import these arrays of route objects and include them as the `children` property of their respective parent route definitions. This ensures a clear hierarchy and modularity that directly reflects the URL structure.
 
 ## Responsive Design
 
