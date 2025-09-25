@@ -1,5 +1,6 @@
-import SearchQuery, { ISearchQuery } from "../models/SearchQuery";
-import TopSearch, { ITopSearch } from "../models/TopSearch";
+import SearchQuery, { ISearchQuery } from "@models/SearchQuery";
+import TopSearch, { ITopSearch } from "@models/TopSearch";
+import mongoose, { AnyBulkWriteOperation } from "mongoose";
 
 /**
  * Calculates the top search queries from the SearchQuery model for a given type.
@@ -10,7 +11,7 @@ import TopSearch, { ITopSearch } from "../models/TopSearch";
 async function _calculateTopQueries(
   type: "films" | "people",
   limit: number = 5
-): Promise<{ searchQuery: ISearchQuery["_id"]; percentage: number }[]> {
+): Promise<{ searchQuery: mongoose.Types.ObjectId; percentage: number }[]> {
   const topQueriesWithPercentage = await SearchQuery.aggregate([
     { $match: { type: type } }, // Filter by type
     {
@@ -46,19 +47,29 @@ async function _calculateTopQueries(
 export async function calculateAndPersistTopQueries(): Promise<void> {
   console.log("Calculating and persisting top queries...");
 
-  // Calculate for films
   const topFilmQueries = await _calculateTopQueries("films");
-  // Calculate for people
   const topPeopleQueries = await _calculateTopQueries("people");
 
-  // Clear existing top queries and insert new ones
-  await TopSearch.deleteMany({});
-  await TopSearch.insertMany(
-    [...topFilmQueries, ...topPeopleQueries].map((q) => ({
-      searchQuery: q.searchQuery,
-      percentage: q.percentage,
-    }))
-  );
+  const newTopQueries = [...topFilmQueries, ...topPeopleQueries];
+  const newTopQueryIds = newTopQueries.map((q) => q.searchQuery);
+
+  const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = newTopQueries.map((q) => ({
+    updateOne: {
+      filter: { searchQuery: q.searchQuery },
+      update: { $set: { percentage: q.percentage } },
+      upsert: true,
+    },
+  }));
+
+  // Add operation to remove old top queries that are no longer in the new list
+  bulkOperations.push({
+    deleteMany: {
+      filter: { searchQuery: { $nin: newTopQueryIds } },
+    },
+  });
+
+  await TopSearch.bulkWrite(bulkOperations);
+
   console.log("Top queries calculated and persisted successfully.");
 }
 

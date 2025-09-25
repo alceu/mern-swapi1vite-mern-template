@@ -15,7 +15,13 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "baseUrl": ".",
+    "paths": {
+      "@services/*": ["./backend/src/services/*"],
+      "@models/*": ["./backend/src/models/*"],
+      "@tasks/*": ["./backend/src/tasks/*"]
+    }
   },
   "exclude": [
     "node_modules"

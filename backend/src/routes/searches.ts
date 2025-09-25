@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { registerSearchQuery } from "../services/SearchQueryService";
-import { getTopQueries } from "../services/TopSearchService";
+import { registerSearchQuery } from "@services/SearchQueryService";
+import { getTopQueries } from "@services/TopSearchService";
 
 const router = express.Router();
 

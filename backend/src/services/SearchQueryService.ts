@@ -1,4 +1,4 @@
-import SearchQuery from "../models/SearchQuery";
+import SearchQuery from "@models/SearchQuery";
 
 /**
  * Registers a search query by directly updating the database.

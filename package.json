@@ -9,7 +9,7 @@
     "dev:frontend": "npm start --prefix ./frontend",
     "check-types": "tsc",
     "prettier": "prettier --write .",
-    "build:backend": "tsc -p tsconfig.json",
+    "build:backend": "tsc -p tsconfig.json && tsc-alias",
     "build:frontend": "npm run build --prefix ./frontend",
     "build": "npm run build:backend && npm run build:frontend"
   },
@@ -36,6 +36,7 @@
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "prettier": "3.2.5",
+    "tsc-alias": "^1.8.10",
     "typescript": "^5.9.2"
   }
 }
