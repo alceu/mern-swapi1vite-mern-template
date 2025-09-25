@@ -4,7 +4,7 @@
   box-shadow: 0 0.05rem 0 0 var(--green-teal);
   background-color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -17,4 +17,18 @@
 
 .titleLink {
   text-decoration: none;
+}
+
+.chartButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--green-teal);
+  width: 50px;
+  text-align: right;
+}
+
+.leftPlaceholder {
+    width: 50px;
 }
