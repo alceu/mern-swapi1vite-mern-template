@@ -1,11 +1,24 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import Header from "./Header";
+import TopSearchesPage from "./TopSearchesPage";
 
 import styles from "./Layout.module.css";
 
 const Layout: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(location.hash === "#top-searches");
+
+  useEffect(() => {
+    setIsModalOpen(location.hash === "#top-searches");
+  }, [location.hash]);
+
+  const onCloseTopSearches = () => {
+    navigate({ pathname: location.pathname, search: location.search, hash: "" });
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -14,6 +27,7 @@ const Layout: React.FC = () => {
           <Outlet />
         </div>
       </div>
+      <TopSearchesPage isOpen={isModalOpen} onClose={onCloseTopSearches} />
     </>
   );
 };

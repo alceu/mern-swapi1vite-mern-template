@@ -1,15 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import TopSearchesChartModal from "@features/top-searches-chart/TopSearchesChartModal";
 
-const TopSearchesPage: React.FC = () => {
-  const navigate = useNavigate();
+interface TopSearchesPageProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-  const handleClose = () => {
-    navigate(-1);
-  };
-
-  return <TopSearchesChartModal isOpen={true} onClose={handleClose} />;
+const TopSearchesPage: React.FC<TopSearchesPageProps> = ({ isOpen, onClose }) => {
+  return <TopSearchesChartModal isOpen={isOpen} onClose={onClose} />;
 };
 
 export default TopSearchesPage;

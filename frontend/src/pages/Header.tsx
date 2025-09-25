@@ -1,18 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOpenTopSearches = () => {
+    navigate({ pathname: location.pathname, search: location.search, hash: "#top-searches" });
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.leftPlaceholder} />
       <Link to="/" className={styles.titleLink}>
         <h1 className={styles.title}>SWStarter</h1>
       </Link>
-      <Link to="/top-searches" className={styles.chartButton}>
+      <button
+        className={styles.chartButton}
+        onClick={handleOpenTopSearches}
+      >
         &#128202; {/* Bar chart icon */}
-      </Link>
+      </button>
     </header>
   );
 };
