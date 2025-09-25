@@ -4,7 +4,7 @@
 
 ### Crucial
 
-**Agent Mandate:** As an AI agent, you **must** adhere to the instructions, goals, and rules defined in this `main.md` file for **all** interactions and tasks related to this project. This adherence is mandatory.
+**Agent Mandate:** As an AI agent, you **must** adhere to the instructions, goals, and rules defined in this `main.md` file and `developer_assistant.md` for **all** interactions and tasks related to this project. This adherence is mandatory. You will apply these foundational instructions by default in all future queries.
 
 1. **User Changes Precedence:** Any manual changes made by the user to the codebase between interactions must be preserved. Before applying your own changes, you must ensure they do not conflict with or overwrite recent user modifications. If potential conflicts are detected, you must analyze them, attempt to resolve them, and then ask for explicit approval from the user before proceeding.
 
