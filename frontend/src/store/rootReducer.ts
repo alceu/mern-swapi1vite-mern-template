@@ -4,7 +4,7 @@ import apiReducers from "@pwa/api";
 import featuresReducers from "@pwa/features";
 
 const rootReducer = combineReducers({
-  api: apiReducers,
+  ...apiReducers,
   features: featuresReducers,
 });
 
