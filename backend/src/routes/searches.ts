@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
-import { registerSearchQuery } from "@services/SearchQueryService";
-import { getTopQueries } from "@services/TopSearchService";
+
+import { registerSearchQuery } from "@api/services/SearchQueryService";
+import { getTopQueries } from "@api/services/TopSearchService";
 
 const router = express.Router();
 
@@ -11,8 +12,10 @@ router.post("/", async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Query is required" });
   }
 
-  if (!type || (type !== 'films' && type !== 'people')) {
-    return res.status(400).json({ error: "Valid type (films or people) is required" });
+  if (!type || (type !== "films" && type !== "people")) {
+    return res
+      .status(400)
+      .json({ error: "Valid type (films or people) is required" });
   }
 
   try {
@@ -29,10 +32,12 @@ router.get("/top", async (req: Request, res: Response) => {
     const limit = req.query.limit
       ? parseInt(req.query.limit as string, 10)
       : undefined;
-    const type = req.query.type as 'films' | 'people' | undefined;
+    const type = req.query.type as "films" | "people" | undefined;
 
-    if (type && type !== 'films' && type !== 'people') {
-      return res.status(400).json({ error: "Invalid type parameter. Must be 'films' or 'people'." });
+    if (type && type !== "films" && type !== "people") {
+      return res.status(400).json({
+        error: "Invalid type parameter. Must be 'films' or 'people'.",
+      });
     }
 
     const topQueries = await getTopQueries(limit, type);

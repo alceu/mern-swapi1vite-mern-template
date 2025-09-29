@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetPeopleQuery, useGetFilmsQuery } from "@api/swapiApi";
-import { usePostSearchQueryMutation } from "@api/searchesStatsApi";
+
+import { useGetPeopleQuery, useGetFilmsQuery } from "@pwa/api/swapiApi";
+import { usePostSearchQueryMutation } from "@pwa/api/searchesStatsApi";
 import {
   selectQuery,
   selectSearchType,
   setIsSearching,
-} from "@features/search";
+} from "@pwa/features/search";
 
 import ResultItem from "./ResultItem";
 

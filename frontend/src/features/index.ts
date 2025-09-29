@@ -2,8 +2,8 @@ import { combineReducers } from "@reduxjs/toolkit";
 
 import searchReducer from "./search";
 
-const featuresReducer = combineReducers({
+const reducers = combineReducers({
   search: searchReducer,
 });
 
-export default featuresReducer;
+export default reducers;

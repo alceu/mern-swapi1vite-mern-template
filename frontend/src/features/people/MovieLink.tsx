@@ -1,6 +1,7 @@
 import React from "react";
-import { useGetFilmByIdQuery } from "@features/api/swapiApi";
-import LoadingSpinner from "@components/LoadingSpinner";
+
+import { useGetFilmByIdQuery } from "@pwa/api/swapiApi";
+import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import styles from "./MovieLink.module.css";
 

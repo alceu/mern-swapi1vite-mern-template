@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setQuery, setSearchType } from "@features/search";
+
+import { setQuery, setSearchType } from "@pwa/features/search";
 
 import SearchForm from "./SearchForm";
 import ResultsDisplay from "./ResultsDisplay";

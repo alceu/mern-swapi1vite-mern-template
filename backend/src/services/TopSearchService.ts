@@ -1,6 +1,7 @@
-import SearchQuery, { ISearchQuery } from "@models/SearchQuery";
-import TopSearch, { ITopSearch } from "@models/TopSearch";
 import mongoose, { AnyBulkWriteOperation } from "mongoose";
+
+import SearchQuery, { ISearchQuery } from "@api/models/SearchQuery";
+import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 
 /**
  * Calculates the top search queries from the SearchQuery model for a given type.
@@ -53,13 +54,15 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
   const newTopQueries = [...topFilmQueries, ...topPeopleQueries];
   const newTopQueryIds = newTopQueries.map((q) => q.searchQuery);
 
-  const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = newTopQueries.map((q) => ({
-    updateOne: {
-      filter: { searchQuery: q.searchQuery },
-      update: { $set: { percentage: q.percentage } },
-      upsert: true,
-    },
-  }));
+  const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = newTopQueries.map(
+    (q) => ({
+      updateOne: {
+        filter: { searchQuery: q.searchQuery },
+        update: { $set: { percentage: q.percentage } },
+        upsert: true,
+      },
+    })
+  );
 
   // Add operation to remove old top queries that are no longer in the new list
   bulkOperations.push({

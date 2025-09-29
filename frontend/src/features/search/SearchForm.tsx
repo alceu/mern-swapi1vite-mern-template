@@ -1,16 +1,23 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useSelector } from "react-redux";
-import { selectQuery, selectSearchType, selectIsSearching } from "@features/search";
+
+import {
+  selectQuery,
+  selectSearchType,
+  selectIsSearching,
+} from "@pwa/features/search";
+
 import styles from "./SearchForm.module.css";
 
 interface SearchFormProps {
-  onSearch: (values: { searchType: "people" | "films"; searchQuery: string }) => void;
+  onSearch: (values: {
+    searchType: "people" | "films";
+    searchQuery: string;
+  }) => void;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({
-  onSearch,
-}) => {
+const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
   const type = useSelector(selectSearchType);
   const query = useSelector(selectQuery);
   const isSearching = useSelector(selectIsSearching);

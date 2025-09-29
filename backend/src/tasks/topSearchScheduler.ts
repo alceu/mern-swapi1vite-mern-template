@@ -1,5 +1,6 @@
 import cron from "node-cron";
-import { calculateAndPersistTopQueries } from "@services/TopSearchService";
+
+import { calculateAndPersistTopQueries } from "@api/services/TopSearchService";
 
 export function initTopSearchScheduler() {
   cron.schedule("*/5 * * * *", () => {

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@store/rootReducer";
+
+import { RootState } from "@pwa/store/rootReducer";
 
 interface SearchState {
   query: string;
@@ -32,7 +33,9 @@ const searchSlice = createSlice({
 export const { setQuery, setSearchType, setIsSearching } = searchSlice.actions;
 
 export const selectQuery = (state: RootState) => state.features.search.query;
-export const selectSearchType = (state: RootState) => state.features.search.searchType;
-export const selectIsSearching = (state: RootState) => state.features.search.isSearching;
+export const selectSearchType = (state: RootState) =>
+  state.features.search.searchType;
+export const selectIsSearching = (state: RootState) =>
+  state.features.search.isSearching;
 
 export default searchSlice.reducer;

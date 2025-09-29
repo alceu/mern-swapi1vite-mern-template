@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { routes } from "./pages/index";
-import store from "./store/store";
+
+import { routes } from "@pwa/pages";
+import store from "@pwa/store";
 
 const router = createBrowserRouter(routes);
 

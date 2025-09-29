@@ -18,9 +18,9 @@
     "target": "es2022",
     "baseUrl": ".",
     "paths": {
-      "@services/*": ["./backend/src/services/*"],
-      "@models/*": ["./backend/src/models/*"],
-      "@tasks/*": ["./backend/src/tasks/*"]
+      "@api/*": [
+        "./backend/src/*"
+      ],
     }
   },
   "exclude": [

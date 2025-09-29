@@ -1,13 +1,17 @@
 import React, { useCallback } from "react";
-import FilmDetails from "@features/films/FilmDetails";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+
+import FilmDetails from "@pwa/features/films/FilmDetails";
 
 export default function FilmDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { query, type } = (location.state || {}) as { query?: string; type?: "people" | "films" };
+  const { query, type } = (location.state || {}) as {
+    query?: string;
+    type?: "people" | "films";
+  };
 
   const handleBackToSearch = useCallback(() => {
     const searchParams = new URLSearchParams();
@@ -22,7 +26,9 @@ export default function FilmDetailsPage() {
 
   const handleCharacterClick = useCallback(
     (charId: string) => {
-      navigate(`/people/${charId}`, { state: { fromSearch: true, query, type } });
+      navigate(`/people/${charId}`, {
+        state: { fromSearch: true, query, type },
+      });
     },
     [navigate, query, type]
   );

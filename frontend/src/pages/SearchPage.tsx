@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import SearchContainer from "@features/search/SearchContainer";
+import SearchContainer from "@pwa/features/search/SearchContainer";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

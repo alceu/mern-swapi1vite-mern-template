@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+
 import { ISearchQuery } from "./SearchQuery";
 export interface ITopSearch extends Document {
   searchQuery: mongoose.Schema.Types.ObjectId | ISearchQuery;

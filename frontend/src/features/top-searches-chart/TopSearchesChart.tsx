@@ -7,8 +7,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+import { useGetTopSearchesQuery } from "@pwa/api/searchesStatsApi";
+
 import styles from "./TopSearchesChart.module.css";
-import { useGetTopSearchesQuery } from "@features/api/searchesStatsApi";
 
 interface TopSearchesChartProps {
   title: string;
