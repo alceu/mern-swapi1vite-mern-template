@@ -6,7 +6,10 @@
 - Keep controllers focused on business logic and service orchestration.
 - Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
 
-## Entity-Driven File Organization
+## Fullstack Cohesion
+
+- When making changes to the backend that could affect the frontend (e.g., changing API routes, modifying response data structures), you must also check the frontend codebase to ensure continued cohesion.
+- Identify the affected frontend files and update them accordingly to maintain fullstack compatibility.
 
 - To ensure a scalable and organized backend, files in all layers (controllers, services, validations, etc.) should be organized by model/schema names.
 - This entity-driven approach groups related logic, making the codebase easier to navigate and maintain.
