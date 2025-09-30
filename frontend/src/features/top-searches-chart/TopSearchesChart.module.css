@@ -1,0 +1,12 @@
+.chartWrapper {
+  flex: 1 1 45%; /* Allows charts to grow and shrink, taking up roughly half the space */
+  min-width: 20rem; /* Ensures charts don't get too small, using rem units */
+  margin-bottom: 1rem; /* Space between charts when wrapped */
+  height: 20rem; /* Define height using rem units */
+}
+
+.chartWrapper h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--green-teal);
+}

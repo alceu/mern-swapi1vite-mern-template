@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectSearchType } from "@features/search";
+
+import { selectSearchType } from "@pwa/features/search";
 
 import styles from "./ResultItem.module.css";
 
@@ -10,11 +11,7 @@ interface ResultItemProps {
   onResultClick: (id: string, type: "people" | "films") => void;
 }
 
-const ResultItem: React.FC<ResultItemProps> = ({
-  name,
-  id,
-  onResultClick,
-}) => {
+const ResultItem: React.FC<ResultItemProps> = ({ name, id, onResultClick }) => {
   const type = useSelector(selectSearchType);
 
   return (

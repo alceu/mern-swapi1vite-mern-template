@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+
+import { middlewares as apiMiddlewares } from "@pwa/api";
+
 import rootReducer from "./rootReducer";
-import { swapiApi } from "@features/api/swapiApi";
-import { searchesStatsApi } from "@features/api/searchesStatsApi";
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      swapiApi.middleware,
-      searchesStatsApi.middleware
-    ),
+    getDefaultMiddleware().concat(apiMiddlewares),
 });
 
 export type AppDispatch = typeof store.dispatch;

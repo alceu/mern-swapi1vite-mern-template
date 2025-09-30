@@ -1,16 +1,24 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { ISearchQuery } from "./SearchQuery"; // Import ISearchQuery for population
 
+import { ISearchQuery } from "./SearchQuery";
 export interface ITopSearch extends Document {
-  searchQuery: mongoose.Schema.Types.ObjectId | ISearchQuery; // Reference to SearchQuery
+  searchQuery: mongoose.Schema.Types.ObjectId | ISearchQuery;
   percentage: number;
-  timestamp: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const TopSearchSchema: Schema = new Schema({
-  searchQuery: { type: mongoose.Schema.Types.ObjectId, ref: 'SearchQuery', required: true, unique: true },
-  percentage: { type: Number, required: true },
-  timestamp: { type: Date, default: Date.now },
-});
+const TopSearchSchema: Schema = new Schema(
+  {
+    searchQuery: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SearchQuery",
+      required: true,
+      unique: true,
+    },
+    percentage: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model<ITopSearch>("TopSearch", TopSearchSchema);

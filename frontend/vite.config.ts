@@ -32,11 +32,7 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        "@features": path.resolve(__dirname, "./src/features"),
-        "@pages": path.resolve(__dirname, "./src/pages"),
-        "@components": path.resolve(__dirname, "./src/components"),
-        "@api": path.resolve(__dirname, "./src/features/api"),
-        "@store": path.resolve(__dirname, "./src/store"),
+        "@pwa": path.resolve(__dirname, "./src/"),
       },
     },
     build: {

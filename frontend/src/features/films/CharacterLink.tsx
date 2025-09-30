@@ -1,6 +1,7 @@
 import React from "react";
-import { useGetPersonByIdQuery } from "@features/api/swapiApi";
-import LoadingSpinner from "@components/LoadingSpinner";
+
+import { useGetPersonByIdQuery } from "@pwa/api/swapiApi";
+import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import styles from "./CharacterLink.module.css";
 

@@ -14,4 +14,4 @@ This file serves as the central configuration for AI agents working on this proj
 
 **Human Developers Guide:** You can find, review, and edit the prompts and instructions for the project's AI assistants in the `.agents/` directory.
 
-**Agent Mandate:** As an AI agent, you **must** follow the instructions within `main.md`, as they are foundational and apply to all interactions and tasks, serving as the baseline for your operation.
+**Agent Mandate:** As an AI agent, you **must** follow the instructions within `main.md` and `developer_assistant.md`, as they are foundational and apply to all interactions and tasks, serving as the baseline for your operation.

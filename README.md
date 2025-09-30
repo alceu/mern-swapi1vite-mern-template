@@ -62,10 +62,16 @@ This is the easiest way to get started. With Docker, the entire application (fro
 
 **Instructions:**
 
-    ```bash
-    docker compose up --build
-    ```
-    The `-d` flag can be added to run in detached mode (in the background).
+- **For development:**
+  ```bash
+  docker compose up --build
+  ```
+- **For production:**
+  ```bash
+  docker compose -f docker-compose.yml -f docker-compose.production.yml up --build
+  ```
+
+The `-d` flag can be added to run in detached mode (in the background).
 
 #### B. Local Development
 
