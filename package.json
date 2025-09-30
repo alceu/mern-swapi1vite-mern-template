@@ -5,11 +5,12 @@
   "scripts": {
     "watch": "tsc --watch",
     "backend": "node --watch build/index.js",
-    "dev:backend": "concurrently \"npm run watch\" \"npm run backend\"",
+    "dev:backend": "npm run dev:backend:watch",
+    "dev:backend:watch": "nodemon --watch backend/src --ext ts --exec \"tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node build/index.js\"",
     "dev:frontend": "npm start --prefix ./frontend",
     "check-types": "tsc",
     "prettier": "prettier --write .",
-    "build:backend": "tsc -p tsconfig.json && tsc-alias",
+    "build:backend": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "build:frontend": "npm run build --prefix ./frontend",
     "build": "npm run build:backend && npm run build:frontend"
   },
@@ -37,6 +38,7 @@
     "eslint": "^8.57.0",
     "prettier": "3.2.5",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "nodemon": "^3.1.0"
   }
 }

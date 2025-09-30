@@ -3,8 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import { initTopSearchScheduler } from "@api/tasks/topSearchScheduler";
 import routes from "@api/routes/";
+import { initTopSearchScheduler } from "@api/tasks/topSearchScheduler";
 
 dotenv.config();
 
