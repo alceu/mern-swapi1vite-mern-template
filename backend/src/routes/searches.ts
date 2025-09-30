@@ -1,7 +1,9 @@
 import express from "express";
 
-import { getTopSearches, postSearchQuery } from "@api/controllers/searchesController";
-import { validateSearchQuery, validateTopSearch } from "@api/validations/searchesValidation";
+import { postSearchQuery } from "@api/controllers/SearchQuery";
+import { getTopSearches } from "@api/controllers/TopSearch";
+import { validateSearchQuery } from "@api/validations/SearchQuery";
+import { validateTopSearch } from "@api/validations/TopSearch";
 
 const router = express.Router();
 
