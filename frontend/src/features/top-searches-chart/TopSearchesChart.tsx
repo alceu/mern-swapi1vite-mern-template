@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useGetTopSearchesQuery } from "@pwa/api/searchesStatsApi";
+import { useGetTopSearchesQuery } from "@pwa/api/topSearchesApi";
 
 import styles from "./TopSearchesChart.module.css";
 

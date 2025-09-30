@@ -16,22 +16,12 @@ if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   );
 }
 
-export const searchesStatsApi = createApi({
-  reducerPath: "searchesStatsApi",
+export const topSearchesApi = createApi({
+  reducerPath: "topSearchesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/searches/`,
+    baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/top-searches/`,
   }),
   endpoints: (builder) => ({
-    postSearchQuery: builder.mutation<
-      void,
-      { query: string; type: "films" | "people" }
-    >({
-      query: (body) => ({
-        url: "/",
-        method: "POST",
-        body,
-      }),
-    }),
     getTopSearches: builder.query<
       TopSearchItem[],
       { limit?: number; type?: "films" | "people" }
@@ -40,11 +30,10 @@ export const searchesStatsApi = createApi({
         const params = new URLSearchParams();
         if (limit) params.append("limit", limit.toString());
         if (type) params.append("type", type);
-        return `top?${params.toString()}`;
+        return `?${params.toString()}`;
       },
     }),
   }),
 });
 
-export const { usePostSearchQueryMutation, useGetTopSearchesQuery } =
-  searchesStatsApi;
+export const { useGetTopSearchesQuery } = topSearchesApi;

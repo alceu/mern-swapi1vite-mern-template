@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useGetPeopleQuery, useGetFilmsQuery } from "@pwa/api/swapiApi";
-import { usePostSearchQueryMutation } from "@pwa/api/searchesStatsApi";
+import { usePostSearchQueryMutation } from "@pwa/api/searchQueryApi";
 import {
   selectQuery,
   selectSearchType,
