@@ -10,6 +10,16 @@ To ensure consistency across the repository, all branches that are not `develop`
 -   **chore/**: For maintenance tasks, such as dependency updates (e.g., `chore/update-react-version`).
 -   **refactor/**: For code refactoring without changing functionality (e.g., `refactor/simplify-user-model`).
 
+## Branching Workflow
+
+To maintain a clean and stable codebase, all development work must be done in a dedicated branch. Commits should never be made directly to `develop` or `main`.
+
+Before starting any work that involves making changes to the codebase, you must:
+
+1.  **Analyze Local Changes**: Check the current state of the repository for any uncommitted changes.
+2.  **Propose a Branch**: Based on the task, suggest a new branch name from `develop` that follows the "Branch Naming Conventions".
+3.  **User Approval**: Wait for the user to approve the branch name before creating it.
+
 ## Commit Planning and Best Practices
 
 To maintain a clear and traceable commit history, follow these guidelines for planning and structuring your commits:

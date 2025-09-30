@@ -4,14 +4,21 @@
 
 - Keep route files focused on API structure, validation, and middleware chaining.
 - Keep controllers focused on business logic and service orchestration.
-- Maintain clear separation for maintainability, testability, and scalability.
+- Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
 
 ## Entity-Driven File Organization
 
 - To ensure a scalable and organized backend, files in all layers (controllers, services, validations, etc.) should be organized by model/schema names.
 - This entity-driven approach groups related logic, making the codebase easier to navigate and maintain.
-- For example, if a feature relies on `SearchQuery` and `TopSearch` models, the corresponding files should be named `SearchQueryController.ts`, `TopSearchController.ts`, `SearchQueryService.ts`, `TopSearchService.ts`, etc.
-- When a file's functionality is not directly tied to a single model, use a descriptive name that reflects its purpose (e.g., `searchesRoutes.ts`).
+
+### Naming Conventions
+
+To ensure consistency, follow these naming conventions for files and folders:
+
+-   **Folders:** Use `lowercase` for all backend folders (e.g., `controllers`, `services`, `routes`).
+-   **Models:** Use `PascalCase` for model files (e.g., `SearchQuery.ts`), as they typically export classes.
+-   **Controllers, Services, and Validations:** Use `PascalCase` for the entity part of the filename (e.g., `controllers/SearchQuery.ts`, `services/TopSearch.ts`).
+-   **Routes:** Use `lowercase` for route files (e.g., `routes/searches.ts`).
 
 ## Route, Middleware, and Controller Chaining
 
