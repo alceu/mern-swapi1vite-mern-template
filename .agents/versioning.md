@@ -17,7 +17,7 @@ To maintain a clean and stable codebase, all development work must be done in a 
 Before starting any work that involves making changes to the codebase, you must:
 
 1.  **Analyze Local Changes**: Check the current state of the repository for any uncommitted changes.
-2.  **Propose a Branch**: Based on the task, suggest a new branch name from `develop` that follows the "Branch Naming Conventions".
+2.  **Propose a Branch**: Based on the analysis of current local changes, or the task if no local changes exist, suggest a new branch name from `develop` that follows the "Branch Naming Conventions".
 3.  **User Approval**: Wait for the user to approve the branch name before creating it.
 
 ## Commit Planning and Best Practices
