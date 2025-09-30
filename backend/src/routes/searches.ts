@@ -1,51 +1,39 @@
-import express, { Request, Response } from "express";
+import express from "express";
 
-import { registerSearchQuery } from "@api/services/SearchQueryService";
-import { getTopQueries } from "@api/services/TopSearchService";
+import {
+  postSearchQuery,
+  getTopSearches,
+} from "@api/controllers/searchesController";
 
 const router = express.Router();
 
-router.post("/", async (req: Request, res: Response) => {
-  const { query, type } = req.body;
+router.post(
+  "/",
+  (req, res, next) => {
+    const { query, type } = req.body;
+    if (!query) {
+      return res.status(400).json({ error: "Query is required" });
+    }
+    if (!type || (type !== "films" && type !== "people")) {
+      return res.status(400).json({ error: "Invalid type parameter." });
+    }
+    next();
+  },
+  postSearchQuery
+);
 
-  if (!query) {
-    return res.status(400).json({ error: "Query is required" });
-  }
-
-  if (!type || (type !== "films" && type !== "people")) {
-    return res
-      .status(400)
-      .json({ error: "Valid type (films or people) is required" });
-  }
-
-  try {
-    await registerSearchQuery(query, type);
-    res.status(200).json({ message: "Query registered successfully" });
-  } catch (error) {
-    console.error("Error registering search query:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-router.get("/top", async (req: Request, res: Response) => {
-  try {
-    const limit = req.query.limit
-      ? parseInt(req.query.limit as string, 10)
-      : undefined;
-    const type = req.query.type as "films" | "people" | undefined;
-
-    if (type && type !== "films" && type !== "people") {
+router.get(
+  "/top",
+  (req, res, next) => {
+    const type = req.query.type as "films" | "people";
+    if (type !== "films" && type !== "people") {
       return res.status(400).json({
-        error: "Invalid type parameter. Must be 'films' or 'people'.",
+        error: "Invalid type parameter.",
       });
     }
-
-    const topQueries = await getTopQueries(limit, type);
-    res.status(200).json(topQueries);
-  } catch (error) {
-    console.error("Error fetching top queries:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+    next();
+  },
+  getTopSearches
+);
 
 export default router;
