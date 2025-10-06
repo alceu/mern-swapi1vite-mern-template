@@ -1,11 +1,13 @@
 import express from "express";
 
-import searchQueryRouter from "./searchQuery";
-import topSearchRouter from "./topSearch";
+import searchQueriesRouter from "./searchQueries";
+import topSearchesRouter from "./topSearches";
+import topSearchEventsRouter from "./topSearchEvents";
 
 const router = express.Router();
 
-router.use("/search-queries", searchQueryRouter);
-router.use("/top-searches", topSearchRouter);
+router.use("/search-queries", searchQueriesRouter);
+router.use("/top-searches", topSearchesRouter);
+router.use("/top-searches/events", topSearchEventsRouter);
 
 export default router;
