@@ -1,5 +1,6 @@
 import mongoose, { AnyBulkWriteOperation } from "mongoose";
 
+import eventEmitter from "@api/events/eventEmitter";
 import SearchQuery, { ISearchQuery } from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 
@@ -14,7 +15,7 @@ async function _calculateTopQueries(
   limit: number = 5
 ): Promise<{ searchQuery: mongoose.Types.ObjectId; percentage: number }[]> {
   const topQueriesWithPercentage = await SearchQuery.aggregate([
-    { $match: { type: type } }, // Filter by type
+    { $match: { type } },
     {
       $group: {
         _id: null,
@@ -74,6 +75,8 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
   await TopSearch.bulkWrite(bulkOperations);
 
   console.log("Top queries calculated and persisted successfully.");
+
+  eventEmitter.emit("top-searches-updated");
 }
 
 /**
@@ -88,7 +91,7 @@ export async function getTopQueries(
 ): Promise<Array<ITopSearch & { searchQuery: ISearchQuery }>> {
   const matchStage: any = {};
   if (type) {
-    matchStage["searchQuery.type"] = type; // Filter by the type in the populated SearchQuery
+    matchStage["searchQuery.type"] = type;
   }
 
   const topQueries = await TopSearch.aggregate([
