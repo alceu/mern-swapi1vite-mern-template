@@ -11,6 +11,6 @@ export async function postSearchQuery(req: Request, res: Response) {
     res.sendStatus(204);
   } catch (error) {
     console.error("Error registering search query:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.sendStatus(500);
   }
 }

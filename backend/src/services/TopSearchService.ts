@@ -1,6 +1,6 @@
 import mongoose, { AnyBulkWriteOperation } from "mongoose";
 
-import eventEmitter from "@api/events/eventEmitter";
+import eventEmitter from "@api/utils/eventEmitter";
 import SearchQuery, { ISearchQuery } from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 
@@ -53,7 +53,21 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
   const topPeopleQueries = await _calculateTopQueries("people");
 
   const newTopQueries = [...topFilmQueries, ...topPeopleQueries];
+  console.log("newTopQueries:", newTopQueries);
   const newTopQueryIds = newTopQueries.map((q) => q.searchQuery);
+
+  // Fetch existing top searches to compare with new ones
+  const existingTopSearches = await TopSearch.find().populate<{
+    searchQuery: ISearchQuery;
+  }>("searchQuery");
+  const existingTopSearchesMap = new Map<
+    string,
+    ITopSearch & { searchQuery: ISearchQuery }
+  >();
+  existingTopSearches.forEach((ts) => {
+    existingTopSearchesMap.set(ts.searchQuery._id.toString(), ts);
+  });
+  console.log("existingTopSearchesMap:", existingTopSearchesMap);
 
   const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = newTopQueries.map(
     (q) => ({
@@ -72,13 +86,52 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
     },
   });
 
+  // Execute bulk write operations
   await TopSearch.bulkWrite(bulkOperations);
 
   console.log("Top queries calculated and persisted successfully.");
 
-  eventEmitter.emit("top-searches-updated");
-}
+  // Fetch the updated state of top searches after bulk write
+  const updatedTopSearches = await TopSearch.find().populate<{
+    searchQuery: ISearchQuery;
+  }>("searchQuery");
+  const updatedTopSearchesMap = new Map<
+    string,
+    ITopSearch & { searchQuery: ISearchQuery }
+  >();
+  updatedTopSearches.forEach((ts) => {
+    updatedTopSearchesMap.set(ts.searchQuery._id.toString(), ts);
+  });
+  console.log("updatedTopSearchesMap:", updatedTopSearchesMap);
 
+  const changedSearchQueryIds = new Set<string>();
+
+  // Identify inserted and updated documents
+  newTopQueries.forEach((newQuery) => {
+    const newQueryId = newQuery.searchQuery._id.toString(); // Use newQuery.searchQuery._id
+    const existingQuery = existingTopSearchesMap.get(newQueryId);
+
+    if (!existingQuery) {
+      // Inserted
+      changedSearchQueryIds.add(newQueryId);
+    } else if (existingQuery.percentage !== newQuery.percentage) {
+      // Updated percentage
+      changedSearchQueryIds.add(newQueryId);
+    }
+  });
+
+  // Identify deleted documents
+  existingTopSearches.forEach((existingQuery) => {
+    const existingQueryId = existingQuery.searchQuery._id.toString();
+    if (!updatedTopSearchesMap.has(existingQueryId)) {
+      // Deleted
+      changedSearchQueryIds.add(existingQueryId);
+    }
+  });
+  console.log("changedSearchQueryIds:", changedSearchQueryIds);
+
+  eventEmitter.emit("top-searches-updated", Array.from(changedSearchQueryIds));
+}
 /**
  * Gets the pre-calculated top search queries with their percentages, optionally filtered by type.
  * @param limit The maximum number of top queries to return. Defaults to 5.
@@ -88,7 +141,7 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
 export async function getTopQueries(
   limit: number = 5,
   type?: "films" | "people"
-): Promise<Array<ITopSearch & { searchQuery: ISearchQuery }>> {
+): Promise<mongoose.Types.ObjectId[]> {
   const matchStage: any = {};
   if (type) {
     matchStage["searchQuery.type"] = type;
@@ -109,17 +162,24 @@ export async function getTopQueries(
     { $limit: limit },
     {
       $project: {
-        _id: 0,
-        searchQuery: {
-          _id: "$searchQuery._id",
-          query: "$searchQuery.query",
-          type: "$searchQuery.type",
-        },
-        percentage: 1,
-        timestamp: 1,
+        _id: "$searchQuery._id",
       },
     },
   ]);
 
-  return topQueries as Array<ITopSearch & { searchQuery: ISearchQuery }>;
+  return topQueries.map((q) => q._id);
+}
+
+export async function getTopSearchById(
+  searchQueryId: string
+): Promise<(ITopSearch & { searchQuery: ISearchQuery }) | null> {
+  if (!mongoose.Types.ObjectId.isValid(searchQueryId)) {
+    return null;
+  }
+
+  const topSearch = await TopSearch.findOne({
+    searchQuery: new mongoose.Types.ObjectId(searchQueryId),
+  }).populate<{ searchQuery: ISearchQuery }>("searchQuery");
+
+  return topSearch;
 }

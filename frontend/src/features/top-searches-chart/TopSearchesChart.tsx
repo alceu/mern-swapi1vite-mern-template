@@ -8,13 +8,17 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useGetTopSearchesQuery } from "@pwa/api/topSearchesApi";
+import {
+  useGetComposedTopSearchesQuery, // Use the new composed query
+} from "@pwa/api/topSearchesApi";
+
+import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import styles from "./TopSearchesChart.module.css";
 
 interface TopSearchesChartProps {
+  type?: "films" | "people";
   title: string;
-  type: "films" | "people";
 }
 
 const COLORS = [
@@ -28,14 +32,22 @@ const COLORS = [
   "#d0ed57",
 ];
 
-const TopSearchesChart: React.FC<TopSearchesChartProps> = ({ title, type }) => {
-  const { data, error, isLoading } = useGetTopSearchesQuery({ type });
+const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
+  const { data: topSearches, isLoading: isLoadingComposed } =
+    useGetComposedTopSearchesQuery({ type });
 
-  if (isLoading) return <p>Loading {title} chart...</p>;
-  if (error) return <p>Error loading {title} chart data.</p>;
-  if (!data || data.length === 0) return <p>No {title} data available.</p>;
+  console.log("topSearches", topSearches);
+  console.log("isLoadingComposed", isLoadingComposed);
 
-  const chartData = data.map((item) => ({
+  if (isLoadingComposed) {
+    return <LoadingSpinner />;
+  }
+
+  if (!topSearches || !topSearches.length) {
+    return <p>No top searches to display.</p>;
+  }
+
+  const chartData = topSearches.map((item) => ({
     name: item.searchQuery.query,
     value: item.percentage,
   }));
@@ -54,7 +66,7 @@ const TopSearchesChart: React.FC<TopSearchesChartProps> = ({ title, type }) => {
             fill="#8884d8"
             dataKey="value"
           >
-            {chartData.map((entry, index) => (
+            {chartData.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}

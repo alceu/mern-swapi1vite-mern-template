@@ -1,19 +1,34 @@
 import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
 
-import { getTopQueries } from "@api/services/TopSearchService";
+import {
+  getTopQueries,
+  getTopSearchById,
+} from "@api/services/TopSearchService";
 
-export async function getTopSearches(req: Request, res: Response) {
-  try {
-    const limit = req.query.limit
-      ? parseInt(req.query.limit as string, 10)
-      : undefined;
-    const type = req.query.type as "films" | "people" | undefined;
-
-    const topQueries = await getTopQueries(limit, type);
-
-    res.status(200).json(topQueries);
-  } catch (error) {
-    console.error("Error fetching top queries:", error);
-    res.status(500).json({ error: "Internal server error" });
+export const getTopSearches = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { limit, type } = req.query;
+    const topSearches = await getTopQueries(
+      Number(limit) || undefined,
+      type as "films" | "people" | undefined
+    );
+    res.status(200).json(topSearches);
   }
-}
+);
+
+export const getTopSearch = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({ message: "Top search ID is required" });
+      return;
+    }
+    const topSearch = await getTopSearchById(id);
+    if (topSearch) {
+      res.status(200).json(topSearch);
+    } else {
+      res.sendStatus(404);
+    }
+  }
+);
