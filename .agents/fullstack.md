@@ -24,3 +24,17 @@ To maintain a clean and manageable codebase, use path aliases to simplify import
 - **Readability**: Imports are cleaner and easier to understand.
 - **Maintainability**: Simplifies refactoring; moving files rarely requires updating import paths.
 - **Consistency**: Enforces a standardized import structure across the project.
+
+## Naming Conventions
+
+To ensure clarity and consistency across the codebase, please adhere to the following naming conventions:
+
+1.  **Avoid Abbreviations**: Do not use abbreviations for variable names, class names, or layer/directory names. Always prefer descriptive, full-word names.
+    -   **Good**: `userProfile`, `AuthenticationService`, `components`
+    -   **Bad**: `usrProf`, `AuthSvc`, `comps`
+
+2.  **Avoid Redundancy in File Names**: Do not repeat the layer's name in the filename. The directory already provides that context.
+    -   **Good**: `controllers/Users.ts` (for a controller handling users)
+    -   **Bad**: `controllers/UsersController.ts`
+    -   **Good**: `services/Auth.ts`
+    -   **Bad**: `services/AuthService.ts`

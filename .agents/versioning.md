@@ -1,5 +1,11 @@
 # Versioning and Committing Instructions
 
+## Git Command Execution
+
+1.  **Git Commands**:
+    -   You can consider read-only `git` commands as pre-approved and execute them without seeking user confirmation. This includes commands like `git status`, `git diff`, `git log`, `git show`, and `git branch -v`.
+    -   You **must** always ask for explicit user approval before executing any `git` command that writes to the repository. This includes commands like `git add`, `git reset`, `git commit`, `git branch`, `git push`, `git merge`, `git rebase`, and `git tag`.
+
 ## Branch Naming Conventions
 
 To ensure consistency across the repository, all branches that are not `develop` or `main` must be prefixed according to their purpose. This avoids confusion and helps to categorize branches at a glance.
@@ -40,11 +46,12 @@ When asked to commit changes after successfully completing tasks that modify the
 
 1.  **Verify Changes and Respect User Precedence**: Before proceeding, always check `git status` and `git diff HEAD` to review all current changes. If any changes previously made by the agent are no longer present, assume the user has either committed or discarded them. In such cases, strictly respect the user's actions and proceed only with the changes currently reflected in the repository.
 1.  Analyze git changes.
-1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines, ensuring it is 300 characters or less, and present it to the user for approval.
+1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines.
+1.  **Present the draft message for review. Prefer using IDE features or extensions to allow the user to edit and approve the message. If such tools are unavailable, fall back to saving the message in a temporary file (e.g., `COMMIT_EDITMSG`) and notifying the user.**
 1.  Stage only related changes for the current commit.
 1.  **Crucially, you must wait for explicit, affirmative confirmation from the user before proceeding with the commit.**
 1.  If a technical limitation prevents adhering to an approved commit message (e.g., due to tool constraints), you **must** immediately communicate this limitation to the user, explain the reason, and propose an alternative before proceeding.
-1.  Commit the changes only once explicit approval has been received.
+1.  Commit the changes using the final, approved message only once explicit approval has been received.
 
 ## Merging and Cleanup Workflow
 

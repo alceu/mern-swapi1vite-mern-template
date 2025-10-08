@@ -5,6 +5,7 @@
 - Keep route files focused on API structure, validation, and middleware chaining.
 - Keep controllers focused on business logic and service orchestration.
 - Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
+- **Statelessness**: The backend must be strictly stateless. Each API request must be independent and self-contained, carrying all necessary data for its processing. The server should not store any client-specific session state between requests.
 
 ## Fullstack Cohesion
 
