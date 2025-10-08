@@ -7,6 +7,16 @@
 - Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
 - **Statelessness**: The backend must be strictly stateless. Each API request must be independent and self-contained, carrying all necessary data for its processing. The server should not store any client-specific session state between requests.
 
+## Data Normalization and Caching
+
+1.  **List Endpoints**:
+    -   To support a normalized frontend cache, list endpoints **must** return only an array of document IDs, along with any necessary aggregated or calculated data and labels. They **must not** return the full documents.
+    -   All list endpoints **must** support `index` and `limit` query parameters for pagination, with sensible default values.
+
+2.  **Event Endpoints for Cache Invalidation**:
+    -   For each data model, there **must** be a corresponding event endpoint (e.g., using Server-Sent Events) that emits the IDs of documents that have been created, updated, or deleted.
+    -   This allows the frontend to perform targeted cache invalidation.
+
 ## Fullstack Cohesion
 
 - When making changes to the backend that could affect the frontend (e.g., changing API routes, modifying response data structures), you must also check the frontend codebase to ensure continued cohesion.

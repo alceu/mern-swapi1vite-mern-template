@@ -10,6 +10,23 @@
 
     - For complex features with internal state that doesn't need to be directly reflected in the URL (e.g., form input values before submission, loading indicators), features store should be used as a global state. This allows feature components to manage and share their state efficiently.
 
+## Data Normalization and Caching
+
+1.  **Normalized Data Fetching**:
+
+    - For displaying lists of data, the frontend will first fetch a list of IDs from the corresponding list endpoint, along with any necessary aggregated or calculated data and labels.
+    - It will then retrieve the full object for each item by making individual requests to the `byId` endpoint.
+    - This approach ensures that data is normalized in the cache, preventing staleness and duplication.
+
+2.  **Cache Invalidation**:
+
+    - The frontend **must** listen to the event endpoints provided by the backend.
+    - When an event is received with a list of changed document IDs, the frontend will invalidate the cache for the corresponding `byId` queries and any list (`list`) queries that may be affected.
+
+3.  **Composed Queries**:
+    - For complex data fetching scenarios that require data from multiple sources, composed queries **must** be implemented.
+    - These queries rely on other, simpler queries for their data, and their caching is managed automatically as the underlying data changes.
+
 ## Component Architecture
 
 Adhere to the following separation of concerns for components:

@@ -25,6 +25,15 @@ To maintain a clean and manageable codebase, use path aliases to simplify import
 - **Maintainability**: Simplifies refactoring; moving files rarely requires updating import paths.
 - **Consistency**: Enforces a standardized import structure across the project.
 
+## Data Normalization and Caching Strategy
+
+To ensure an optimized, scalable, and maintainable application, all new features **must** adhere to the following full-stack data normalization and caching strategy.
+
+1.  **Backend**: List endpoints will only return document IDs and essential metadata. Full data for each document will be available via `byId` endpoints. Event endpoints will broadcast changes.
+2.  **Frontend**: The frontend will fetch lists of IDs and then retrieve individual documents. It will rely on composed queries and event-driven cache invalidation to keep data fresh.
+
+This unified strategy is detailed in the `backend.md` and `frontend.md` instruction files and is not optional.
+
 ## Naming Conventions
 
 To ensure clarity and consistency across the codebase, please adhere to the following naming conventions:
