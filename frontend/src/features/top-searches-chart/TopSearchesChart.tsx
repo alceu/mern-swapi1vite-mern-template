@@ -36,9 +36,6 @@ const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
   const { data: topSearches, isLoading: isLoadingComposed } =
     useGetComposedTopSearchesQuery({ type });
 
-  console.log("topSearches", topSearches);
-  console.log("isLoadingComposed", isLoadingComposed);
-
   if (isLoadingComposed) {
     return <LoadingSpinner />;
   }

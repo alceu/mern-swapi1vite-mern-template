@@ -44,32 +44,31 @@ async function _calculateTopQueries(
 }
 
 /**
- * Calculates the top search queries for both 'films' and 'people' and persists them into the TopSearch model.
+ * Calculates and persists top queries for a given type, returning changed TopSearch document IDs.
  */
-export async function calculateAndPersistTopQueries(): Promise<void> {
-  console.log("Calculating and persisting top queries...");
+export async function calculateAndPersistTopQueriesByType(
+  type: "films" | "people",
+  limit: number = 5
+): Promise<string[]> {
+  const topQueries = await _calculateTopQueries(type, limit);
+  const newTopQueryIds = topQueries.map((q) => q.searchQuery);
 
-  const topFilmQueries = await _calculateTopQueries("films");
-  const topPeopleQueries = await _calculateTopQueries("people");
-
-  const newTopQueries = [...topFilmQueries, ...topPeopleQueries];
-  console.log("newTopQueries:", newTopQueries);
-  const newTopQueryIds = newTopQueries.map((q) => q.searchQuery);
-
-  // Fetch existing top searches to compare with new ones
+  // Fetch existing top searches for this type
   const existingTopSearches = await TopSearch.find().populate<{
     searchQuery: ISearchQuery;
   }>("searchQuery");
+  const filteredExisting = existingTopSearches.filter(
+    (ts) => ts.searchQuery.type === type
+  );
   const existingTopSearchesMap = new Map<
     string,
     ITopSearch & { searchQuery: ISearchQuery }
   >();
-  existingTopSearches.forEach((ts) => {
+  filteredExisting.forEach((ts) => {
     existingTopSearchesMap.set(ts.searchQuery._id.toString(), ts);
   });
-  console.log("existingTopSearchesMap:", existingTopSearchesMap);
 
-  const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = newTopQueries.map(
+  const bulkOperations: AnyBulkWriteOperation<ITopSearch>[] = topQueries.map(
     (q) => ({
       updateOne: {
         filter: { searchQuery: q.searchQuery },
@@ -78,59 +77,71 @@ export async function calculateAndPersistTopQueries(): Promise<void> {
       },
     })
   );
-
-  // Add operation to remove old top queries that are no longer in the new list
   bulkOperations.push({
     deleteMany: {
-      filter: { searchQuery: { $nin: newTopQueryIds } },
+      filter: { searchQuery: { $nin: newTopQueryIds }, type },
     },
   });
 
-  // Execute bulk write operations
   await TopSearch.bulkWrite(bulkOperations);
 
-  console.log("Top queries calculated and persisted successfully.");
-
-  // Fetch the updated state of top searches after bulk write
+  // Fetch updated top searches for this type
   const updatedTopSearches = await TopSearch.find().populate<{
     searchQuery: ISearchQuery;
   }>("searchQuery");
+  const filteredUpdated = updatedTopSearches.filter(
+    (ts) => ts.searchQuery.type === type
+  );
   const updatedTopSearchesMap = new Map<
     string,
     ITopSearch & { searchQuery: ISearchQuery }
   >();
-  updatedTopSearches.forEach((ts) => {
+  filteredUpdated.forEach((ts) => {
     updatedTopSearchesMap.set(ts.searchQuery._id.toString(), ts);
   });
-  console.log("updatedTopSearchesMap:", updatedTopSearchesMap);
 
   const changedSearchQueryIds = new Set<string>();
-
-  // Identify inserted and updated documents
-  newTopQueries.forEach((newQuery) => {
-    const newQueryId = newQuery.searchQuery._id.toString(); // Use newQuery.searchQuery._id
+  // Inserted/updated
+  topQueries.forEach((newQuery) => {
+    const newQueryId =
+      newQuery.searchQuery._id?.toString?.() || newQuery.searchQuery.toString();
     const existingQuery = existingTopSearchesMap.get(newQueryId);
-
     if (!existingQuery) {
-      // Inserted
       changedSearchQueryIds.add(newQueryId);
     } else if (existingQuery.percentage !== newQuery.percentage) {
-      // Updated percentage
       changedSearchQueryIds.add(newQueryId);
     }
   });
-
-  // Identify deleted documents
-  existingTopSearches.forEach((existingQuery) => {
+  // Deleted
+  filteredExisting.forEach((existingQuery) => {
     const existingQueryId = existingQuery.searchQuery._id.toString();
     if (!updatedTopSearchesMap.has(existingQueryId)) {
-      // Deleted
       changedSearchQueryIds.add(existingQueryId);
     }
   });
-  console.log("changedSearchQueryIds:", changedSearchQueryIds);
+  return Array.from(changedSearchQueryIds);
+}
 
-  eventEmitter.emit("top-searches-updated", Array.from(changedSearchQueryIds));
+/**
+ * Calculates and persists top queries for both types, emits a single event with all changed TopSearch document IDs.
+ */
+export async function calculateAndPersistAllTopQueries(): Promise<void> {
+  console.debug("Calculating and persisting top queries for all types...");
+  const changedIds = new Set<string>();
+  const filmsChanged = await calculateAndPersistTopQueriesByType("films");
+  const peopleChanged = await calculateAndPersistTopQueriesByType("people");
+  filmsChanged.forEach((id) => changedIds.add(id));
+  peopleChanged.forEach((id) => changedIds.add(id));
+  if (changedIds.size > 0) {
+    eventEmitter.emit("top-searches-updated", Array.from(changedIds));
+    console.debug(
+      "Top queries for all types calculated, persisted, and event emitted."
+    );
+  } else {
+    console.debug(
+      "Top queries for all types calculated, persisted, no changes detected."
+    );
+  }
 }
 /**
  * Gets the pre-calculated top search queries with their percentages, optionally filtered by type.

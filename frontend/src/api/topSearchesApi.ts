@@ -33,7 +33,9 @@ export const topSearchesApi = createApi({
         if (type) params.append("type", type);
         return `?${params.toString()}`;
       },
-      providesTags: ["TopSearches"],
+      providesTags: (result, error, arg) => [
+        { type: "TopSearches", id: "LIST" },
+      ],
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
       async onCacheEntryAdded(
         arg,
@@ -48,7 +50,11 @@ export const topSearchesApi = createApi({
 
           const listener = (event: MessageEvent) => {
             const data = JSON.parse(event.data);
-            if (data.updatedIds && Array.isArray(data.updatedIds)) {
+            if (
+              data.updatedIds &&
+              Array.isArray(data.updatedIds) &&
+              data.updatedIds.length > 0
+            ) {
               // Invalidate cache for each updated ID
               data.updatedIds.forEach((id: string) => {
                 dispatch(
@@ -57,12 +63,20 @@ export const topSearchesApi = createApi({
                   ])
                 );
               });
-              // Invalidate the composed query as its underlying data has changed
-              dispatch(
-                topSearchesApi.util.invalidateTags([
-                  { type: "TopSearches", id: "LIST" }, // Invalidate the list of composed top searches
-                ])
-              );
+              // Only invalidate the list cache if at least one updatedId is present in the current cached list
+              updateCachedData((current: string[] | undefined) => {
+                if (
+                  current &&
+                  current.some((id) => data.updatedIds.includes(id))
+                ) {
+                  dispatch(
+                    topSearchesApi.util.invalidateTags([
+                      { type: "TopSearches", id: "LIST" },
+                    ])
+                  );
+                }
+                return current;
+              });
             }
           };
 
@@ -118,7 +132,7 @@ export const topSearchesApi = createApi({
         const composedData = individualResults.filter(
           (item): item is TopSearchItem => item !== null && item !== undefined
         );
-        
+
         return { data: composedData };
       },
       providesTags: (result, error, arg) =>
