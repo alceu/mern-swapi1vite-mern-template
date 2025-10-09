@@ -1,10 +1,10 @@
-# Frontend Agent Instructions
+# PWA Agent Instructions
 
 ## State Management
 
 1.  **URL-Driven State**:
 
-    - When developing the frontend, the URL, including the route path and query parameters, should be considered the primary source of truth for any persistent UI state. This ensures that the application state is bookmarkable and shareable, and allows the UI to return to its original state upon reload.
+    - When developing the pwa, the URL, including the route path and query parameters, should be considered the primary source of truth for any persistent UI state. This ensures that the application state is bookmarkable and shareable, and allows the UI to return to its original state upon reload.
 
 1.  **Active Features Store**:
 
@@ -14,14 +14,14 @@
 
 1.  **Normalized Data Fetching**:
 
-    - For displaying lists of data, the frontend will first fetch a list of IDs from the corresponding list endpoint, along with any necessary aggregated or calculated data and labels.
+    - For displaying lists of data, the pwa will first fetch a list of IDs from the corresponding list endpoint, along with any necessary aggregated or calculated data and labels.
     - It will then retrieve the full object for each item by making individual requests to the `byId` endpoint.
     - This approach ensures that data is normalized in the cache, preventing staleness and duplication.
 
 2.  **Cache Invalidation**:
 
-    - The frontend **must** listen to the event endpoints provided by the backend.
-    - When an event is received with a list of changed document IDs, the frontend will invalidate the cache for the corresponding `byId` queries and any list (`list`) queries that may be affected.
+    - The pwa **must** listen to the event endpoints provided by the api.
+    - When an event is received with a list of changed document IDs, the pwa will invalidate the cache for the corresponding `byId` queries and any list (`list`) queries that may be affected.
 
 3.  **Composed Queries**:
     - For complex data fetching scenarios that require data from multiple sources, composed queries **must** be implemented.
@@ -55,18 +55,18 @@ Adhere to the following separation of concerns for components:
 
 ## Routing
 
-To maintain a scalable and organized frontend, adhere to the following principles for routing and global styles:
+To maintain a scalable and organized pwa, adhere to the following principles for routing and global styles:
 
 1.  **Modular Route Definition**:
-    - **Principle**: The `frontend/src/pages/` directory structure should mirror the application's URL paths. This organization enhances discoverability, maintainability, and scalability by co-locating route-related files (components, loaders, actions) with their corresponding URL segments.
+- **Principle**: The `pwa/src/pages/` directory structure should mirror the application\'s URL paths.
     - **Implementation**:
-      1. The primary route configuration resides in `frontend/src/pages/index.ts`, exporting an array of route objects.
+      1. The primary route configuration resides in `pwa/src/pages/index.ts`, exporting an array of route objects.
       1. For each distinct URL segment and subsegment, create a dedicated subfolder (e.g., `pages/films/`). This subfolder must contain an `index.ts` file that exports an array of route objects representing the children routes for that segment.
       1. Each `index.ts` will then import these arrays of route objects and include them as the `children` property of their respective parent route definitions. This ensures a clear hierarchy and modularity that directly reflects the URL structure.
 
 ## Responsive Design
 
-To ensure a consistent and accessible user experience across a wide range of devices, from mobile phones to desktops, all frontend components must be built with responsiveness as a primary consideration.
+To ensure a consistent and accessible user experience across a wide range of devices, from mobile phones to desktops, all pwa components must be built with responsiveness as a primary consideration.
 
 1.  **Use Relative Units**:
 

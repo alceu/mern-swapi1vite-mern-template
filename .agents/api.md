@@ -1,35 +1,35 @@
-# Backend Agent Instructions
+# API Agent Instructions
 
 ## General Principles
 
 - Keep route files focused on API structure, validation, and middleware chaining.
 - Keep controllers focused on business logic and service orchestration.
 - Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
-- **Statelessness**: The backend must be strictly stateless. Each API request must be independent and self-contained, carrying all necessary data for its processing. The server should not store any client-specific session state between requests.
+- **Statelessness**: The api must be strictly stateless. Each API request must be independent and self-contained, carrying all necessary data for its processing. The server should not store any client-specific session state between requests.
 
 ## Data Normalization and Caching
 
 1.  **List Endpoints**:
-    -   To support a normalized frontend cache, list endpoints **must** return only an array of document IDs, along with any necessary aggregated or calculated data and labels. They **must not** return the full documents.
+    -   To support a normalized pwa cache, list endpoints **must** return only an array of document IDs, along with any necessary aggregated or calculated data and labels. They **must not** return the full documents.
     -   All list endpoints **must** support `index` and `limit` query parameters for pagination, with sensible default values.
 
 2.  **Event Endpoints for Cache Invalidation**:
     -   For each data model, there **must** be a corresponding event endpoint (e.g., using Server-Sent Events) that emits the IDs of documents that have been created, updated, or deleted.
-    -   This allows the frontend to perform targeted cache invalidation.
+    -   This allows the pwa to perform targeted cache invalidation.
 
 ## Fullstack Cohesion
 
-- When making changes to the backend that could affect the frontend (e.g., changing API routes, modifying response data structures), you must also check the frontend codebase to ensure continued cohesion.
-- Identify the affected frontend files and update them accordingly to maintain fullstack compatibility.
+- When making changes to the api that could affect the pwa (e.g., changing API routes, modifying response data structures), you must also check the pwa codebase to ensure continued cohesion.
+- Identify the affected pwa files and update them accordingly to maintain fullstack compatibility.
 
-- To ensure a scalable and organized backend, files in all layers (controllers, services, validations, etc.) should be organized by model/schema names.
+- To ensure a scalable and organized api, files in all layers (controllers, services, validations, etc.) should be organized by model/schema names.
 - This entity-driven approach groups related logic, making the codebase easier to navigate and maintain.
 
 ### Naming Conventions
 
 To ensure consistency, follow these naming conventions for files and folders:
 
--   **Folders:** Use `lowercase` for all backend folders (e.g., `controllers`, `services`, `routes`).
+-   **Folders:** Use `lowercase` for all api folders (e.g., `controllers`, `services`, `routes`).
 -   **Models:** Use `PascalCase` for model files (e.g., `SearchQuery.ts`), as they typically export classes.
 -   **Controllers, Services, and Validations:** Use `PascalCase` for the entity part of the filename (e.g., `controllers/SearchQuery.ts`, `services/TopSearch.ts`).
 -   **Routes:** Use `lowercase` for route files (e.g., `routes/searches.ts`).

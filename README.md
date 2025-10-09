@@ -1,6 +1,6 @@
 # MERN SWAPI Project
 
-This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application, leveraging a Vite-based build system for the frontend. Both the frontend and backend are developed using TypeScript, ensuring type safety and improved code quality.
+This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application, leveraging a Vite-based build system for the pwa. Both the pwa and api are developed using TypeScript, ensuring type safety and improved code quality.
 
 ## Getting Started
 
@@ -17,9 +17,6 @@ cd mern-swapi1vite-mern-template
 
     ```bash
     npm install
-    cd frontend
-    npm install
-    cd ..
     ```
 
 ### 3. Optional:
@@ -30,7 +27,7 @@ cd mern-swapi1vite-mern-template
 
 ### 4. Environment Setup
 
-To get started, you need to create `.env` files from the provided samples for both the backend and frontend. These files will hold your environment-specific variables.
+To get started, you need to create `.env` files from the provided samples for both the api and pwa. These files will hold your environment-specific variables.
 
 - **For Development:**
   ```bash
@@ -40,9 +37,9 @@ To get started, you need to create `.env` files from the provided samples for bo
   ```bash
   cp sample-production.env .env
   ```
-- **Finally, create a symbolic link for the frontend:**
+- **Finally, create symbolic links for each workspace:**
   ```bash
-  ln -s ../.env frontend/.env
+  ln -s ../.env pwa/.env && ln -s ../.env api/.env
   ```
 
 **Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
@@ -53,7 +50,7 @@ You can run this project in two ways: using Docker (recommended for a consistent
 
 #### A. Docker Development (Recommended)
 
-This is the easiest way to get started. With Docker, the entire application (frontend, backend, and database) runs in containers.
+This is the easiest way to get started. With Docker, the entire application (pwa, api, and database) runs in containers.
 
 **Prerequisites:**
 
@@ -63,13 +60,16 @@ This is the easiest way to get started. With Docker, the entire application (fro
 **Instructions:**
 
 - **For development:**
-  ```bash
-  docker compose up --build
-  ```
+
+```bash
+docker compose up --build
+```
+
 - **For production:**
-  ```bash
-  docker compose -f docker-compose.yml -f docker-compose.production.yml up --build
-  ```
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.production.yml up --build
+```
 
 The `-d` flag can be added to run in detached mode (in the background).
 
@@ -94,26 +94,26 @@ If you prefer to run the services directly on your machine, follow these steps.
 1.  **IMPORTANT:** In your `.env` file, update the `MONGO_URI` to replace `mongo:27017` with `localhost:27017`.
 
 1.  **Start the development servers:**
-    - **Backend (in one terminal):**
+    - **api (in one terminal):**
       ```bash
-      npm run dev:backend
+      npm run dev:api
       ```
-    - **Frontend (in another terminal):**
+    - **pwa (in another terminal):**
       ```bash
-      npm run dev:frontend
+      npm run dev:pwa
       ```
 
 **Accessing the Application (default, check your `.env`):**
 
 - **Docker and Local Development:**
 
-  - Backend: `http://localhost:5000`
-  - Frontend: `http://localhost:3000`
+  - api: `http://localhost:5000`
+  - pwa: `http://localhost:3000`
 
 - **Docker Production:**
 
-  - Backend: `http://localhost:5000`
-  - Frontend: `http://localhost`
+  - api: `http://localhost:5000`
+  - pwa: `http://localhost`
 
 ## Project Enhancements and Custom Development
 
@@ -123,26 +123,26 @@ This project extends the base `vite-mern-template` with several key enhancements
 
 1.  **[x] State Management with Redux Toolkit**:
 
-    - Utilized Redux Toolkit for centralized and predictable state management across the frontend application.
+    - Utilized Redux Toolkit for centralized and predictable state management across the pwa application.
 
 1.  **[x] Modular Component Architecture**:
 
-    - Organized frontend components into `pages`, `features`, and `components` directories, following a clear separation of concerns.
+    - Organized pwa components into `pages`, `features`, and `components` directories, following a clear separation of concerns.
     - `Pages` handle routing and layout, `Features` encapsulate business logic and data fetching, and `Components` are reusable UI elements.
 
 1.  **[x] Responsive Design**:
 
-    - All frontend components are designed with responsiveness in mind, utilizing `rem` units, Flexbox, Grid, and media queries to ensure optimal viewing across various devices.
+    - All pwa components are designed with responsiveness in mind, utilizing `rem` units, Flexbox, Grid, and media queries to ensure optimal viewing across various devices.
 
 1.  **[x] Code Quality and Development Experience**:
-    - Integrated Prettier and ESLint for consistent code formatting and linting across both frontend and backend.
+    - Integrated Prettier and ESLint for consistent code formatting and linting across both pwa and api.
 
 ## TODO
 
 - [ ] Add testing framework.
 - [ ] Implement monorepo structure for better project organization and sharing resources and strong type definitions.
 - [ ] Achieve code coverage above 90% across the codebase.
-- [ ] Improve data normalization and caching strategies between frontend and backend, using Frontend Top Search Queries Chart feature as example.
+- [ ] Improve data normalization and caching strategies between pwa and api, using pwa Top Search Queries Chart feature as example.
 
 ---
 
@@ -174,13 +174,13 @@ git clone https://github.com/apicgg/vite-mern-template.git
 
 ## Install dependencies (npm or yarn or pnpm)
 
-- Backend
+- api
 
 ```bash
 npm install
 ```
 
-- Frontend
+- pwa
 
 ```bash
 npm install
@@ -188,16 +188,16 @@ npm install
 
 ## Start the development server
 
-- Backend
+- api
 
 ```bash
-npm run dev:backend
+npm run dev:api
 ```
 
-- Frontend
+- pwa
 
 ```bash
-npm run dev:frontend
+npm run dev:pwa
 ```
 
 - Remove the .github folder and initialize your own git repository with `git init`.

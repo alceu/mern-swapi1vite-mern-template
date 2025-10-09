@@ -2,21 +2,21 @@
 
 ## Modular Architecture
 
-This project employs a modular architecture with distinct modules for the frontend and backend, using path aliases to enforce clear boundaries and simplify imports.
+This project employs a modular architecture with distinct modules for the pwa and api, using path aliases to enforce clear boundaries and simplify imports.
 
 ### Pragmatic Path Aliases
 
 To maintain a clean and manageable codebase, use path aliases to simplify import statements.
 
-#### Backend (`@api` alias)
+#### API (`@api` alias)
 
-- **Unified Alias**: The backend uses a single `@api` alias for all internal modules.
-- **Usage**: When importing backend modules, use the `@api` alias (e.g., `import { MyService } from '@api/services/MyService'`).
+- **Unified Alias**: The api uses a single `@api` alias for all internal modules.
+- **Usage**: When importing api modules, use the `@api` alias (e.g., `import { MyService } from \'@api/services/MyService\'`).
 
-#### Frontend (`@pwa` alias)
+#### PWA (`@pwa` alias)
 
-- **Unified Alias**: The frontend uses a single `@pwa` alias for all internal modules.
-- **Usage**: When importing frontend modules, use the `@pwa` alias (e.g., `import { MyComponent } from '@pwa/components/MyComponent'`).
+- **Unified Alias**: The pwa uses a single `@pwa` alias for all internal modules.
+- **Usage**: When importing pwa modules, use the `@pwa` alias (e.g., `import { MyComponent } from \'@pwa/components/MyComponent\'`).
 
 #### Benefits
 
@@ -29,10 +29,10 @@ To maintain a clean and manageable codebase, use path aliases to simplify import
 
 To ensure an optimized, scalable, and maintainable application, all new features **must** adhere to the following full-stack data normalization and caching strategy.
 
-1.  **Backend**: List endpoints will only return document IDs and essential metadata. Full data for each document will be available via `byId` endpoints. Event endpoints will broadcast changes.
-2.  **Frontend**: The frontend will fetch lists of IDs and then retrieve individual documents. It will rely on composed queries and event-driven cache invalidation to keep data fresh.
+1.  **API**: List endpoints will only return document IDs and essential metadata. Full data for each document will be available via `byId` endpoints. Event endpoints will broadcast changes.
+2.  **PWA**: The pwa will fetch lists of IDs and then retrieve individual documents. It will rely on composed queries and event-driven cache invalidation to keep data fresh.
 
-This unified strategy is detailed in the `backend.md` and `frontend.md` instruction files and is not optional.
+This unified strategy is detailed in the `api.md` and `pwa.md` instruction files and is not optional.
 
 ## Naming Conventions
 

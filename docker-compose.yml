@@ -18,13 +18,13 @@ services:
       retries: 5
       start_period: 5s
 
-  backend:
-    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-backend"
+  api:
+    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-api"
     build:
       context: .
-      dockerfile: backend/Dockerfile.development
+      dockerfile: api/Dockerfile.development
     ports:
-      - "${BACKEND_PORT}:5000"
+      - "${API_PORT}:5000"
     volumes:
       - .:/app
     env_file:
@@ -32,6 +32,7 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+    command: npm run dev --workspace=api
     healthcheck:
       test: ["CMD", "curl", "-f", "${VITE_SEARCHES_STATS_API_URL}/health"]
       interval: 3s
@@ -39,26 +40,27 @@ services:
       retries: 5
       start_period: 10s
 
-  frontend:
-    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-frontend"
+  pwa:
+    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-pwa"
     build:
       context: .
-      dockerfile: frontend/Dockerfile.development
+      dockerfile: pwa/Dockerfile.development
       args:
-        - VITE_FRONTEND_PORT=${VITE_FRONTEND_PORT}
+        - VITE_PWA_PORT=${VITE_PWA_PORT}
         - VITE_SEARCHES_STATS_API_URL=${VITE_SEARCHES_STATS_API_URL}
         - VITE_SWAPI_API_URL=${VITE_SWAPI_API_URL}
     ports:
-      - "${VITE_FRONTEND_PORT}:${FRONTEND_CONTAINER_PORT}"
+      - "${VITE_PWA_PORT}:${PWA_CONTAINER_PORT}"
     volumes:
-      - ./frontend:/app/frontend
+      - .:/app
     env_file:
-      - frontend/.env
+      - pwa/.env
     depends_on:
-      backend:
+      api:
         condition: service_healthy
+    command: sh -c "cd /app && npm run dev --workspace=pwa"
     healthcheck:
-      test: ["CMD", "curl", "-f", "${FRONTEND_URL}"]
+      test: ["CMD", "curl", "-f", "${PWA_URL}"]
       interval: 3s
       timeout: 10s 
       retries: 5

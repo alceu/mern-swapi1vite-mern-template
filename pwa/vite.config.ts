@@ -11,15 +11,13 @@ import path from "node:path";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
-  if (!env.VITE_FRONTEND_PORT) {
-    throw new Error(
-      "Missing required environment variable: VITE_FRONTEND_PORT"
-    );
+  if (!env.VITE_PWA_PORT) {
+    throw new Error("Missing required environment variable: VITE_PWA_PORT");
   }
 
   return {
     server: {
-      port: Number(env.VITE_FRONTEND_PORT),
+      port: Number(env.VITE_PWA_PORT),
       host: true,
     },
     plugins: [

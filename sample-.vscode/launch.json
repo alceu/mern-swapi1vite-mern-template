@@ -2,21 +2,21 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run dev:backend",
-      "name": "npm run dev:backend",
+      "command": "npm run dev:api",
+      "name": "npm run dev:api",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npm run dev:frontend",
-      "name": "npm run dev:frontend",
+      "command": "npm run dev:pwa",
+      "name": "npm run dev:pwa",
       "request": "launch",
       "type": "node-terminal"
     },
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Chrome localhost frontend",
+      "name": "Chrome localhost pwa",
       "url": "http://localhost:3000"
     }
   ]

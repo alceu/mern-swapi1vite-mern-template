@@ -1,20 +1,21 @@
-# Production Dockerfile for Frontend
+# Production Dockerfile for pwa
 
 # Stage 1: Build the application
 FROM node:20-alpine AS builder
 
-WORKDIR /app/frontend
+WORKDIR /app/pwa
 
-COPY frontend/package*.json ./
+COPY pwa/package*.json ./
+
 RUN npm install
 
-COPY frontend/ ./
+COPY pwa/ ./
 
-ARG VITE_FRONTEND_PORT
+ARG VITE_PWA_PORT
 ARG VITE_SEARCHES_STATS_API_URL
 ARG VITE_SWAPI_API_URL
 
-ENV VITE_FRONTEND_PORT=$VITE_FRONTEND_PORT
+ENV VITE_PWA_PORT=$VITE_PWA_PORT
 ENV VITE_SEARCHES_STATS_API_URL=$VITE_SEARCHES_STATS_API_URL
 ENV VITE_SWAPI_API_URL=$VITE_SWAPI_API_URL
 
@@ -24,7 +25,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built files from the builder stage to Nginx's public directory
-COPY --from=builder /app/frontend/build /usr/share/nginx/html
+COPY --from=builder /app/pwa/build /usr/share/nginx/html
 
 # Command to start Nginx
 CMD ["nginx", "-g", "daemon off;"]

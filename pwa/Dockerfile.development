@@ -1,19 +1,13 @@
 # Development Dockerfile for Frontend
 FROM node:20-alpine
 
-WORKDIR /app/frontend
-
-# Copy package.json and package-lock.json for dependency installation
-COPY frontend/package*.json ./
-
-# Install dependencies
-RUN npm install
+WORKDIR /app
 
 # Install curl for health checks
 RUN apk add --no-cache curl
 
 # Copy the rest of the application code
-COPY frontend/ ./
+COPY . .
 
 # Command to run the frontend in development mode
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

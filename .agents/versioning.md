@@ -34,7 +34,7 @@ To maintain a clear and traceable commit history, follow these guidelines for pl
 1.  **Contextual Grouping**: When a task involves multiple distinct areas (e.g., development, documentation, agent instructions), split the changes into separate commits, each focusing on one area.
 1.  **Conventional Commits**: Adhere strictly to the Conventional Commits specification for commit messages. This includes:
     - **Type**: (e.g., `feat`, `fix`, `docs`, `refactor`, `style`, `test`, `chore`, `build`, `ci`, `perf`).
-    - **Scope (optional)**: A noun describing the section of the codebase affected (e.g., `frontend`, `backend`, `auth`, `api`).
+    - **Scope (optional)**: A noun describing the section of the codebase affected (e.g., `pwa`, `api`, `auth`).
     - **Description**: A concise, imperative statement of the change.
     - **Body (optional)**: More detailed explanatory text.
     - **Footer (optional)**: For breaking changes or referencing issues.

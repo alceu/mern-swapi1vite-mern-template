@@ -1,14 +1,14 @@
 services:
-  backend:
+  api:
     build:
       context: .
-      dockerfile: backend/Dockerfile.production
-    image: mern-swapi1vite-mern-template-backend-prod:latest
+      dockerfile: api/Dockerfile.production
+    image: mern-swapi1vite-mern-template-api-prod:latest
     volumes: []
 
-  frontend:
+  pwa:
     build:
       context: .
-      dockerfile: frontend/Dockerfile.production
-    image: mern-swapi1vite-mern-template-frontend-prod:latest
+      dockerfile: pwa/Dockerfile.production
+    image: mern-swapi1vite-mern-template-pwa-prod:latest
     volumes: []

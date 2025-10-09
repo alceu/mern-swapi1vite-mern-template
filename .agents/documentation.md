@@ -32,15 +32,19 @@ To ensure consistency and readability across all agent documentation, adhere to 
       - Item B
       ```
 1.  **Code Blocks**: Use fenced code blocks with language identifiers for all code examples.
+
     - Example:
+
       ````markdown
       ```python
       print("Hello, World!")
       ```
       ````
+
       ```
 
       ```
+
 1.  **Bold and Italics**: Use `**bold**` for strong emphasis and `*italics*` for emphasis.
 1.  **Links**: Use descriptive inline links (e.g., `[Link Text](URL)`).
 1.  **Indentation**: Maintain consistent indentation for nested lists and code blocks. Typically, 2 or 4 spaces are used. Follow the existing project's convention.
@@ -52,5 +56,5 @@ Each agent instruction file should generally follow this structure:
 1.  **Agent Name/Title**: A clear and descriptive title for the agent.
 1.  **Purpose/Persona**: A brief description of the agent's role and objectives.
 1.  **Operational Rules**: Specific rules and mandates that the agent must follow.
-1.  **Specific Guidelines**: Any detailed instructions related to the agent's domain (e.g., Frontend, Versioning).
+1.  **Specific Guidelines**: Any detailed instructions related to the agent's domain (e.g., pwa, Versioning).
 1.  **Examples (Optional)**: Provide concrete examples of expected behavior or output.

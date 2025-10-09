@@ -8,7 +8,14 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   const handleOpenTopSearches = () => {
-    navigate({ pathname: location.pathname, search: location.search, hash: "#top-searches" }, { state: location.state });
+    navigate(
+      {
+        pathname: location.pathname,
+        search: location.search,
+        hash: "#top-searches",
+      },
+      { state: location.state }
+    );
   };
 
   return (
@@ -17,10 +24,7 @@ const Header: React.FC = () => {
       <Link to="/" className={styles.titleLink}>
         <h1 className={styles.title}>SWStarter</h1>
       </Link>
-      <button
-        className={styles.chartButton}
-        onClick={handleOpenTopSearches}
-      >
+      <button className={styles.chartButton} onClick={handleOpenTopSearches}>
         &#128202; {/* Bar chart icon */}
       </button>
     </header>
