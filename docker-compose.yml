@@ -1,7 +1,7 @@
 services:
   mongo:
     image: mongo
-    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-mongo"
+    container_name: "swapi-mern-example-${NODE_ENV}-mongo"
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
@@ -19,16 +19,16 @@ services:
       start_period: 5s
 
   api:
-    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-api"
+    container_name: "swapi-mern-example-${NODE_ENV}-api"
     build:
       context: .
-      dockerfile: api/Dockerfile.development
+      dockerfile: packages/api/Dockerfile.development
     ports:
       - "${API_PORT}:5000"
     volumes:
       - .:/app
     env_file:
-      - .env
+      - packages/api/.env
     depends_on:
       mongo:
         condition: service_healthy
@@ -41,10 +41,10 @@ services:
       start_period: 10s
 
   pwa:
-    container_name: "mern-swapi1vite-mern-template-${NODE_ENV}-pwa"
+    container_name: "swapi-mern-example-${NODE_ENV}-pwa"
     build:
       context: .
-      dockerfile: pwa/Dockerfile.development
+      dockerfile: packages/pwa/Dockerfile.development
       args:
         - VITE_PWA_PORT=${VITE_PWA_PORT}
         - VITE_SEARCHES_STATS_API_URL=${VITE_SEARCHES_STATS_API_URL}
@@ -54,7 +54,7 @@ services:
     volumes:
       - .:/app
     env_file:
-      - pwa/.env
+      - packages/pwa/.env
     depends_on:
       api:
         condition: service_healthy
@@ -68,4 +68,4 @@ services:
 
 volumes:
   mongo-data:
-    name: "mern-swapi1vite-mern-template-${NODE_ENV}-mongo-data"
+    name: "swapi-mern-example-${NODE_ENV}-mongo-data"

@@ -1,6 +1,6 @@
-# MERN SWAPI Project
+# SWAPI MERN Example
 
-This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application, leveraging a Vite-based build system for the pwa. Both the pwa and api are developed using TypeScript, ensuring type safety and improved code quality.
+This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application. It leverages a Vite-based build system for the PWA, and both the PWA and API are developed using TypeScript, ensuring type safety and improved code quality.
 
 ## Getting Started
 
@@ -10,22 +10,22 @@ Follow these instructions to set up and run the project.
 
 ```bash
 git clone <repository-url>
-cd mern-swapi1vite-mern-template
+cd swapi-mern-example
 ```
 
-### 2. **Install dependencies:**
+1. **Install dependencies:**
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
-### 3. Optional:
+1. Optional:
 
-    ```bash
-    cp -r sample-.vscode .vscode
-    ```
+   ```bash
+   cp -r sample-.vscode .vscode
+   ```
 
-### 4. Environment Setup
+1. Environment Setup
 
 To get started, you need to create `.env` files from the provided samples for both the api and pwa. These files will hold your environment-specific variables.
 
@@ -37,14 +37,14 @@ To get started, you need to create `.env` files from the provided samples for bo
   ```bash
   cp sample-production.env .env
   ```
-- **Finally, create symbolic links for each workspace:**
+- **Create symbolic links for each workspace:**
   ```bash
-  ln -s ../.env pwa/.env && ln -s ../.env api/.env
+  ln -s ../../.env packages/pwa/.env && ln -s ../../.env packages/api/.env
   ```
 
 **Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
 
-### 5. Running the Application
+1. Running the Application
 
 You can run this project in two ways: using Docker (recommended for a consistent environment) or running the services locally on your machine.
 
@@ -94,11 +94,15 @@ If you prefer to run the services directly on your machine, follow these steps.
 1.  **IMPORTANT:** In your `.env` file, update the `MONGO_URI` to replace `mongo:27017` with `localhost:27017`.
 
 1.  **Start the development servers:**
-    - **api (in one terminal):**
+
+    - **API (in one terminal):**
+
       ```bash
       npm run dev:api
       ```
-    - **pwa (in another terminal):**
+
+    - **PWA (in another terminal):**
+
       ```bash
       npm run dev:pwa
       ```
@@ -115,9 +119,9 @@ If you prefer to run the services directly on your machine, follow these steps.
   - api: `http://localhost:5000`
   - pwa: `http://localhost`
 
-## Project Enhancements and Custom Development
+## Project Development
 
-This project extends the base `vite-mern-template` with several key enhancements and custom development tailored for the MERN SWAPI application. These additions focus on implementing specific features, improving code organization, and adhering to modern development practices.
+This project implements specific features and code organization, adhering to modern development practices.
 
 ### Key Solutions and Features Implemented:
 
@@ -136,83 +140,11 @@ This project extends the base `vite-mern-template` with several key enhancements
 
 1.  **[x] Code Quality and Development Experience**:
     - Integrated Prettier and ESLint for consistent code formatting and linting across both pwa and api.
+1.  **[x] Data normalization and caching strategies between PWA and API**:
+    - Implemented using the PWA Top Search Queries Chart feature as an example.
 
 ## TODO
 
 - [ ] Add testing framework.
-- [ ] Implement monorepo structure for better project organization and sharing resources and strong type definitions.
+- [ ] Implement monorepo structure for better project organization, sharing resources, and strong type definitions.
 - [ ] Achieve code coverage above 90% across the codebase.
-- [ ] Improve data normalization and caching strategies between pwa and api, using pwa Top Search Queries Chart feature as example.
-
----
-
----
-
-# **(Original template readme content bellow)**
-
-# vite-mern-template
-
-## Requirements
-
-- [Node.js](https://nodejs.org/en/) 18+
-
-## Demo
-
-![vite-mern-template-gh-demo](https://user-images.githubusercontent.com/78271602/234833309-fe8df564-2895-4727-be1e-c807fe142333.gif)
-
-## Installation
-
-```bash
-npx degit apicgg/vite-mern-template my-app
-```
-
-or
-
-```bash
-git clone https://github.com/apicgg/vite-mern-template.git
-```
-
-## Install dependencies (npm or yarn or pnpm)
-
-- api
-
-```bash
-npm install
-```
-
-- pwa
-
-```bash
-npm install
-```
-
-## Start the development server
-
-- api
-
-```bash
-npm run dev:api
-```
-
-- pwa
-
-```bash
-npm run dev:pwa
-```
-
-- Remove the .github folder and initialize your own git repository with `git init`.
-
-## TODO
-
-- [x] Include eslint and prettier.
-- [x] Add testing framework.
-
-## License
-
-MIT License.
-
-Please review the [License](https://github.com/apicgg/vite-mern-template/blob/main/LICENSE).
-
-## Contributors ✨
-
-Contributions of any kind welcome! Kindly have a look into [Contributing Guidelines](CONTRIBUTING.md)
