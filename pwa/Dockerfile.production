@@ -3,23 +3,19 @@
 # Stage 1: Build the application
 FROM node:20-alpine AS builder
 
-WORKDIR /app/pwa
+WORKDIR /app
 
-COPY pwa/package*.json ./
+# Copy root package.json and package-lock.json
+COPY package*.json ./
 
+# Copy the entire project
+COPY . .
+
+# Install dependencies for all workspaces
 RUN npm install
 
-COPY pwa/ ./
-
-ARG VITE_PWA_PORT
-ARG VITE_SEARCHES_STATS_API_URL
-ARG VITE_SWAPI_API_URL
-
-ENV VITE_PWA_PORT=$VITE_PWA_PORT
-ENV VITE_SEARCHES_STATS_API_URL=$VITE_SEARCHES_STATS_API_URL
-ENV VITE_SWAPI_API_URL=$VITE_SWAPI_API_URL
-
-RUN npm run build
+# Build the pwa workspace
+RUN npm run build:pwa
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
