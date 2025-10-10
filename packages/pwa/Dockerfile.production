@@ -1,0 +1,27 @@
+# Production Dockerfile for pwa
+
+# Stage 1: Build the application
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy root package.json and package-lock.json
+COPY package*.json ./
+
+# Copy the entire project
+COPY . .
+
+# Install dependencies for all workspaces
+RUN npm install
+
+# Build the pwa workspace
+RUN npm run build --workspace=pwa
+
+# Stage 2: Serve the application with Nginx
+FROM nginx:alpine
+
+# Copy the built files from the builder stage to Nginx's public directory
+COPY --from=builder /app/packages/pwa/build /usr/share/nginx/html
+
+# Command to start Nginx
+CMD ["nginx", "-g", "daemon off;"]

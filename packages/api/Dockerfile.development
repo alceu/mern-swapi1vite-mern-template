@@ -1,0 +1,13 @@
+# Development Dockerfile for api
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Copy the rest of the application code
+COPY . .
+
+# Command to run the api in development mode
+CMD ["npm", "run", "dev"]
