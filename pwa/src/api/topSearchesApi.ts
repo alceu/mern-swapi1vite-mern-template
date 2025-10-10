@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface TopSearchItem {
+export interface TopSearchItem {
   searchQuery: {
     _id: string;
     query: string;
@@ -99,7 +99,12 @@ export const topSearchesApi = createApi({
       TopSearchItem[],
       { limit?: number; type?: "films" | "people" }
     >({
-      async queryFn(arg, _queryApi, _extraOptions, baseQuery) {
+      async queryFn(
+        arg,
+        _queryApi,
+        _extraOptions,
+        baseQuery
+      ): Promise<{ data: TopSearchItem[] } | { error: any }> {
         // First, get the list of top search IDs, leveraging caching
         const topSearchIdsResult = await _queryApi.dispatch(
           topSearchesApi.endpoints.getTopSearches.initiate(arg)

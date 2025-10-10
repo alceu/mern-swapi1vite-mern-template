@@ -10,6 +10,7 @@ import {
 
 import {
   useGetComposedTopSearchesQuery, // Use the new composed query
+  TopSearchItem,
 } from "@pwa/api/topSearchesApi";
 
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
@@ -44,7 +45,7 @@ const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
     return <p>No top searches to display.</p>;
   }
 
-  const chartData = topSearches.map((item) => ({
+  const chartData = topSearches.map((item: TopSearchItem) => ({
     name: item.searchQuery.query,
     value: item.percentage,
   }));
@@ -63,7 +64,7 @@ const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
             fill="#8884d8"
             dataKey="value"
           >
-            {chartData.map((_entry, index) => (
+            {chartData.map((_entry: { name: string; value: number }, index: number) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
