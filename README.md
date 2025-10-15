@@ -123,6 +123,12 @@ If you prefer to run the services directly on your machine, follow these steps.
 
 This project implements specific features and code organization, adhering to modern development practices.
 
+## Agent instructions (applied by default)
+
+This repository includes a set of AI agent instruction files in the `.agents/` directory. The files listed (notably `main.md` and `developer_assistant.md`) are considered the authoritative, foundational instructions and are applied by default for all AI agent interactions related to this project. Human developers may review and edit the `.agents/` files; agents must preserve and respect any user-made changes.
+
+See `.agents/` for details.
+
 ### Key Solutions and Features Implemented:
 
 1.  **[x] State Management with Redux Toolkit**:
