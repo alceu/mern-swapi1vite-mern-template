@@ -8,3 +8,4 @@ dist
 misc
 .vscode/
 notes_todo.txt
+packages/domain/tsconfig.tsbuildinfo

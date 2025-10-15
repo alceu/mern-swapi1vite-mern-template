@@ -8,10 +8,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import {
-  useGetComposedTopSearchesQuery, // Use the new composed query
-  TopSearchItem,
-} from "@pwa/api/topSearchesApi";
+import { useGetComposedTopSearchesQuery } from "@pwa/api/topSearchesApi";
+import type { TopSearchItem } from "@domain";
 
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
@@ -64,12 +62,14 @@ const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
             fill="#8884d8"
             dataKey="value"
           >
-            {chartData.map((_entry: { name: string; value: number }, index: number) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
+            {chartData.map(
+              (_entry: { name: string; value: number }, index: number) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              )
+            )}
           </Pie>
           <Tooltip
             formatter={(value: number) => `${(value * 100).toFixed(2)}%`}

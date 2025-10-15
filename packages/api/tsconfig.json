@@ -21,6 +21,18 @@
     "paths": {
       "@api/*": [
         "src/*"
+      ],
+      "domain": [
+        "../domain/src"
+      ],
+      "domain/*": [
+        "../domain/src/*"
+      ],
+      "@domain/*": [
+        "../domain/src/*"
+      ],
+      "@domain": [
+        "../domain/src"
       ]
     }
   },

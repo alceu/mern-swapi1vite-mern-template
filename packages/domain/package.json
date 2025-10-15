@@ -1,0 +1,13 @@
+{
+  "name": "domain",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "private": true,
+  "files": [
+    "src"
+  ]
+}

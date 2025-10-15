@@ -1,14 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface TopSearchItem {
-  searchQuery: {
-    _id: string;
-    query: string;
-    type: "films" | "people";
-  };
-  percentage: number;
-  timestamp: string;
-}
+import type {
+  QueryReturnValue,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query";
+import type { TopSearchItem } from "@domain";
 
 if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
@@ -33,9 +29,7 @@ export const topSearchesApi = createApi({
         if (type) params.append("type", type);
         return `?${params.toString()}`;
       },
-      providesTags: (result, error, arg) => [
-        { type: "TopSearches", id: "LIST" },
-      ],
+      providesTags: () => [{ type: "TopSearches", id: "LIST" }],
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
       async onCacheEntryAdded(
         arg,
@@ -92,7 +86,7 @@ export const topSearchesApi = createApi({
     }),
     getTopSearchById: builder.query<TopSearchItem, string>({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: "TopSearches", id }],
+      providesTags: (_result, _error, id) => [{ type: "TopSearches", id }],
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
     }),
     getComposedTopSearches: builder.query<
@@ -101,17 +95,24 @@ export const topSearchesApi = createApi({
     >({
       async queryFn(
         arg,
-        _queryApi,
-        _extraOptions,
-        baseQuery
-      ): Promise<{ data: TopSearchItem[] } | { error: any }> {
+        { dispatch }
+      ): Promise<
+        QueryReturnValue<
+          TopSearchItem[],
+          FetchBaseQueryError,
+          FetchBaseQueryMeta
+        >
+      > {
         // First, get the list of top search IDs, leveraging caching
-        const topSearchIdsResult = await _queryApi.dispatch(
+        const topSearchIdsResult = await dispatch(
           topSearchesApi.endpoints.getTopSearches.initiate(arg)
         );
 
         if (topSearchIdsResult.error) {
-          return { error: topSearchIdsResult.error };
+          return {
+            error: topSearchIdsResult.error as FetchBaseQueryError,
+            meta: undefined,
+          };
         }
 
         const topSearchIds = topSearchIdsResult.data as string[];
@@ -123,24 +124,25 @@ export const topSearchesApi = createApi({
         // Then, fetch each individual top search item by ID concurrently, leveraging caching
         const individualResults = await Promise.all(
           topSearchIds.map(async (id) => {
-            const { data, error } = await _queryApi.dispatch(
+            const res = await dispatch(
               topSearchesApi.endpoints.getTopSearchById.initiate(id)
             );
-            if (error) {
-              throw error; // Propagate error
+            if (res.error) {
+              throw res.error;
             }
-            return data;
+            return res.data as TopSearchItem | null | undefined;
           })
         );
 
         // Filter out any null or undefined results from individual fetches
         const composedData = individualResults.filter(
-          (item): item is TopSearchItem => item !== null && item !== undefined
+          (item: TopSearchItem | null | undefined): item is TopSearchItem =>
+            item !== null && item !== undefined
         );
 
-        return { data: composedData };
+        return { data: composedData, meta: undefined };
       },
-      providesTags: (result, error, arg) =>
+      providesTags: (result) =>
         result
           ? [
               ...result.map(({ searchQuery }) => ({
@@ -160,3 +162,5 @@ export const {
   useGetTopSearchByIdQuery,
   useGetComposedTopSearchesQuery,
 } = topSearchesApi;
+
+export type { TopSearchItem };

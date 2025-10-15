@@ -8,13 +8,20 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "build", "dist"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist"
+  ],
   "references": [
     {
       "path": "./packages/api"
     },
     {
       "path": "./packages/pwa"
+    },
+    {
+      "path": "./packages/domain"
     }
   ]
 }

@@ -3,6 +3,7 @@ import mongoose, { AnyBulkWriteOperation } from "mongoose";
 import eventEmitter from "@api/utils/eventEmitter";
 import SearchQuery, { ISearchQuery } from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
+import type { TopSearchItem } from "@domain";
 
 /**
  * Calculates the top search queries from the SearchQuery model for a given type.
@@ -152,8 +153,8 @@ export async function calculateAndPersistAllTopQueries(): Promise<void> {
 export async function getTopQueries(
   limit: number = 5,
   type?: "films" | "people"
-): Promise<mongoose.Types.ObjectId[]> {
-  const matchStage: any = {};
+): Promise<string[]> {
+  const matchStage: Record<string, unknown> = {};
   if (type) {
     matchStage["searchQuery.type"] = type;
   }
@@ -178,12 +179,12 @@ export async function getTopQueries(
     },
   ]);
 
-  return topQueries.map((q) => q._id);
+  return topQueries.map((q) => q._id.toString());
 }
 
 export async function getTopSearchById(
   searchQueryId: string
-): Promise<(ITopSearch & { searchQuery: ISearchQuery }) | null> {
+): Promise<TopSearchItem | null> {
   if (!mongoose.Types.ObjectId.isValid(searchQueryId)) {
     return null;
   }
@@ -192,5 +193,18 @@ export async function getTopSearchById(
     searchQuery: new mongoose.Types.ObjectId(searchQueryId),
   }).populate<{ searchQuery: ISearchQuery }>("searchQuery");
 
-  return topSearch;
+  if (!topSearch) return null;
+
+  const sq = topSearch.searchQuery as ISearchQuery;
+  const dto: TopSearchItem = {
+    searchQuery: {
+      _id: sq._id.toString(),
+      query: sq.query,
+      type: sq.type,
+    },
+    percentage: topSearch.percentage,
+    timestamp: (topSearch.updatedAt || topSearch.createdAt).toISOString(),
+  };
+
+  return dto;
 }

@@ -27,6 +27,18 @@
       "@pwa/*": [
         "src/*"
       ],
+      "domain": [
+        "../domain/src"
+      ],
+      "domain/*": [
+        "../domain/src/*"
+      ],
+      "@domain/*": [
+        "../domain/src/*"
+      ],
+      "@domain": [
+        "../domain/src"
+      ]
     }
   },
   "include": [
