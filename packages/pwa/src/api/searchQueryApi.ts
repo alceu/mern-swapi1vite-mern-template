@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { SearchType } from "@swapi-mern/domain";
 
 if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
@@ -14,8 +15,8 @@ export const searchQueryApi = createApi({
   endpoints: (builder) => ({
     postSearchQuery: builder.mutation<
       void,
-      { query: string; type: "films" | "people" }
-    >({
+      { query: string; type: SearchType }
+    >({ 
       query: (body) => ({
         url: "/",
         method: "POST",
@@ -24,5 +25,4 @@ export const searchQueryApi = createApi({
     }),
   }),
 });
-
 export const { usePostSearchQueryMutation } = searchQueryApi;

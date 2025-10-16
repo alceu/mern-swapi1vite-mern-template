@@ -1,45 +1,28 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "lib": [
-      "es2022",
-      "dom"
-    ],
-    "module": "NodeNext",
-    "moduleDetection": "force",
-    "moduleResolution": "NodeNext",
-    "noUncheckedIndexedAccess": true,
     "outDir": "./build",
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "target": "es2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
       "@api/*": [
         "src/*"
       ],
-      "domain": [
-        "../domain/src"
-      ],
-      "domain/*": [
-        "../domain/src/*"
-      ],
-      "@domain/*": [
-        "../domain/src/*"
-      ],
-      "@domain": [
-        "../domain/src"
-      ]
+      "@swapi-mern/domain": ["../../packages/domain/src"]
     }
   },
-  "exclude": [
-    "node_modules"
-  ],
   "include": [
-    "src/**/*.ts"
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ],
+  "references": [
+    {
+      "path": "../domain"
+    }
   ]
 }

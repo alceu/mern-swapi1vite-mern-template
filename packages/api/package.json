@@ -8,6 +8,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@swapi-mern/domain": "workspace:*",
     "@types/node-cron": "^3.0.11",
     "argon2": "^0.40.1",
     "cors": "^2.8.5",

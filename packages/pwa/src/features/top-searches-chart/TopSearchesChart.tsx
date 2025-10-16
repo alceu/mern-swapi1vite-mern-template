@@ -8,8 +8,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useGetComposedTopSearchesQuery } from "@pwa/api/topSearchesApi";
-import type { TopSearchItem } from "@domain";
+import {
+  useGetComposedTopSearchesQuery,
+  TopSearchItem,
+} from "@pwa/api/topSearchesApi";
 
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 

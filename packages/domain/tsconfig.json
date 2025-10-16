@@ -1,17 +1,12 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "declaration": true,
-        "declarationMap": true,
-        "outDir": "./build",
-        "rootDir": "src",
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "target": "ESNext",
-        "skipLibCheck": true,
-        "strict": true
-    },
-    "include": [
-        "src/**/*.ts"
-    ]
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "composite": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,9 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { SearchType } from "@swapi-mern/domain";
 
 export interface ISearchQuery extends Document {
-  _id: mongoose.Types.ObjectId;
   query: string;
-  type: "films" | "people";
+  type: SearchType;
   count: number;
   createdAt: Date;
   updatedAt: Date;

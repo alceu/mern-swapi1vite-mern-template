@@ -1,53 +1,29 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
+    "jsx": "react-jsx",
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "types": [
-      "vitest/globals"
-    ],
     "baseUrl": ".",
     "paths": {
       "@pwa/*": [
         "src/*"
       ],
-      "domain": [
-        "../domain/src"
-      ],
-      "domain/*": [
-        "../domain/src/*"
-      ],
-      "@domain/*": [
-        "../domain/src/*"
-      ],
-      "@domain": [
-        "../domain/src"
-      ]
-    }
+      "@swapi-mern/domain": ["../../packages/domain/src"]
+    },
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
+    "src"
   ],
   "references": [
     {
       "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../../packages/domain"
     }
   ]
 }

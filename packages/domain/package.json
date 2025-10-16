@@ -1,13 +1,14 @@
 {
-  "name": "domain",
+  "name": "@swapi-mern/domain",
   "version": "0.0.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "scripts": {
-    "build": "tsc -b"
-  },
   "private": true,
-  "files": [
-    "src"
-  ]
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
 }

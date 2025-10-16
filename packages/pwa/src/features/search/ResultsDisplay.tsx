@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { IPersonDto, IFilmDto, SearchType } from "@swapi-mern/domain";
 
 import { useGetPeopleQuery, useGetFilmsQuery } from "@pwa/api/swapiApi";
 import { usePostSearchQueryMutation } from "@pwa/api/searchQueryApi";
@@ -14,7 +15,7 @@ import ResultItem from "./ResultItem";
 import styles from "./ResultsDisplay.module.css";
 
 interface ResultsDisplayProps {
-  onResultClick: (id: string, type: "people" | "films") => void;
+  onResultClick: (id: string, type: SearchType) => void;
 }
 
 const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
@@ -65,7 +66,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
   } else if (isLoading) {
     content = <div className={styles.resultsPlaceholder}>Searching...</div>;
   } else {
-    const results = displayData?.result || [];
+    const results = (displayData?.result || []) as (IPersonDto | IFilmDto)[];
 
     if (!results.length) {
       content = (
@@ -78,11 +79,11 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
     } else {
       content = (
         <>
-          {results.map((result: any) => (
+          {results.map((result) => (
             <ResultItem
               key={result.uid}
               id={result.uid}
-              name={result.properties.name || result.properties.title}
+              name={type === 'people' ? (result as IPersonDto).properties.name : (result as IFilmDto).properties.title}
               onResultClick={onResultClick}
             />
           ))}
