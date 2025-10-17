@@ -13,6 +13,7 @@
     "build:api": "npm run build --workspace=api",
     "build:pwa": "npm run build --workspace=pwa",
     "check-types": "npm run check-types --workspaces",
+    "lint": "npm run lint --workspaces",
     "prettier": "prettier --write ."
   },
   "devDependencies": {
