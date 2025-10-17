@@ -4,5 +4,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "eslint.workingDirectories": [
+    "./packages/api",
+    "./packages/pwa",
+    "./packages/domain"
+  ]
 }

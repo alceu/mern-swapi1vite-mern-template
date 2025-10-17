@@ -24,12 +24,12 @@ export const topSearchesApi = createApi({
         if (type) params.append("type", type);
         return `?${params.toString()}`;
       },
-      providesTags: (result, error, arg) => [
+      providesTags: (_result, _error, _arg) => [
         { type: "TopSearches", id: "LIST" },
       ],
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
       async onCacheEntryAdded(
-        arg,
+        _arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved, dispatch }
       ) {
         const eventSource = new EventSource(
@@ -83,7 +83,7 @@ export const topSearchesApi = createApi({
     }),
     getTopSearchById: builder.query<ITopSearchDto, string>({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: "TopSearches", id }],
+      providesTags: (result, _error, id) => [{ type: "TopSearches", id }],
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
     }),
     getComposedTopSearches: builder.query<
@@ -94,7 +94,7 @@ export const topSearchesApi = createApi({
         arg,
         _queryApi,
         _extraOptions,
-        baseQuery
+        _baseQuery
       ): Promise<{ data: ITopSearchDto[] } | { error: any }> {
         // First, get the list of top search IDs, leveraging caching
         const topSearchIdsResult = await _queryApi.dispatch(
@@ -131,7 +131,7 @@ export const topSearchesApi = createApi({
 
         return { data: composedData };
       },
-      providesTags: (result, error, arg) =>
+      providesTags: (result, _error, _arg) =>
         result
           ? [
               ...result.map(({ searchQuery }) => ({

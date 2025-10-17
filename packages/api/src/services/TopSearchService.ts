@@ -1,7 +1,7 @@
 import mongoose, { AnyBulkWriteOperation } from "mongoose";
 
 import eventEmitter from "@api/utils/eventEmitter";
-import SearchQuery, { ISearchQuery } from "@api/models/SearchQuery";
+import SearchQuery from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 import { ITopSearchDto, ISearchQueryDto, SearchType } from "@swapi-mern/domain";
 
@@ -57,7 +57,7 @@ export async function calculateAndPersistTopQueriesByType(
   // Fetch existing top searches for this type
   const existingTopSearches = await TopSearch.find({
     searchQuery: { $in: newTopQueryIds },
-  }).populate<{ searchQuery: any }>("searchQuery");
+  }).populate<{ searchQuery: { _id: mongoose.Types.ObjectId } }>("searchQuery");
 
   const existingTopSearchesMap = new Map<string, ITopSearch>();
   existingTopSearches.forEach((ts) => {
@@ -84,7 +84,7 @@ export async function calculateAndPersistTopQueriesByType(
   // Fetch updated top searches for this type
   const updatedTopSearches = await TopSearch.find({
     searchQuery: { $in: newTopQueryIds },
-  }).populate<{ searchQuery: any }>("searchQuery");
+  }).populate<{ searchQuery: { _id: mongoose.Types.ObjectId } }>("searchQuery");
 
   const updatedTopSearchesMap = new Map<string, ITopSearch>();
   updatedTopSearches.forEach((ts) => {
@@ -104,7 +104,7 @@ export async function calculateAndPersistTopQueriesByType(
   });
   // Deleted
   existingTopSearches.forEach((existingQuery) => {
-    const existingQueryId = (existingQuery.searchQuery as any)._id.toString();
+    const existingQueryId = (existingQuery.searchQuery as { _id: mongoose.Types.ObjectId })._id.toString();
     if (!updatedTopSearchesMap.has(existingQueryId)) {
       changedSearchQueryIds.add(existingQueryId);
     }
@@ -144,7 +144,7 @@ export async function getTopQueries(
   limit: number = 5,
   type?: SearchType
 ): Promise<string[]> {
-  const matchStage: any = {};
+  const matchStage: Record<string, unknown> = {};
   if (type) {
     matchStage["searchQuery.type"] = type;
   }
@@ -181,7 +181,7 @@ export async function getTopSearchById(
 
   const topSearch = await TopSearch.findOne({
     searchQuery: new mongoose.Types.ObjectId(searchQueryId),
-  }).populate<{ searchQuery: any }>("searchQuery");
+  }).populate<{ searchQuery: ISearchQueryDto }>("searchQuery");
 
   if (!topSearch) {
     return null;
@@ -197,7 +197,7 @@ export async function getTopSearchById(
   };
 
   const topSearchDto: ITopSearchDto = {
-    _id: (topSearch as any)._id.toString(),
+    _id: (topSearch as ITopSearch & { _id: mongoose.Types.ObjectId })._id.toString(),
     searchQuery: searchQueryDto,
     percentage: topSearch.percentage,
     createdAt: topSearch.createdAt.toISOString(),
