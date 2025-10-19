@@ -6,14 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:pwa\"",
-    "dev:api": "npm run dev --workspace=api",
-    "dev:pwa": "npm run dev --workspace=pwa",
-    "build": "npm run build --workspaces",
-    "build:api": "npm run build --workspace=api",
-    "build:pwa": "npm run build --workspace=pwa",
-    "check-types": "npm run check-types --workspaces",
-    "lint": "npm run lint --workspaces",
+    "dev": "concurrently \"pnpm dev:api\" \"pnpm dev:pwa\"",
+    "dev:api": "pnpm --filter api dev",
+    "dev:pwa": "pnpm --filter pwa dev",
+    "build": "pnpm -r build",
+    "build:api": "pnpm --filter api build",
+    "build:pwa": "pnpm --filter pwa build",
+    "check-types": "pnpm -r check-types",
+    "lint": "pnpm -r lint",
     "prettier": "prettier --write ."
   },
   "devDependencies": {

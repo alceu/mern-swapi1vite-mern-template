@@ -16,7 +16,7 @@ cd swapi-mern-example
 1. **Install dependencies:**
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 1. Optional:
@@ -80,7 +80,7 @@ If you prefer to run the services directly on your machine, follow these steps.
 **Prerequisites:**
 
 - Node.js 18+
-- npm (or your preferred package manager)
+- pnpm
 - Docker (for the database)
 
 **Instructions:**
@@ -98,13 +98,13 @@ If you prefer to run the services directly on your machine, follow these steps.
     - **API (in one terminal):**
 
       ```bash
-      npm run dev:api
+      pnpm dev:api
       ```
 
     - **PWA (in another terminal):**
 
       ```bash
-      npm run dev:pwa
+      pnpm dev:pwa
       ```
 
 **Accessing the Application (default, check your `.env`):**
@@ -147,10 +147,11 @@ See `.agents/` for details.
 1.  **[x] Code Quality and Development Experience**:
     - Integrated Prettier and ESLint for consistent code formatting and linting across both pwa and api.
 1.  **[x] Data normalization and caching strategies between PWA and API**:
-    - Implemented using the PWA Top Search Queries Chart feature as an example.
+    - Using the PWA Top Search Queries Chart feature as an example.
+1.  **[x] Monorepo structure**:
+    - For better project organization, sharing resources, and strong type definitions.
 
 ## TODO
 
 - [ ] Add testing framework.
-- [ ] Implement monorepo structure for better project organization, sharing resources, and strong type definitions.
 - [ ] Achieve code coverage above 90% across the codebase.
