@@ -20,20 +20,26 @@ const CharacterLink: React.FC<CharacterLinkProps> = ({
     error: personError,
   } = useGetPersonByIdQuery(charId);
 
-  if (personIsLoading)
-    return <LoadingSpinner>Loading character...</LoadingSpinner>;
-  if (personError) return <span>Error loading character.</span>;
+  let content;
 
-  return (
-    <span>
-      <span
-        onClick={() => onCharacterClick(charId)}
-        className={styles.characterLink}
-      >
-        {personData?.result?.properties?.name || "Unknown Character"}
+  if (personIsLoading) {
+    content = <LoadingSpinner>Loading character...</LoadingSpinner>;
+  } else if (personError) {
+    content = <span>Error loading character.</span>;
+  } else if (personData) {
+    content = (
+      <span>
+        <span
+          onClick={() => onCharacterClick(charId)}
+          className={styles.characterLink}
+        >
+          {personData.properties.name}
+        </span>
       </span>
-    </span>
-  );
+    );
+  }
+
+  return content;
 };
 
 export default CharacterLink;

@@ -8,9 +8,10 @@ import {
 
 export const getTopSearches = asyncHandler(
   async (req: Request, res: Response) => {
-    const { limit, type } = req.query;
+    const { limit, type, index } = req.query;
     const topSearches = await getTopQueries(
       Number(limit) || undefined,
+      Number(index) || undefined,
       type as "films" | "people" | undefined
     );
     res.status(200).json(topSearches);

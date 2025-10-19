@@ -14,14 +14,32 @@ export const swapiApi = createApi({
         searchQuery ? `people/?name=${searchQuery}` : "people/",
     }),
     getPersonById: builder.query<IPersonDto, string>({
-      query: (id) => `people/${id}`,
+      queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
+        const result = await baseQuery(`people/${id}`);
+        if (result.error) {
+          return { error: result.error };
+        }
+        if (!result.data) {
+          return { error: { status: 404, data: 'Not Found' } };
+        }
+        return { data: result.data as IPersonDto };
+      },
     }),
     getFilms: builder.query<{ result: IFilmDto[] }, string | void>({
       query: (searchQuery) =>
         searchQuery ? `films/?title=${searchQuery}` : "films/",
     }),
     getFilmById: builder.query<IFilmDto, string>({
-      query: (id) => `films/${id}`,
+      queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
+        const result = await baseQuery(`films/${id}`);
+        if (result.error) {
+          return { error: result.error };
+        }
+        if (!result.data) {
+          return { error: { status: 404, data: 'Not Found' } };
+        }
+        return { data: result.data as IFilmDto };
+      },
     }),
   }),
 });

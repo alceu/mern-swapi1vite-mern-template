@@ -34,43 +34,41 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({
     );
   } else if (filmError) {
     content = <div>Error loading film details.</div>;
-  } else {
-    const characters = filmData?.result?.properties?.characters || [];
+  } else if (filmData) {
+    const characters = filmData.properties.characters;
     content = (
       <>
-        {filmData && <h2>{filmData.result.properties.title}</h2>}
-        {filmData && (
-          <div className={styles.contentColumns}>
-            <div className={styles.openingCrawlColumn}>
-              <h3>Opening Crawl</h3>
-              <p>{filmData.result.properties.opening_crawl}</p>
-            </div>
-            <div className={styles.charactersColumn}>
-              <h3>Characters</h3>
-              <p>
-                {!characters.length ? (
-                  <>None.</>
-                ) : (
-                  characters.map((charUrl: string, index: number) => {
-                    const charId = charUrl.split("/").filter(Boolean).pop();
-                    const hasNext = index < characters.length - 1;
-                    return (
-                      charId && (
-                        <React.Fragment key={charId}>
-                          <CharacterLink
-                            charId={charId}
-                            onCharacterClick={onCharacterClick}
-                          />
-                          {hasNext && ", "}
-                        </React.Fragment>
-                      )
-                    );
-                  })
-                )}
-              </p>
-            </div>
+        <h2>{filmData.properties.title}</h2>
+        <div className={styles.contentColumns}>
+          <div className={styles.openingCrawlColumn}>
+            <h3>Opening Crawl</h3>
+            <p>{filmData.properties.opening_crawl}</p>
           </div>
-        )}
+          <div className={styles.charactersColumn}>
+            <h3>Characters</h3>
+            <p>
+              {!characters.length ? (
+                <>None.</>
+              ) : (
+                characters.map((charUrl: string, index: number) => {
+                  const charId = charUrl.split("/").filter(Boolean).pop();
+                  const hasNext = index < characters.length - 1;
+                  return (
+                    charId && (
+                      <React.Fragment key={charId}>
+                        <CharacterLink
+                          charId={charId}
+                          onCharacterClick={onCharacterClick}
+                        />
+                        {hasNext && ", "}
+                      </React.Fragment>
+                    )
+                  );
+                })
+              )}
+            </p>
+          </div>
+        </div>
         <button onClick={onBackToSearch} className={styles.backButton}>
           Back to search
         </button>

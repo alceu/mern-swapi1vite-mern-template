@@ -17,18 +17,23 @@ const MovieLink: React.FC<MovieLinkProps> = ({ filmId, onMovieClick }) => {
     error: filmError,
   } = useGetFilmByIdQuery(filmId);
 
-  if (filmIsLoading) return <LoadingSpinner>Loading movie...</LoadingSpinner>;
-  if (filmError) return <span>Error loading movie.</span>;
+  let content;
 
-  return (
-    <span>
-      {filmData && (
+  if (filmIsLoading) {
+    content = <LoadingSpinner>Loading movie...</LoadingSpinner>;
+  } else if (filmError) {
+    content = <span>Error loading movie.</span>;
+  } else if (filmData) {
+    content = (
+      <span>
         <span onClick={() => onMovieClick(filmId)} className={styles.movieLink}>
-          {filmData.result.properties.title || "Unknown Movie"}
+          {filmData.properties.title}
         </span>
-      )}
-    </span>
-  );
+      </span>
+    );
+  }
+
+  return content;
 };
 
 export default MovieLink;
