@@ -9,8 +9,10 @@
 
 ## Data Normalization and Caching
 
-1.  **List Endpoints**:
-    -   To support a normalized pwa cache, list endpoints **must** return only an array of document IDs, along with any necessary aggregated or calculated data and labels. They **must not** return the full documents.
+1.  **Normalized Endpoints**:
+    -   To support a normalized PWA cache, endpoints **must not** return populated or nested documents.
+    -   **List Endpoints**: Must return only an array of document IDs, along with any necessary aggregated or calculated data.
+    -   **`byId` Endpoints**: Must return the flat document, with any references to other documents represented as IDs.
     -   All list endpoints **must** support `index` and `limit` query parameters for pagination, with sensible default values.
 
 2.  **Event Endpoints for Cache Invalidation**:

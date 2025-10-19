@@ -23,9 +23,10 @@
     - The pwa **must** listen to the event endpoints provided by the api.
     - When an event is received with a list of changed document IDs, the pwa will invalidate the cache for the corresponding `byId` queries and any list (`list`) queries that may be affected.
 
-3.  **Composed Queries**:
+3.  **Composed Queries and Types**:
     - For complex data fetching scenarios that require data from multiple sources, composed queries **must** be implemented.
     - These queries rely on other, simpler queries for their data, and their caching is managed automatically as the underlying data changes.
+    - When a composed query needs to return a nested or denormalized data structure for a component, a **PWA-specific type** (e.g., `ComposedTopSearch`) **must** be created for this structure. These presentation-specific types should reside within the PWA's codebase and **must not** be part of the `domain` package.
 
 ## Component Architecture
 

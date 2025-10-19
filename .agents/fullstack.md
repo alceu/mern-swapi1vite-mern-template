@@ -29,8 +29,8 @@ To maintain a clean and manageable codebase, use path aliases to simplify import
 
 To ensure an optimized, scalable, and maintainable application, all new features **must** adhere to the following full-stack data normalization and caching strategy.
 
-1.  **API**: List endpoints will only return document IDs and essential metadata. Full data for each document will be available via `byId` endpoints. Event endpoints will broadcast changes.
-2.  **PWA**: The pwa will fetch lists of IDs and then retrieve individual documents. It will rely on composed queries and event-driven cache invalidation to keep data fresh.
+1.  **API**: List endpoints will only return document IDs and essential metadata. Full data for each document will be available via `byId` endpoints, which **must not** return populated or nested documents. Event endpoints will broadcast changes.
+2.  **PWA**: The pwa is responsible for fetching lists of IDs and then retrieving individual documents. It will rely on composed queries to fetch and cache normalized data. When a view requires a nested or denormalized data structure, the PWA is responsible for creating and managing PWA-specific types/interfaces for that composed data.
 
 This unified strategy is detailed in the `api.md` and `pwa.md` instruction files and is not optional.
 
