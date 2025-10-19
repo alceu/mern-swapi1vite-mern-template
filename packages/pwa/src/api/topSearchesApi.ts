@@ -1,10 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ITopSearchDto, SearchType } from "@swapi-mern/domain";
+import {
+  ITopSearchDto,
+  ISearchQueryDto,
+  SearchType,
+} from "@swapi-mern/domain";
+import { searchQueryApi } from "./searchQueryApi";
 
 if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
     "Missing required environment variable: VITE_SEARCHES_STATS_API_URL"
   );
+}
+
+export interface ComposedTopSearch extends Omit<ITopSearchDto, "searchQuery"> {
+  searchQuery: ISearchQueryDto;
 }
 
 export const topSearchesApi = createApi({
@@ -87,7 +96,7 @@ export const topSearchesApi = createApi({
       keepUnusedDataFor: 60 * 60 * 24, // Keep data for 24 hours
     }),
     getComposedTopSearches: builder.query<
-      ITopSearchDto[],
+      ComposedTopSearch[],
       { limit?: number; type?: SearchType }
     >({
       async queryFn(
@@ -95,7 +104,7 @@ export const topSearchesApi = createApi({
         _queryApi,
         _extraOptions,
         _baseQuery
-      ): Promise<{ data: ITopSearchDto[] } | { error: any }> {
+      ): Promise<{ data: ComposedTopSearch[] } | { error: any }> {
         // First, get the list of top search IDs, leveraging caching
         const topSearchIdsResult = await _queryApi.dispatch(
           topSearchesApi.endpoints.getTopSearches.initiate(arg)
@@ -114,19 +123,40 @@ export const topSearchesApi = createApi({
         // Then, fetch each individual top search item by ID concurrently, leveraging caching
         const individualResults = await Promise.all(
           topSearchIds.map(async (id) => {
-            const { data, error } = await _queryApi.dispatch(
+            const topSearch = await _queryApi.dispatch(
               topSearchesApi.endpoints.getTopSearchById.initiate(id)
             );
-            if (error) {
-              throw error; // Propagate error
+
+            if (topSearch.error) {
+              throw topSearch.error;
             }
-            return data;
+            if (!topSearch.data) {
+              return null;
+            }
+
+            const searchQuery = await _queryApi.dispatch(
+              searchQueryApi.endpoints.getSearchQueryById.initiate(
+                topSearch.data.searchQuery
+              )
+            );
+
+            if (searchQuery.error) {
+              throw searchQuery.error;
+            }
+            if (!searchQuery.data) {
+              return null;
+            }
+
+            return {
+              ...topSearch.data,
+              searchQuery: searchQuery.data,
+            };
           })
         );
 
         // Filter out any null or undefined results from individual fetches
         const composedData = individualResults.filter(
-          (item): item is ITopSearchDto => item !== null && item !== undefined
+          (item): item is ComposedTopSearch => item !== null && item !== undefined
         );
 
         return { data: composedData };
@@ -152,4 +182,4 @@ export const {
   useGetComposedTopSearchesQuery,
 } = topSearchesApi;
 
-export type { ITopSearchDto as TopSearchItem };
+export type { ComposedTopSearch as TopSearchItem };

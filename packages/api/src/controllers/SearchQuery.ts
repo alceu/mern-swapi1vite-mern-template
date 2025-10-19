@@ -1,16 +1,33 @@
 import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
 
-import { registerSearchQuery } from "@api/services/SearchQueryService";
+import {
+  registerSearchQuery,
+  getSearchQueryById,
+} from "@api/services/SearchQueryService";
 
-export async function postSearchQuery(req: Request, res: Response) {
-  try {
+export const postSearchQuery = asyncHandler(
+  async (req: Request, res: Response) => {
     const { query, type } = req.body;
 
     await registerSearchQuery(query, type);
 
     res.sendStatus(204);
-  } catch (error) {
-    console.error("Error registering search query:", error);
-    res.sendStatus(500);
   }
-}
+);
+
+export const getSearchQuery = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({ message: "Search query ID is required" });
+      return;
+    }
+    const searchQuery = await getSearchQueryById(id);
+    if (searchQuery) {
+      res.status(200).json(searchQuery);
+    } else {
+      res.sendStatus(404);
+    }
+  }
+);

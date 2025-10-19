@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SearchType } from "@swapi-mern/domain";
+import { ISearchQueryDto, SearchType } from "@swapi-mern/domain";
 
 if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
@@ -12,7 +12,12 @@ export const searchQueryApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/search-queries/`,
   }),
+  tagTypes: ["SearchQuery"],
   endpoints: (builder) => ({
+    getSearchQueryById: builder.query<ISearchQueryDto, string>({
+      query: (id) => `/${id}`,
+      providesTags: (result, _error, id) => [{ type: "SearchQuery", id }],
+    }),
     postSearchQuery: builder.mutation<
       void,
       { query: string; type: SearchType }
@@ -25,4 +30,4 @@ export const searchQueryApi = createApi({
     }),
   }),
 });
-export const { usePostSearchQueryMutation } = searchQueryApi;
+export const { usePostSearchQueryMutation, useGetSearchQueryByIdQuery } = searchQueryApi;
