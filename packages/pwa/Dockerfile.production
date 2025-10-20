@@ -5,17 +5,19 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy root package.json and package-lock.json
-COPY package*.json ./
+RUN npm install -g pnpm
+
+# Copy root package.json and pnpm lockfile
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Copy the entire project
 COPY . .
 
 # Install dependencies for all workspaces
-RUN npm install
+RUN pnpm install
 
 # Build the pwa workspace
-RUN npm run build --workspace=pwa
+RUN pnpm --filter pwa build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine

@@ -32,7 +32,7 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-    command: npm run dev --workspace=api
+    command: pnpm --filter api dev
     healthcheck:
       test: ["CMD", "curl", "-f", "${VITE_SEARCHES_STATS_API_URL}/health"]
       interval: 3s
@@ -58,11 +58,11 @@ services:
     depends_on:
       api:
         condition: service_healthy
-    command: sh -c "cd /app && npm run dev --workspace=pwa"
+    command: pnpm --filter pwa dev
     healthcheck:
       test: ["CMD", "curl", "-f", "${PWA_URL}"]
       interval: 3s
-      timeout: 10s 
+      timeout: 10s
       retries: 5
       start_period: 10s
 

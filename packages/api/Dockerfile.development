@@ -3,6 +3,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+RUN npm install -g pnpm
+
 # Install curl for health checks
 RUN apk add --no-cache curl
 
@@ -10,4 +12,4 @@ RUN apk add --no-cache curl
 COPY . .
 
 # Command to run the api in development mode
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]
