@@ -8,10 +8,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import {
-  useGetComposedTopSearchesQuery,
-  TopSearchItem,
-} from "@pwa/api/topSearchesApi";
+import { useGetComposedTopSearchesQuery } from "@pwa/api/topSearches";
+import { ComposedTopSearch } from "@pwa/features/topSearch";
 
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
@@ -45,7 +43,7 @@ const TopSearchesChart = ({ type, title }: TopSearchesChartProps) => {
     return <p>No top searches to display.</p>;
   }
 
-  const chartData = topSearches.map((item: TopSearchItem) => ({
+  const chartData = topSearches.map((item: ComposedTopSearch) => ({
     name: item.searchQuery.query,
     value: item.percentage,
   }));

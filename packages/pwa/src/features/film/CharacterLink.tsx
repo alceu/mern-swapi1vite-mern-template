@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useGetPersonByIdQuery } from "@pwa/api/swapiApi";
+import { useGetPersonByIdQuery } from "@pwa/api/swapi";
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import styles from "./CharacterLink.module.css";
@@ -14,26 +14,24 @@ const CharacterLink: React.FC<CharacterLinkProps> = ({
   charId,
   onCharacterClick,
 }) => {
-  const {
-    data: personData,
-    isLoading: personIsLoading,
-    error: personError,
-  } = useGetPersonByIdQuery(charId);
+  const { data: person, isLoading, error } = useGetPersonByIdQuery(charId);
 
   let content;
 
-  if (personIsLoading) {
+  if (isLoading) {
     content = <LoadingSpinner>Loading character...</LoadingSpinner>;
-  } else if (personError) {
+  } else if (error) {
     content = <span>Error loading character.</span>;
-  } else if (personData) {
+  } else if (person) {
+    const { name } = person.properties;
+
     content = (
       <span>
         <span
           onClick={() => onCharacterClick(charId)}
           className={styles.characterLink}
         >
-          {personData.properties.name}
+          {name}
         </span>
       </span>
     );

@@ -7,8 +7,8 @@ if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   );
 }
 
-export const searchQueryApi = createApi({
-  reducerPath: "searchQueryApi",
+export const searchQueries = createApi({
+  reducerPath: "searchQueriesApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/search-queries/`,
   }),
@@ -21,7 +21,7 @@ export const searchQueryApi = createApi({
     postSearchQuery: builder.mutation<
       void,
       { query: string; type: SearchType }
-    >({ 
+    >({
       query: (body) => ({
         url: "/",
         method: "POST",
@@ -30,4 +30,5 @@ export const searchQueryApi = createApi({
     }),
   }),
 });
-export const { usePostSearchQueryMutation, useGetSearchQueryByIdQuery } = searchQueryApi;
+export const { usePostSearchQueryMutation, useGetSearchQueryByIdQuery } =
+  searchQueries;

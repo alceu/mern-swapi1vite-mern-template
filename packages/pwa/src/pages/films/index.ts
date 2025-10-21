@@ -1,8 +1,8 @@
-import FilmDetailsPage from "./FilmDetailsPage";
+import DetailsPage from "./Details";
 
 export const filmRoutes = [
   {
     path: ":id",
-    Component: FilmDetailsPage,
+    Component: DetailsPage,
   },
 ];

@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 
-import {
-  getTopQueries,
-  getTopSearchById,
-} from "@api/services/TopSearchService";
+import { getTopQueries, getTopSearchById } from "@api/services/TopSearch";
+
+import eventEmitter from "@api/utils/EventEmitter";
 
 export const getTopSearches = asyncHandler(
   async (req: Request, res: Response) => {
@@ -33,3 +32,20 @@ export const getTopSearch = asyncHandler(
     }
   }
 );
+
+export function getEvents(req: Request, res: Response) {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
+
+  const onUpdate = (updatedIds: string[]) => {
+    res.write(`data: ${JSON.stringify({ updated: updatedIds })}\n\n`);
+  };
+
+  eventEmitter.on("top-searches-updated", onUpdate);
+
+  req.on("close", () => {
+    eventEmitter.off("top-searches-updated", onUpdate);
+  });
+}

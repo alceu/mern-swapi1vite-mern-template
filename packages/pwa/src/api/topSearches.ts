@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  ITopSearchDto,
-  ISearchQueryDto,
-  SearchType,
-} from "@swapi-mern/domain";
-import { searchQueryApi } from "./searchQueryApi";
+
+import { ITopSearchDto, SearchType } from "@swapi-mern/domain";
+
+import type { ComposedTopSearch } from "@pwa/features/topSearch";
+
+import { searchQueries } from "./searchQueries";
 
 if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   throw new Error(
@@ -12,11 +12,7 @@ if (!import.meta.env.VITE_SEARCHES_STATS_API_URL) {
   );
 }
 
-export interface ComposedTopSearch extends Omit<ITopSearchDto, "searchQuery"> {
-  searchQuery: ISearchQueryDto;
-}
-
-export const topSearchesApi = createApi({
+export const topSearches = createApi({
   reducerPath: "topSearchesApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SEARCHES_STATS_API_URL}/top-searches/`,
@@ -49,32 +45,31 @@ export const topSearchesApi = createApi({
           await cacheDataLoaded;
 
           const listener = (event: MessageEvent) => {
-            const data = JSON.parse(event.data);
+            const { updated: updatedIds } = JSON.parse(event.data);
+
             if (
-              data.updatedIds &&
-              Array.isArray(data.updatedIds) &&
-              data.updatedIds.length > 0
+              updatedIds &&
+              Array.isArray(updatedIds) &&
+              updatedIds.length > 0
             ) {
               // Invalidate cache for each updated ID
-              data.updatedIds.forEach((id: string) => {
+              updatedIds.forEach((id: string) => {
                 dispatch(
-                  topSearchesApi.util.invalidateTags([
+                  topSearches.util.invalidateTags([
                     { type: "TopSearches", id: id },
                   ])
                 );
               });
               // Only invalidate the list cache if at least one updatedId is present in the current cached list
               updateCachedData((current: string[] | undefined) => {
-                if (
-                  current &&
-                  current.some((id) => data.updatedIds.includes(id))
-                ) {
+                if (current && current.some((id) => updatedIds.includes(id))) {
                   dispatch(
-                    topSearchesApi.util.invalidateTags([
+                    topSearches.util.invalidateTags([
                       { type: "TopSearches", id: "LIST" },
                     ])
                   );
                 }
+
                 return current;
               });
             }
@@ -107,7 +102,7 @@ export const topSearchesApi = createApi({
       ): Promise<{ data: ComposedTopSearch[] } | { error: any }> {
         // First, get the list of top search IDs, leveraging caching
         const topSearchIdsResult = await _queryApi.dispatch(
-          topSearchesApi.endpoints.getTopSearches.initiate(arg)
+          topSearches.endpoints.getTopSearches.initiate(arg)
         );
 
         if (topSearchIdsResult.error) {
@@ -124,7 +119,7 @@ export const topSearchesApi = createApi({
         const individualResults = await Promise.all(
           topSearchIds.map(async (id) => {
             const topSearch = await _queryApi.dispatch(
-              topSearchesApi.endpoints.getTopSearchById.initiate(id)
+              topSearches.endpoints.getTopSearchById.initiate(id)
             );
 
             if (topSearch.error) {
@@ -135,7 +130,7 @@ export const topSearchesApi = createApi({
             }
 
             const searchQuery = await _queryApi.dispatch(
-              searchQueryApi.endpoints.getSearchQueryById.initiate(
+              searchQueries.endpoints.getSearchQueryById.initiate(
                 topSearch.data.searchQuery
               )
             );
@@ -156,7 +151,8 @@ export const topSearchesApi = createApi({
 
         // Filter out any null or undefined results from individual fetches
         const composedData = individualResults.filter(
-          (item): item is ComposedTopSearch => item !== null && item !== undefined
+          (item): item is ComposedTopSearch =>
+            item !== null && item !== undefined
         );
 
         return { data: composedData };
@@ -180,6 +176,4 @@ export const {
   useGetTopSearchesQuery,
   useGetTopSearchByIdQuery,
   useGetComposedTopSearchesQuery,
-} = topSearchesApi;
-
-export type { ComposedTopSearch as TopSearchItem };
+} = topSearches;

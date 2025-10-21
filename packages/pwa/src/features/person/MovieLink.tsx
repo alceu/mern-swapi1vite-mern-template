@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useGetFilmByIdQuery } from "@pwa/api/swapiApi";
+import { useGetFilmByIdQuery } from "@pwa/api/swapi";
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import styles from "./MovieLink.module.css";
@@ -11,23 +11,21 @@ interface MovieLinkProps {
 }
 
 const MovieLink: React.FC<MovieLinkProps> = ({ filmId, onMovieClick }) => {
-  const {
-    data: filmData,
-    isLoading: filmIsLoading,
-    error: filmError,
-  } = useGetFilmByIdQuery(filmId);
+  const { data: film, isLoading, error } = useGetFilmByIdQuery(filmId);
 
   let content;
 
-  if (filmIsLoading) {
+  if (isLoading) {
     content = <LoadingSpinner>Loading movie...</LoadingSpinner>;
-  } else if (filmError) {
+  } else if (error) {
     content = <span>Error loading movie.</span>;
-  } else if (filmData) {
+  } else if (film) {
+    const { title } = film.properties;
+
     content = (
       <span>
         <span onClick={() => onMovieClick(filmId)} className={styles.movieLink}>
-          {filmData.properties.title}
+          {title}
         </span>
       </span>
     );

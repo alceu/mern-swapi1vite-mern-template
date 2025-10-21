@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
-import FilmDetails from "@pwa/features/films/FilmDetails";
+import Details from "@pwa/features/person/Details";
 
-export default function FilmDetailsPage() {
+export default function DetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,9 +24,9 @@ export default function FilmDetailsPage() {
     navigate(`/?${searchParams.toString()}`);
   }, [navigate, query, type]);
 
-  const handleCharacterClick = useCallback(
-    (charId: string) => {
-      navigate(`/people/${charId}`, {
+  const handleMovieClick = useCallback(
+    (filmId: string) => {
+      navigate(`/films/${filmId}`, {
         state: { fromSearch: true, query, type },
       });
     },
@@ -34,10 +34,10 @@ export default function FilmDetailsPage() {
   );
 
   return (
-    <FilmDetails
+    <Details
       id={id as string}
       onBackToSearch={handleBackToSearch}
-      onCharacterClick={handleCharacterClick}
+      onMovieClick={handleMovieClick}
     />
   );
 }

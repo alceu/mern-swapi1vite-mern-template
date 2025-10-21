@@ -5,7 +5,7 @@ if (!import.meta.env.VITE_SWAPI_API_URL) {
   throw new Error("Missing required environment variable: VITE_SWAPI_API_URL");
 }
 
-export const swapiApi = createApi({
+export const swapi = createApi({
   reducerPath: "swapiApi",
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SWAPI_API_URL }),
   endpoints: (builder) => ({
@@ -13,32 +13,32 @@ export const swapiApi = createApi({
       query: (searchQuery) =>
         searchQuery ? `people/?name=${searchQuery}` : "people/",
     }),
-    getPersonById: builder.query<IPersonDto, string>({
+    getPersonById: builder.query<{ result: IPersonDto }, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
-        const result = await baseQuery(`people/${id}`);
-        if (result.error) {
-          return { error: result.error };
+        const response = await baseQuery(`people/${id}`);
+        if (response.error) {
+          return { error: response.error };
         }
-        if (!result.data) {
-          return { error: { status: 404, data: 'Not Found' } };
+        if (!response.data) {
+          return { error: { status: 404, data: "Not Found" } };
         }
-        return { data: result.data as IPersonDto };
+        return { data: response.data.result as IPersonDto };
       },
     }),
     getFilms: builder.query<{ result: IFilmDto[] }, string | void>({
       query: (searchQuery) =>
         searchQuery ? `films/?title=${searchQuery}` : "films/",
     }),
-    getFilmById: builder.query<IFilmDto, string>({
+    getFilmById: builder.query<{ result: IFilmDto }, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
-        const result = await baseQuery(`films/${id}`);
-        if (result.error) {
-          return { error: result.error };
+        const response = await baseQuery(`films/${id}`);
+        if (response.error) {
+          return { error: response.error };
         }
-        if (!result.data) {
-          return { error: { status: 404, data: 'Not Found' } };
+        if (!response.data) {
+          return { error: { status: 404, data: "Not Found" } };
         }
-        return { data: result.data as IFilmDto };
+        return { data: response.data.result as IFilmDto };
       },
     }),
   }),
@@ -49,4 +49,4 @@ export const {
   useGetPersonByIdQuery,
   useGetFilmsQuery,
   useGetFilmByIdQuery,
-} = swapiApi;
+} = swapi;

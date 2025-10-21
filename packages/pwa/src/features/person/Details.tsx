@@ -1,25 +1,25 @@
 import { IPersonProperties } from "@swapi-mern/domain";
 import React from "react";
 
-import { useGetPersonByIdQuery } from "@pwa/api/swapiApi";
+import { useGetPersonByIdQuery } from "@pwa/api/swapi";
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import MovieLink from "./MovieLink";
 
-import styles from "./PersonDetails.module.css";
+import styles from "./Details.module.css";
 
-interface PersonDetailsProps {
+interface DetailsProps {
   id: string;
   onBackToSearch: () => void;
   onMovieClick: (filmId: string) => void;
 }
 
-const PersonDetails: React.FC<PersonDetailsProps> = ({
+const Details: React.FC<DetailsProps> = ({
   id,
   onBackToSearch,
   onMovieClick,
 }) => {
-  const { data, error, isLoading } = useGetPersonByIdQuery(id);
+  const { data: person, error, isLoading } = useGetPersonByIdQuery(id);
 
   const toTitleCase = (str: string) => {
     return str
@@ -38,7 +38,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({
     );
   } else if (error) {
     content = <div>Error loading details.</div>;
-  } else if (data) {
+  } else if (person) {
     const detailKeys: (keyof IPersonProperties)[] = [
       "birth_year",
       "gender",
@@ -47,17 +47,21 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({
       "height",
       "mass",
     ];
-    const films = data.properties.films;
+    const {
+      properties: { films },
+      properties,
+    } = person;
+
     content = (
       <>
-        <h2>{data.properties.name}</h2>
+        <h2>{properties.name}</h2>
         <div className={styles.contentColumns}>
           <div className={styles.detailsColumn}>
             <h3>Details</h3>
             <p>
               {detailKeys.map((key) => (
                 <React.Fragment key={key}>
-                  <span>{toTitleCase(key)}:</span> {data.properties[key]}
+                  <span>{toTitleCase(key)}:</span> {properties[key]}
                   <br />
                 </React.Fragment>
               ))}
@@ -99,4 +103,4 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({
   return <div className={styles.detailsContainer}>{content}</div>;
 };
 
-export default PersonDetails;
+export default Details;

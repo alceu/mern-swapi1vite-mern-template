@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import SearchContainer from "@pwa/features/search/SearchContainer";
+import Search from "@pwa/features/search/Container";
 
 const SearchPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +50,7 @@ const SearchPage: React.FC = () => {
   );
 
   return (
-    <SearchContainer
+    <Search
       type={type}
       query={query}
       onSearchSubmit={onSearchSubmit}

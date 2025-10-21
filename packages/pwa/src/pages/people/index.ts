@@ -1,8 +1,8 @@
-import PersonDetailsPage from "./PersonDetailsPage";
+import DetailsPage from "./Details";
 
 export const peopleRoutes = [
   {
     path: ":id",
-    Component: PersonDetailsPage,
+    Component: DetailsPage,
   },
 ];

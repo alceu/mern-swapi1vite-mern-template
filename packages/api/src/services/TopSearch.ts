@@ -1,6 +1,6 @@
 import mongoose, { AnyBulkWriteOperation } from "mongoose";
 
-import eventEmitter from "@api/utils/eventEmitter";
+import eventEmitter from "@api/utils/EventEmitter";
 import SearchQuery from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 import { ITopSearchDto, SearchType } from "@swapi-mern/domain";
@@ -74,7 +74,10 @@ export async function calculateAndPersistTopQueriesByType(
   );
   bulkOperations.push({
     deleteMany: {
-      filter: { "searchQuery.type": type, searchQuery: { $nin: newTopQueryIds } },
+      filter: {
+        "searchQuery.type": type,
+        searchQuery: { $nin: newTopQueryIds },
+      },
     },
   });
 

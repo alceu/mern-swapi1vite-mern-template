@@ -1,4 +1,4 @@
-import SearchPage from "./SearchPage";
+import SearchPage from "./Search";
 import { filmRoutes } from "./films";
 import { peopleRoutes } from "./people";
 import Layout from "./Layout";

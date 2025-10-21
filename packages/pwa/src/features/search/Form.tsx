@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form as FormikForm, Field } from "formik";
 import { useSelector } from "react-redux";
 
 import {
@@ -8,16 +8,16 @@ import {
   selectIsSearching,
 } from "@pwa/features/search";
 
-import styles from "./SearchForm.module.css";
+import styles from "./Form.module.css";
 
-interface SearchFormProps {
+interface FormProps {
   onSearch: (values: {
     searchType: "people" | "films";
     searchQuery: string;
   }) => void;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
+const Form: React.FC<FormProps> = ({ onSearch }) => {
   const type = useSelector(selectSearchType);
   const query = useSelector(selectQuery);
   const isSearching = useSelector(selectIsSearching);
@@ -37,7 +37,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
           values.searchType === "people" ? peoplePlaceholder : filmsPlaceholder;
 
         return (
-          <Form className={styles.searchContainer}>
+          <FormikForm className={styles.searchContainer}>
             <p className={styles.label}>What are you searching for?</p>
             <div className={styles.radioGroup}>
               <label className={styles.radioLabel}>
@@ -76,11 +76,11 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
             >
               {isSearching ? "Searching..." : "Search"}
             </button>
-          </Form>
+          </FormikForm>
         );
       }}
     </Formik>
   );
 };
 
-export default SearchForm;
+export default Form;

@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler";
 import {
   registerSearchQuery,
   getSearchQueryById,
-} from "@api/services/SearchQueryService";
+} from "@api/services/SearchQuery";
 
 export const postSearchQuery = asyncHandler(
   async (req: Request, res: Response) => {

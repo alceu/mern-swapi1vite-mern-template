@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles.leftPlaceholder} />
       <Link to="/" className={styles.titleLink}>
-        <h1 className={styles.title}>SWStarter</h1>
+        <h1 className={styles.title}>SWAPI M-E-R-N stack app example</h1>
       </Link>
       <button className={styles.chartButton} onClick={handleOpenTopSearches}>
         &#128202; {/* Bar chart icon */}

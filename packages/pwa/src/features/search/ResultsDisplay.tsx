@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IPersonDto, IFilmDto, SearchType } from "@swapi-mern/domain";
 
-import { useGetPeopleQuery, useGetFilmsQuery } from "@pwa/api/swapiApi";
-import { usePostSearchQueryMutation } from "@pwa/api/searchQueryApi";
+import { useGetPeopleQuery, useGetFilmsQuery } from "@pwa/api/swapi";
+import { usePostSearchQueryMutation } from "@pwa/api/searchQueries";
 import {
   selectQuery,
   selectSearchType,
@@ -83,7 +83,11 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
             <ResultItem
               key={result.uid}
               id={result.uid}
-              name={type === 'people' ? (result as IPersonDto).properties.name : (result as IFilmDto).properties.title}
+              name={
+                type === "people"
+                  ? (result as IPersonDto).properties.name
+                  : (result as IFilmDto).properties.title
+              }
               onResultClick={onResultClick}
             />
           ))}

@@ -1,48 +1,45 @@
 import React from "react";
 
-import { useGetFilmByIdQuery } from "@pwa/api/swapiApi";
+import { useGetFilmByIdQuery } from "@pwa/api/swapi";
 import LoadingSpinner from "@pwa/components/LoadingSpinner";
 
 import CharacterLink from "./CharacterLink";
 
-import styles from "./FilmDetails.module.css";
+import styles from "./Details.module.css";
 
-interface FilmDetailsProps {
+interface DetailsProps {
   id: string;
   onBackToSearch: () => void;
   onCharacterClick: (charId: string) => void;
 }
 
-const FilmDetails: React.FC<FilmDetailsProps> = ({
+const Details: React.FC<DetailsProps> = ({
   id,
   onBackToSearch,
   onCharacterClick,
 }) => {
-  const {
-    data: filmData,
-    error: filmError,
-    isLoading: filmIsLoading,
-  } = useGetFilmByIdQuery(id);
+  const { data: film, error, isLoading } = useGetFilmByIdQuery(id);
 
   let content;
 
-  if (filmIsLoading) {
+  if (isLoading) {
     content = (
       <LoadingSpinner className={styles.mainSpinner}>
         Loading film details...
       </LoadingSpinner>
     );
-  } else if (filmError) {
+  } else if (error) {
     content = <div>Error loading film details.</div>;
-  } else if (filmData) {
-    const characters = filmData.properties.characters;
+  } else if (film) {
+    const { title, opening_crawl, characters } = film.properties;
+
     content = (
       <>
-        <h2>{filmData.properties.title}</h2>
+        <h2>{title}</h2>
         <div className={styles.contentColumns}>
           <div className={styles.openingCrawlColumn}>
             <h3>Opening Crawl</h3>
-            <p>{filmData.properties.opening_crawl}</p>
+            <p>{opening_crawl}</p>
           </div>
           <div className={styles.charactersColumn}>
             <h3>Characters</h3>
@@ -79,4 +76,4 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({
   return <div className={styles.detailsContainer}>{content}</div>;
 };
 
-export default FilmDetails;
+export default Details;

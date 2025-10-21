@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 
 import { setQuery, setSearchType } from "@pwa/features/search";
 
-import SearchForm from "./SearchForm";
+import SearchForm from "./Form";
 import ResultsDisplay from "./ResultsDisplay";
 
-import styles from "./SearchContainer.module.css";
+import styles from "./Container.module.css";
 
-interface SearchContainerProps {
+interface ContainerProps {
   type: "people" | "films";
   query: string;
   onSearchSubmit: (values: {
@@ -18,7 +18,7 @@ interface SearchContainerProps {
   onResultClick: (id: string, type: "people" | "films") => void;
 }
 
-const SearchContainer: React.FC<SearchContainerProps> = ({
+const Container: React.FC<ContainerProps> = ({
   type,
   query,
   onSearchSubmit,
@@ -46,4 +46,4 @@ const SearchContainer: React.FC<SearchContainerProps> = ({
   );
 };
 
-export default SearchContainer;
+export default Container;

@@ -1,19 +1,19 @@
 import { Middleware } from "@reduxjs/toolkit";
 
-import { swapiApi } from "@pwa/api/swapiApi";
-import { searchQueryApi } from "@pwa/api/searchQueryApi";
-import { topSearchesApi } from "@pwa/api/topSearchesApi";
+import { swapi } from "@pwa/api/swapi";
+import { searchQueries } from "@pwa/api/searchQueries";
+import { topSearches } from "@pwa/api/topSearches";
 
 export const middlewares: Middleware[] = [
-  swapiApi.middleware,
-  searchQueryApi.middleware,
-  topSearchesApi.middleware,
+  swapi.middleware,
+  searchQueries.middleware,
+  topSearches.middleware,
 ];
 
 export const reducers = {
-  [swapiApi.reducerPath]: swapiApi.reducer,
-  [searchQueryApi.reducerPath]: searchQueryApi.reducer,
-  [topSearchesApi.reducerPath]: topSearchesApi.reducer,
+  [swapi.reducerPath]: swapi.reducer,
+  [searchQueries.reducerPath]: searchQueries.reducer,
+  [topSearches.reducerPath]: topSearches.reducer,
 };
 
 export default reducers;

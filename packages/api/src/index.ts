@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import routes from "@api/routes/";
-import { initTopSearchScheduler } from "@api/tasks/topSearchScheduler";
+import { initTopSearchScheduler } from "@api/tasks/TopSearch";
 
 dotenv.config();
 
