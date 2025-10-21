@@ -7,23 +7,28 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-# Copy root package.json and pnpm lockfile
+# Copy manifests for dependency installation
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/domain/package.json packages/domain/
+COPY packages/api/package.json packages/api/
+COPY packages/pwa/package.json packages/pwa/
 
-# Copy the entire project
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application
 COPY . .
 
-# Install dependencies for all workspaces
-RUN pnpm install
-
 # Build the pwa workspace
-RUN pnpm --filter pwa build
+RUN pnpm --filter pwa... build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
-# Copy the built files from the builder stage to Nginx's public directory
+# Copy the build output from the builder stage
 COPY --from=builder /app/packages/pwa/build /usr/share/nginx/html
 
-# Command to start Nginx
+# Expose port 80
+EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]

@@ -6,12 +6,15 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"pnpm dev:api\" \"pnpm dev:pwa\"",
+    "dev": "pnpm --parallel --filter api --filter pwa dev",
     "dev:api": "pnpm --filter api dev",
     "dev:pwa": "pnpm --filter pwa dev",
     "build": "pnpm -r build",
     "build:api": "pnpm --filter api build",
     "build:pwa": "pnpm --filter pwa build",
+    "start:api": "pnpm --filter api start",
+    "start:pwa": "pnpm --filter pwa start",
+    "start": "pnpm --parallel --filter api --filter pwa start",
     "check-types": "pnpm -r check-types",
     "lint": "pnpm -r lint",
     "prettier": "prettier --write ."

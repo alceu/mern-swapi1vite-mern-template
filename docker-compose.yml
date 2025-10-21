@@ -27,6 +27,13 @@ services:
       - "${API_PORT}:5000"
     volumes:
       - .:/app
+      - /app/build
+      - /app/node_modules
+      - /app/packages/api/build
+      - /app/packages/api/node_modules
+      - /app/packages/domain/build
+      - /app/packages/domain/dist
+      - /app/packages/domain/node_modules
     env_file:
       - packages/api/.env
     depends_on:
@@ -53,6 +60,13 @@ services:
       - "${VITE_PWA_PORT}:${PWA_CONTAINER_PORT}"
     volumes:
       - .:/app
+      - /app/build
+      - /app/node_modules
+      - /app/packages/pwa/build
+      - /app/packages/pwa/node_modules
+      - /app/packages/domain/build
+      - /app/packages/domain/dist
+      - /app/packages/domain/node_modules
     env_file:
       - packages/pwa/.env
     depends_on:

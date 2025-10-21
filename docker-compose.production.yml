@@ -5,7 +5,7 @@ services:
       dockerfile: packages/api/Dockerfile.production
     image: swapi-mern-example-api-prod:latest
     volumes: []
-    command: node build/index.js
+    command: pnpm --filter api start
 
   pwa:
     build:
@@ -13,4 +13,4 @@ services:
       dockerfile: packages/pwa/Dockerfile.production
     image: swapi-mern-example-pwa-prod:latest
     volumes: []
-    command: nginx -g 'daemon off;'
+    command: nginx -g "daemon off;"

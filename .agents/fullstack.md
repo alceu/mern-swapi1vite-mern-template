@@ -11,12 +11,12 @@ To maintain a clean and manageable codebase, use path aliases to simplify import
 #### API (`@api` alias)
 
 - **Unified Alias**: The api uses a single `@api` alias for all internal modules.
-- **Usage**: When importing api modules, use the `@api` alias (e.g., `import { MyService } from \'@api/services/MyService\'`).
+- **Usage**: When importing api modules, use the `@api` alias (e.g., `import { MyService } from '@api/services/MyService'`).
 
 #### PWA (`@pwa` alias)
 
 - **Unified Alias**: The pwa uses a single `@pwa` alias for all internal modules.
-- **Usage**: When importing pwa modules, use the `@pwa` alias (e.g., `import { MyComponent } from \'@pwa/components/MyComponent\'`).
+- **Usage**: When importing pwa modules, use the `@pwa` alias (e.g., `import { MyComponent } from '@pwa/components/MyComponent'`).
 
 #### Benefits
 

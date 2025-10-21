@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec \"tsc && tsc-alias && node ./build/index.js\"",
+    "dev": "tsx --watch src/index.ts",
     "build": "tsc && tsc-alias",
+    "start": "node ./build/index.js",
     "check-types": "tsc --noEmit",
     "lint": "eslint ."
   },
@@ -33,6 +34,7 @@
     "nodemon": "^3.1.0",
     "prettier": "3.2.5",
     "tsc-alias": "^1.8.10",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.2"
   }
 }

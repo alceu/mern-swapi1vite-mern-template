@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => {
       port: Number(env.VITE_PWA_PORT),
       host: true,
     },
+    preview: {
+      port: Number(env.VITE_PWA_PORT),
+    },
     plugins: [
       react(),
       svgrPlugin({
