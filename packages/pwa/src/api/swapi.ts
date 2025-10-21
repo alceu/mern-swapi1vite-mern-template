@@ -1,6 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPersonDto, IFilmDto } from "@swapi-mern/domain";
 
+interface IPersonApiResponse {
+  message: string;
+  result: IPersonDto;
+}
+
+interface IPeopleApiResponse {
+  message: string;
+  result: IPersonDto[];
+}
+
+interface IFilmApiResponse {
+  message: string;
+  result: IFilmDto;
+}
+
+interface IFilmsApiResponse {
+  message: string;
+  result: IFilmDto[];
+}
+
 if (!import.meta.env.VITE_SWAPI_API_URL) {
   throw new Error("Missing required environment variable: VITE_SWAPI_API_URL");
 }
@@ -9,11 +29,11 @@ export const swapi = createApi({
   reducerPath: "swapiApi",
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SWAPI_API_URL }),
   endpoints: (builder) => ({
-    getPeople: builder.query<{ result: IPersonDto[] }, string | void>({
+    getPeople: builder.query<IPeopleApiResponse, string | void>({
       query: (searchQuery) =>
         searchQuery ? `people/?name=${searchQuery}` : "people/",
     }),
-    getPersonById: builder.query<{ result: IPersonDto }, string>({
+    getPersonById: builder.query<IPersonDto, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
         const response = await baseQuery(`people/${id}`);
         if (response.error) {
@@ -22,14 +42,16 @@ export const swapi = createApi({
         if (!response.data) {
           return { error: { status: 404, data: "Not Found" } };
         }
-        return { data: response.data.result as IPersonDto };
+        const data = (response.data as IPersonApiResponse).result;
+
+        return { data };
       },
     }),
-    getFilms: builder.query<{ result: IFilmDto[] }, string | void>({
+    getFilms: builder.query<IFilmsApiResponse, string | void>({
       query: (searchQuery) =>
         searchQuery ? `films/?title=${searchQuery}` : "films/",
     }),
-    getFilmById: builder.query<{ result: IFilmDto }, string>({
+    getFilmById: builder.query<IFilmDto, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
         const response = await baseQuery(`films/${id}`);
         if (response.error) {
@@ -38,7 +60,9 @@ export const swapi = createApi({
         if (!response.data) {
           return { error: { status: 404, data: "Not Found" } };
         }
-        return { data: response.data.result as IFilmDto };
+        const data = (response.data as IFilmApiResponse).result;
+
+        return { data };
       },
     }),
   }),

@@ -47,21 +47,17 @@ const Details: React.FC<DetailsProps> = ({
       "height",
       "mass",
     ];
-    const {
-      properties: { films },
-      properties,
-    } = person;
-
+    const { films, name } = person.properties;
     content = (
       <>
-        <h2>{properties.name}</h2>
+        <h2>{name}</h2>
         <div className={styles.contentColumns}>
           <div className={styles.detailsColumn}>
             <h3>Details</h3>
             <p>
               {detailKeys.map((key) => (
                 <React.Fragment key={key}>
-                  <span>{toTitleCase(key)}:</span> {properties[key]}
+                  <span>{toTitleCase(key)}:</span> {person.properties[key]}
                   <br />
                 </React.Fragment>
               ))}
