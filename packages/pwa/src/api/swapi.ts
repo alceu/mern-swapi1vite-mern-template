@@ -29,9 +29,11 @@ export const swapi = createApi({
   reducerPath: "swapiApi",
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SWAPI_API_URL }),
   endpoints: (builder) => ({
-    getPeople: builder.query<IPeopleApiResponse, string | void>({
+    getPeople: builder.query<IPersonDto[], string | void>({
       query: (searchQuery) =>
         searchQuery ? `people/?name=${searchQuery}` : "people/",
+      transformResponse: (response: IPeopleApiResponse) =>
+        response.result as IPersonDto[],
     }),
     getPersonById: builder.query<IPersonDto, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {
@@ -47,9 +49,11 @@ export const swapi = createApi({
         return { data };
       },
     }),
-    getFilms: builder.query<IFilmsApiResponse, string | void>({
+    getFilms: builder.query<IFilmDto[], string | void>({
       query: (searchQuery) =>
         searchQuery ? `films/?title=${searchQuery}` : "films/",
+      transformResponse: (response: IFilmsApiResponse) =>
+        response.result as IFilmDto[],
     }),
     getFilmById: builder.query<IFilmDto, string>({
       queryFn: async (id, _queryApi, _extraOptions, baseQuery) => {

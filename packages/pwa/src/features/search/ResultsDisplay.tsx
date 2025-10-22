@@ -50,7 +50,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
   const isLoading = type === "people" ? peopleLoading : filmsLoading;
   const isError = type === "people" ? peopleError : filmsError;
 
-  const displayData = query.length >= 2 ? data : undefined;
   const isSearching = isLoading && query.length >= 2;
 
   useEffect(() => {
@@ -63,16 +62,23 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onResultClick }) => {
     content = (
       <div className={styles.resultsPlaceholder}>Error loading results.</div>
     );
-  } else if (isLoading) {
+  } else if (isSearching) {
     content = <div className={styles.resultsPlaceholder}>Searching...</div>;
   } else {
-    const results = (displayData?.result || []) as (IPersonDto | IFilmDto)[];
+    const results = (query.length >= 2 ? data : []) as (
+      | IPersonDto
+      | IFilmDto
+    )[];
 
     if (!results.length) {
       content = (
         <div className={styles.resultsPlaceholder}>
-          There are zero matches.
-          <br />
+          {query.length >= 2 && (
+            <>
+              There are zero matches.
+              <br />
+            </>
+          )}
           Use the form to search for People or Movies.
         </div>
       );
