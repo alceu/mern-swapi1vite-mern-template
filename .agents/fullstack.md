@@ -7,7 +7,7 @@
 ### MUST
 
 1. Scope cross-cutting features across the API (`packages/api`), PWA (`packages/pwa`), and shared domain models (`packages/domain`) to maintain aligned contracts.
-1. Apply the path aliases defined in the root and workspace TypeScript configs to avoid brittle relative imports.
+1. Apply the path aliases defined in the root and workspace type system configuration documented in `docs/stack.md` to avoid brittle relative imports.
 1. Use the workspace aliases (`@api/...`, `@pwa/...`) for internal modules instead of `../`-style relative paths so imports remain stable during refactors.
 1. Keep data contracts synchronized with the shared DTOs defined in `packages/domain/src`, updating that workspace first when new fields are introduced.
 

@@ -8,18 +8,18 @@ when a request describes errors or undesired behaviors and asks for a fix.
 
 ### MUST
 
-1. Add a failing test in the affected workspace that captures the reported behavior (for example, a Vitest spec under `packages/pwa`).
-1. Run the package-level test command (for example, `pnpm --filter pwa test`) to confirm the failure reproduces before applying fixes.
+1. Add a failing test in the affected workspace that captures the reported behavior using the testing framework documented in `docs/testing.md`.
+1. Run the package-level test command documented in `docs/verification.md` to confirm the failure reproduces before applying fixes.
 1. Implement the code change that resolves the failing scenario, keeping implementations aligned with `.agents/api.md` and `.agents/pwa.md` as applicable.
 1. Re-run the same test command to verify the new behavior passes alongside existing suites.
 1. When the defect spans multiple layers (for example, API plus PWA), repeat the add-test → reproduce → fix → verify cycle in each impacted workspace before closing the issue.
-1. Reset any running Docker environments with `docker compose down --volumes --remove-orphans` before executing reproduction or verification commands to avoid stale state.
+1. Reset any running container environments using the cleanup command documented in `docs/verification.md` before executing reproduction or verification commands to avoid stale state.
 
 ### SHOULD
 
 1. Prefer the smallest effective test scope, escalating from unit to integration coverage only when the discrepancy remains unresolved.
 1. Document manual reproduction steps in the issue or PR description if an automated harness is not yet available for the affected area.
-1. Run the relevant coverage command (for example, `pnpm --filter pwa coverage`) when fixes touch instrumentation or when acceptance criteria call for updated coverage baselines.
+1. Run the relevant coverage command documented in `docs/verification.md` when fixes touch instrumentation or when acceptance criteria call for updated coverage baselines.
 
 ### COULD
 
@@ -33,7 +33,7 @@ when a request describes errors or undesired behaviors and asks for a fix.
 
 ### MUST
 
-1. Master the testing stacks used in this repo (Vitest, React Testing Library, Jest) to write, extend, and debug automated coverage.
+1. Master the testing frameworks documented in `docs/testing.md` to write, extend, and debug automated coverage.
 1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
 
 ### SHOULD
@@ -73,7 +73,7 @@ Guidance for introducing automated visual or end-to-end regression suites once t
 
 ### MUST
 
-1. Begin every debugging session by running `docker compose down --volumes --remove-orphans` to guarantee clean containers, networks, and volumes before launching services.
+1. Begin every debugging session by running the container cleanup command documented in `docs/verification.md` to guarantee clean containers, networks, and volumes before launching services.
 1. Mirror BDD scenarios from `.agents/plan.md` when reproducing defects so traced expectations stay aligned with automated coverage.
 
 ### SHOULD
@@ -108,7 +108,7 @@ when an issue references mismatches between the implementation and the approved 
 ### COULD
 
 1. Store comparison artifacts (for example, annotated screenshots or CSS audit notes) alongside QA documentation when historical reference is helpful.
-1. Pilot automated visual or end-to-end tooling (for example, Playwright) in an experiment branch before formal adoption.
+1. Pilot automated visual or end-to-end tooling documented in `docs/testing.md` in an experiment branch before formal adoption.
 
 ### WANT
 

@@ -28,9 +28,9 @@
 1. When the plan is approved, go ahead with the tasks and do not pause for user confirmation on non-critical, easily reversible tasks; consult context agent instructions to determine criticality.
 1. Generate clean, well-documented code that adheres to existing project standards.
 1. Use git-aware moves (for example, `git mv`) for file relocations or renames to preserve history; if unable, notify the user to perform the move.
-1. After completing a code task, perform verification by keeping `README.md` updated with running and debugging instructions and running the project's `pnpm check-types` script from the root as a default step.
+1. After completing a code task, perform verification by keeping `README.md` updated with running and debugging instructions and running the default verification command documented in `docs/verification.md`.
 1. Coordinate plans and acceptance criteria with `.agents/plan.md`, ensuring BDD scenarios and function point estimates stay current throughout delivery.
-1. Before and after Docker-based verification, run `docker compose down --volumes --remove-orphans` to guarantee a clean environment without re-pulling unchanged images.
+1. Before and after container-based verification, run the cleanup command documented in `docs/verification.md` to guarantee a clean environment without re-pulling unchanged images.
 
 ### SHOULD
 

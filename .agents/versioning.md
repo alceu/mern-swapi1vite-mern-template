@@ -46,9 +46,9 @@
 
 1. Determine the impacted workspaces and file types, then run verification steps only for the scopes that changed (for example, documentation updates may need Markdown linting, while API code changes require type checks and tests).
 1. Keep `README.md` and related debugging instructions aligned with the implemented behavior before seeking commit approval.
-1. Run the lint, type-check, and test commands applicable to the affected packages (for example, `pnpm lint`, `pnpm check-types`, `pnpm --filter pwa test`) and skip steps irrelevant to the change scope.
-1. Before running development-mode scripts, confirm the user is not already running the dev server, then launch the appropriate `pnpm` development command, redirect output to a log, and monitor the log for errors for up to 10 seconds when runtime behavior is affected.
-1. When pnpm scripts, Dockerfiles, or container orchestration change, start the documented Docker Compose environments in detached mode, verify service health, inspect logs for failures, then tear down only the started containers, networks, volumes, and orphans via `docker compose down --volumes --remove-orphans`.
+1. Run the lint, type-check, and test commands documented in `docs/verification.md` applicable to the affected packages and skip steps irrelevant to the change scope.
+1. Before running development-mode scripts, confirm the user is not already running the dev server, then launch the appropriate development command documented in `docs/verification.md`, redirect output to a log, and monitor the log for errors for up to 10 seconds when runtime behavior is affected.
+1. When package scripts, container images, or orchestration definitions change, start the documented container environments in detached mode, verify service health, inspect logs for failures, then tear down using the cleanup command documented in `docs/verification.md`.
 
 ### SHOULD
 

@@ -62,6 +62,7 @@
 1. Proofread grammar and spelling before committing updates.
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
+1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic; relocate stack- or command-specific guidance to the appropriate `docs/` references.
 1. Ensure each spec documents the contributor competencies it depends on so team members know which skills are required.
 
 ### SHOULD
@@ -87,8 +88,8 @@
 ### MUST
 
 1. Author and maintain the repository stack reference at `docs/stack.md`, capturing package-level tooling, scripts, and verification flows specific to this project.
-1. Cross-check every update against active manifests (`package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`) and infrastructure blueprints (`docker-compose*.yml`, sample `.env` templates) before publishing changes.
-1. Record required verification commands (for example, `pnpm check-types`, `pnpm lint`, package-level tests) whenever `docs/stack.md` changes so reviewers can confirm compatibility.
+1. Cross-check every update against active manifests (package manifests, workspace configurations, type system configs) and infrastructure blueprints (container orchestration files, environment templates) documented in `docs/stack.md` before publishing changes.
+1. Record required verification commands documented in `docs/verification.md` whenever `docs/stack.md` changes so reviewers can confirm compatibility.
 1. Link back to governing specs (for example, `.agents/main.md`, `.agents/api.md`, `.agents/pwa.md`) rather than duplicating their mandates, keeping `docs/stack.md` focused on project specifics.
 
 ### SHOULD

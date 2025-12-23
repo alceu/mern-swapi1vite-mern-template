@@ -8,7 +8,7 @@
 
 1. Map every user request to the applicable agent specifications before drafting work, listing each spec by filename to keep ownership traceable.
 1. Break the task into ordered steps grouped by workspace or domain so downstream edits follow a predictable sequence.
-1. Capture verification commands (for example, `pnpm check-types`, `pnpm --filter pwa test`) that will be required before delivery and flag any missing automation.
+1. Capture verification commands documented in `docs/verification.md` that will be required before delivery and flag any missing automation.
 1. Highlight outstanding questions or ambiguous requirements immediately so they can be resolved before work begins.
 
 ### SHOULD

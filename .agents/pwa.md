@@ -26,12 +26,12 @@
 ### MUST
 
 1. Follow the shared normalization approach described in `.agents/fullstack.md`, fetching collection endpoints first and loading detail queries by identifier.
-1. Configure data-layer settings in line with `docs/stack.md`, keeping environment-controlled base URLs documented in that reference.
+1. Configure the data access layer settings in line with `docs/stack.md`, keeping environment-controlled base URLs documented in that reference.
 1. Subscribe to the API event streams defined in `.agents/fullstack.md` and invalidate affected list and detail caches by identifier when events arrive.
 
 ### SHOULD
 
-1. Compose selectors or query hooks within `packages/pwa/src/features` so shared caching logic remains reusable.
+1. Compose selectors or data access hooks within `packages/pwa/src/features` so shared caching logic remains reusable.
 1. Shape composed data needed for single-prop consumers (for example, chart payloads) as feature-scoped view models derived from normalized sources before passing them to components.
 
 ### COULD
@@ -131,7 +131,7 @@
 
 ### MUST
 
-1. Enforce strict TypeScript definitions for components, hooks, and store slices, preferring typed RTK Query hooks and selectors over `any` or implicit inference.
+1. Enforce strict type definitions for components, hooks, and store slices, preferring typed data access hooks and selectors over `any` or implicit inference.
 1. Reuse shared domain types from `@swapi-mern/domain` or local feature models to keep API and UI contracts aligned.
 
 ### SHOULD
@@ -150,7 +150,7 @@
 
 ### MUST
 
-1. Stay proficient with React Testing Library and Vitest to maintain automated coverage for components, hooks, and RTK Query flows.
+1. Stay proficient with the client testing frameworks documented in `docs/testing.md` to maintain automated coverage for components, hooks, and data access flows.
 1. Apply accessibility (a11y) best practices across features, ensuring semantic markup, ARIA usage, and keyboard support.
 1. Monitor and optimize web performance metrics (for example, bundle size, hydration time) during feature work.
 
