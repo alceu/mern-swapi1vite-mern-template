@@ -32,7 +32,7 @@
 
 ### MUST
 
-1. Structure each topic with priority as the final sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`)
+1. Structure each topic with priority as the final sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`).
 1. Inside each priority sub-topic, order the checklist items by their subpriority so the most critical guidance appears first.
 1. Define `MUST` directives as mandatory and non-negotiable instructions that must be followed exactly.
 1. Define `SHOULD` for instructions that warrant a warning when the user explicitly authorizes an exception, documenting any approved deviation instead of following them exactly.
@@ -77,6 +77,28 @@
 1. Use cross-links to related specs (`[Versioning](./versioning.md)`) when additional context is necessary.
 1. Validate that heading order, list styles, and spec identifiers make the file straightforward to parse programmatically.
 1. Ensure instructions are actionable without relying on institutional knowledge; link to context documents when broader background is helpful.
+
+### WANT
+
+1. None
+
+## Documentation Stack
+
+### MUST
+
+1. Author and maintain the repository stack reference at `docs/stack.md`, capturing package-level tooling, scripts, and verification flows specific to this project.
+1. Cross-check every update against active manifests (`package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`) and infrastructure blueprints (`docker-compose*.yml`, sample `.env` templates) before publishing changes.
+1. Record required verification commands (for example, `pnpm check-types`, `pnpm lint`, package-level tests) whenever `docs/stack.md` changes so reviewers can confirm compatibility.
+1. Link back to governing specs (for example, `.agents/main.md`, `.agents/api.md`, `.agents/pwa.md`) rather than duplicating their mandates, keeping `docs/stack.md` focused on project specifics.
+
+### SHOULD
+
+1. Capture expected environment variables, path aliases, and cross-package dependencies so agents can trace configuration impacts quickly.
+1. Reference supporting runbooks or ADRs in `docs/` when stack changes need deeper operational context.
+
+### COULD
+
+1. Include change history notes summarizing stack evolutions to accelerate onboarding.
 
 ### WANT
 
