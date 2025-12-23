@@ -16,11 +16,15 @@
     "start:pwa": "pnpm --filter pwa start",
     "start": "pnpm --parallel --filter api --filter pwa start",
     "check-types": "pnpm -r check-types",
-    "lint": "pnpm -r lint",
+    "lint": "pnpm -r lint && pnpm markdownlint",
+    "markdownlint": "markdownlint-cli2 **/*.md --ignore-path .markdownlintignore",
+    "lint:fix": "pnpm -r lint:fix && prettier --write .",
     "prettier": "prettier --write ."
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "markdownlint": "^0.40.0",
+    "markdownlint-cli2": "^0.20.0",
     "prettier": "3.2.5",
     "typescript": "^5.9.2"
   }
