@@ -4,8 +4,22 @@
 
 ## Purpose
 
+### MUST
+
 1. Provide clear guidance for planning, opening, and reviewing pull requests in this monorepo.
 1. Ensure agents follow consistent workflows that align with the broader `.agents/` mandate.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Git Structure Checklist
 

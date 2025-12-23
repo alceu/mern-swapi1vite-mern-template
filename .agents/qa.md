@@ -13,15 +13,36 @@ when a request describes errors or undesired behaviors and asks for a fix.
 1. Implement the code change that resolves the failing scenario, keeping implementations aligned with `.agents/api.md` and `.agents/pwa.md` as applicable.
 1. Re-run the same test command to verify the new behavior passes alongside existing suites.
 1. When the defect spans multiple layers (for example, API plus PWA), repeat the add-test → reproduce → fix → verify cycle in each impacted workspace before closing the issue.
+1. Reset any running Docker environments with `docker compose down --volumes --remove-orphans` before executing reproduction or verification commands to avoid stale state.
 
 ### SHOULD
 
 1. Prefer the smallest effective test scope, escalating from unit to integration coverage only when the discrepancy remains unresolved.
 1. Document manual reproduction steps in the issue or PR description if an automated harness is not yet available for the affected area.
+1. Run the relevant coverage command (for example, `pnpm --filter pwa coverage`) when fixes touch instrumentation or when acceptance criteria call for updated coverage baselines.
 
 ### COULD
 
 1. Introduce shared fixtures or utilities in the `packages/domain` workspace when a regression touches cross-package DTOs.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Master the testing stacks used in this repo (Vitest, React Testing Library, Jest) to write, extend, and debug automated coverage.
+1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
+
+### SHOULD
+
+1. Track accessibility and performance considerations raised during QA and route them to the owning specs.
+
+### COULD
+
+1. Document reusable troubleshooting recipes in `docs/qa/` to speed future investigations.
 
 ### WANT
 
@@ -43,6 +64,25 @@ Guidance for introducing automated visual or end-to-end regression suites once t
 ### COULD
 
 1. Reuse findings from prototype runs to establish coding standards or page-object conventions for future contributors.
+
+### WANT
+
+1. None
+
+## Debugging Workflow
+
+### MUST
+
+1. Begin every debugging session by running `docker compose down --volumes --remove-orphans` to guarantee clean containers, networks, and volumes before launching services.
+1. Mirror BDD scenarios from `.agents/plan.md` when reproducing defects so traced expectations stay aligned with automated coverage.
+
+### SHOULD
+
+1. Capture logs or traces that connect the failing BDD scenario to the observed runtime behavior before applying fixes.
+
+### COULD
+
+1. Maintain a shared checklist of recurring debugging steps that link back to the associated specs for quick reference.
 
 ### WANT
 

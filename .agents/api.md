@@ -17,11 +17,31 @@
 
 ### COULD
 
-- None
+1. None
 
 ### WANT
 
-- None
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand Git-based workflows and CI/CD pipelines used to deploy the API so changes remain shippable and traceable.
+1. Be proficient with API-focused testing frameworks (for example, Jest, Supertest) to keep controllers and services covered.
+1. Apply performance profiling and monitoring basics to spot regressions introduced by new endpoints or aggregations.
+
+### SHOULD
+
+1. Stay familiar with security best practices (authentication, authorization, input validation) relevant to Express and MongoDB.
+
+### COULD
+
+1. Share performance findings or CI/CD adjustments in `docs/` to help other contributors adopt improvements.
+
+### WANT
+
+1. None
 
 ## Data Normalization and Caching
 
@@ -36,7 +56,11 @@
 
 ### COULD
 
+1. None
+
 ### WANT
+
+1. None
 
 ## Collection Endpoints
 
@@ -59,7 +83,7 @@
 
 ### WANT
 
-None
+1. None
 
 ## Event Streaming
 
@@ -92,8 +116,29 @@ None
 
 ### COULD
 
-- None
+1. None
 
 ### WANT
 
-- None
+1. None
+
+## Parameter and Error Handling
+
+### MUST
+
+1. Repeat the parameter key for each value when accepting array query parameters (`param=value1&param=value2`) to stay URI-compliant and compatible with standard HTTP clients.
+1. Throw `404 Not Found` responses whenever requested resources or query results are absent so RTK Query and other clients can rely on strict, non-null types.
+1. Normalize complex types (for example, `ObjectId`, `Date`) through dedicated mapping or middleware layers before controllers consume them, keeping validation and serialization consistent.
+1. Define explicit default limits for indexed or paginated queries instead of relying on `undefined` fallbacks to avoid unbounded loads.
+
+### SHOULD
+
+1. Centralize parameter parsing and error helpers so repeated logic stays uniform across controllers.
+
+### COULD
+
+1. Publish reusable validation utilities that enforce compliant array parameter encoding and limit selection.
+
+### WANT
+
+1. None

@@ -14,11 +14,11 @@
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Instructions
 
@@ -29,10 +29,13 @@ None
 1. Generate clean, well-documented code that adheres to existing project standards.
 1. Use git-aware moves (for example, `git mv`) for file relocations or renames to preserve history; if unable, notify the user to perform the move.
 1. After completing a code task, perform verification by keeping `README.md` updated with running and debugging instructions and running the project's `pnpm check-types` script from the root as a default step.
+1. Coordinate plans and acceptance criteria with `.agents/plan.md`, ensuring BDD scenarios and function point estimates stay current throughout delivery.
+1. Before and after Docker-based verification, run `docker compose down --volumes --remove-orphans` to guarantee a clean environment without re-pulling unchanged images.
 
 ### SHOULD
 
 1. Disregard compiled files and folders (for example, `node_modules`, `dist`, `build`) during searches and edits unless specified by the user.
+1. Refresh automated test coverage expectations with the QA spec whenever workflows change, keeping BDD scenarios and regression suites aligned.
 
 ### COULD
 
@@ -40,4 +43,4 @@ None
 
 ### WANT
 
-None
+1. None

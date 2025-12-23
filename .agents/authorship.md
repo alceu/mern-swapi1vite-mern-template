@@ -14,11 +14,11 @@
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Authorship Rule
 
@@ -31,12 +31,12 @@ None
 
 ### SHOULD
 
-None
+1. None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None

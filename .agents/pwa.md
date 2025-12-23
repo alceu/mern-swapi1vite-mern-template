@@ -15,7 +15,7 @@
 
 ### COULD
 
-1. Expose selectors and action creators via the feature entry points so consumers avoid deep imports.
+1. None
 
 ### WANT
 
@@ -60,7 +60,7 @@
 
 ### COULD
 
-1. Promote widely adopted feature utilities into shared helper modules once multiple teams rely on them.
+1. None
 
 ### WANT
 
@@ -92,12 +92,12 @@
 1. Favor relative units for typography and spacing to respect user settings and scale across devices.
 1. Build layout primitives with flexible CSS patterns (for example, grid or flex utilities) so modules expand to available width while enforcing sane constraints.
 1. Keep markup structural and delegate visual styling to CSS modules or utility classes maintained in `packages/pwa/src`.
+1. Name CSS classes semantically to reflect business purpose or UI state (for example, `.product-card`, `.is-active`) instead of visual-only descriptors.
+1. Apply visual transformations through CSS (for example, `text-transform`) rather than hardcoding presentation in markup or copy.
 
 ### SHOULD
 
 1. Apply breakpoint-driven adjustments consistently across features so shared components behave predictably.
-1. Name CSS classes semantically to describe business purpose or UI state (for example, `.product-card`, `.is-active`) rather than appearance-only descriptors (for example, `.red-text`).
-1. Handle all presentation exclusively via CSS, avoiding HTML or text hacks (for example, using `text-transform: uppercase;` instead of writing uppercase content directly).
 1. Keep HTML structural by steering clear of layout-driven markup such as empty `div` spacers or content used solely for visual breaks.
 
 ### COULD
@@ -106,6 +106,64 @@
 
 ### WANT
 
-None
+1. None
+
+## Business Data Orchestration
+
+### MUST
+
+1. Treat routes and feature stores as the single source of truth for business data, exposing state changes and derived selectors through those modules instead of duplicating logic in pages or components.
+1. Align feature store contracts with API normalization rules so cached data remains consistent across navigations.
+
+### SHOULD
+
+1. Document shared route or store contracts in workspace docs when features depend on them across teams.
+
+### COULD
+
+1. Provide migration notes when reorganizing feature stores or routes so downstream consumers can update quickly.
+
+### WANT
+
+1. None
+
+## Type Safety
+
+### MUST
+
+1. Enforce strict TypeScript definitions for components, hooks, and store slices, preferring typed RTK Query hooks and selectors over `any` or implicit inference.
+1. Reuse shared domain types from `@swapi-mern/domain` or local feature models to keep API and UI contracts aligned.
+
+### SHOULD
+
+1. Extend local typing helpers when new UI states emerge, ensuring discriminated unions or enums cover the full business workflow.
+
+### COULD
+
+1. Capture complex front-end types in dedicated `types.ts` modules within each feature for reuse.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Stay proficient with React Testing Library and Vitest to maintain automated coverage for components, hooks, and RTK Query flows.
+1. Apply accessibility (a11y) best practices across features, ensuring semantic markup, ARIA usage, and keyboard support.
+1. Monitor and optimize web performance metrics (for example, bundle size, hydration time) during feature work.
+
+### SHOULD
+
+1. Share accessibility and performance checklists in workspace docs when new patterns emerge.
+
+### COULD
+
+1. Collaborate with QA to align coverage expectations and adopt shared testing utilities.
+
+### WANT
+
+1. None
 
 <!-- Future automation (for example, screenshot diffing or interaction recording) can be documented here once adopted. -->

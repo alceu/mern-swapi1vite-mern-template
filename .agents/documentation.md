@@ -26,7 +26,7 @@
 
 ### WANT
 
-None
+1. None
 
 ## Plan the Spec
 
@@ -36,6 +36,7 @@ None
 1. Inside each priority sub-topic, order the checklist items by their subpriority so the most critical guidance appears first.
 1. Define `MUST` directives as mandatory and non-negotiable instructions that must be followed exactly.
 1. Define `SHOULD` for instructions that warrant a warning when the user explicitly authorizes an exception, documenting any approved deviation instead of following them exactly.
+1. Capture relevant cross-layer requirements and reference the specs that enforce them so related instructions stay aligned.
 
 ### SHOULD
 
@@ -61,6 +62,7 @@ None
 1. Proofread grammar and spelling before committing updates.
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
+1. Ensure each spec documents the contributor competencies it depends on so team members know which skills are required.
 
 ### SHOULD
 
@@ -78,5 +80,4 @@ None
 
 ### WANT
 
-None
-
+1. None

@@ -9,24 +9,25 @@
 1. Adhere to the instructions in `main.md` and `developer_assistant.md` for all project tasks.
 1. Preserve user changes made between interactions.
 1. If conflicts with user changes are detected, analyze them, attempt a resolution, and ask for user approval before proceeding.
+1. Incorporate the planning guidance defined in `.agents/plan.md` whenever outlining or revising a task plan.
 
 ### SHOULD
 
-None
+1. None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Human Learning and Query-Handling
 
 ### MUST
 
-None
+1. None
 
 ### SHOULD
 
@@ -35,11 +36,11 @@ None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Instructions
 
@@ -49,6 +50,7 @@ None
 1. Apply the priority hierarchy (`MUST`, `SHOULD`, `COULD`, `WANT`) and the subpriority ordering defined in `.agents/documentation.md` when interpreting instructions, as mandatory and non-mandatory directives strategy.
 1. Distinguish between instructional files (`.agents/`) and contextual files (all others).
 1. Prioritize guidelines from specific instruction files (for example, `developer_assistant.md`) when a query implies them, while still following the rules in `main.md`.
+1. Seek clarification or propose refactor paths when requirements appear ambiguous, conflicting, or risky before committing to an implementation approach.
 
 ### SHOULD
 
@@ -56,8 +58,8 @@ None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None

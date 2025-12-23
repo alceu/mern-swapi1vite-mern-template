@@ -18,7 +18,7 @@
 
 ### WANT
 
-None
+1. None
 
 ## Branching
 
@@ -34,11 +34,11 @@ None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Pre-Commit Verification
 
@@ -62,7 +62,7 @@ None
 
 ### WANT
 
-None
+1. None
 
 ## Commit Message Drafting
 
@@ -87,13 +87,13 @@ None
 
 ### WANT
 
-None
+1. None
 
 ## Merging
 
 ### MUST
 
-None
+1. None
 
 ### SHOULD
 
@@ -101,11 +101,11 @@ None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
 
 ## Pushing
 
@@ -120,8 +120,8 @@ None
 
 ### COULD
 
-None
+1. None
 
 ### WANT
 
-None
+1. None
