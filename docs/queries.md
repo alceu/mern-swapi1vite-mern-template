@@ -26,8 +26,6 @@ This catalog enumerates AI-first SDLC guidance, mapping common requests to the r
 
 ## Documentation Maintenance
 
-1. Now please incorporate the agents' documentation instructions file as well, and review the XXX file.
+1. Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file, to assert if the following guidance is covered in the correct section, or let's place it if missing: XXX
 
-1. Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file to place the missing guidance in the correct section.
-
-1. Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file to include task-context approach descriptions as future orientation notes.
+1. Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file to include this task-context approach descriptions we just achieved, as future orientation notes.
