@@ -27,14 +27,17 @@
 
 1. Follow the shared normalization approach described in `.agents/fullstack.md`, fetching collection endpoints first and loading detail queries by identifier.
 1. Configure data-layer settings in line with `.agents/stack.md`, keeping environment-controlled base URLs documented in that spec.
+1. Subscribe to the API event streams defined in `.agents/fullstack.md` and invalidate affected list and detail caches by identifier when events arrive.
 
 ### SHOULD
 
 1. Compose selectors or query hooks within `packages/pwa/src/features` so shared caching logic remains reusable.
+1. Shape composed data needed for single-prop consumers (for example, chart payloads) as feature-scoped view models derived from normalized sources before passing them to components.
 
 ### COULD
 
 1. Capture presentation-specific shapes (for example, composed top search view models) within the PWA workspace while persisting normalized data in caches.
+1. Document widely reused composed view models in the workspace README or `docs/` to help other features adopt them.
 
 ### WANT
 
@@ -48,6 +51,7 @@
 1. Encapsulate business flows inside feature modules (`packages/pwa/src/features`), housing data fetching, store wiring, and view composition together.
 1. Reserve shared presentational components for `packages/pwa/src/components`, ensuring they remain stateless and receive all data via props.
 1. Avoid importing feature state or data hooks directly inside page modules; instead, pass props from pages to features so navigation and business logic stay separated.
+1. Mirror the URL hierarchy inside the pages components base folder using per-segment subdirectories and route exports, following the detailed structure documented in `.agents/stack.md`.
 1. Document new cross-feature utilities or adapters in the workspace README so contributors understand their scope.
 
 ### SHOULD

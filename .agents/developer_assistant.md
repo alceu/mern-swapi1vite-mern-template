@@ -24,7 +24,7 @@ None
 
 ### MUST
 
-1. When start working in a query, before implementing first changes, provide a review, explain your reasoning, and outline your plan.
+1. When start working in a query, before implementing first changes, provide a review, explain your reasoning, and outline your plan, explicitly asking whether the user already has the development server running before proposing runtime checks.
 1. When the plan is approved, go ahead with the tasks and do not pause for user confirmation on non-critical, easily reversible tasks; consult context agent instructions to determine criticality.
 1. Generate clean, well-documented code that adheres to existing project standards.
 1. Use git-aware moves (for example, `git mv`) for file relocations or renames to preserve history; if unable, notify the user to perform the move.
@@ -36,7 +36,7 @@ None
 
 ### COULD
 
-None
+1. When sharing code edits, prefer unified diff formatting (`diff --unified`) so reviewers can scan changes quickly.
 
 ### WANT
 

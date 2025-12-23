@@ -8,7 +8,7 @@ This catalog enumerates AI-first SDLC guidance, mapping common requests to the r
 
 ## Version Control & Collaboration
 
-1. Now please incorporate the agents' versioning instruction file as well, and plan plus execute contextual committing of all current changes. Once the plan is approved, keep committing until every commit is done, following the commit message drafting instructions.
+1. Now please incorporate the agents' versioning instruction file as well, and plan plus execute contextual committing of all current changes. Once the plan is approved, keep committing until every commit is done.
 
 1. Now please incorporate the agents' versioning instructions file as well, and create a new feature branch from `develop` named XXX.
 

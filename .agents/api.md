@@ -13,7 +13,7 @@
 
 ### SHOULD
 
-1. Keep the API strictly stateless so every request carries all data required for processing without server-side session storage.
+1. Keep the API strictly stateless: each request must be self-contained without server-held session state, and long-lived streaming or event endpoints must emit identifiers without persisting client-specific context.
 
 ### COULD
 
@@ -27,7 +27,7 @@
 
 ### MUST
 
-1. Ensure collection listing endpoints return array that only exposes document identifiers. 
+1. Ensure collection listing endpoints return array that only exposes document identifiers.
 1. Collection listings may include calculated data not persisted as document properties (for example, `commentsCount`, `ratingAvg`) alongside the identifier.
 
 ### SHOULD
@@ -36,9 +36,7 @@
 
 ### COULD
 
-
 ### WANT
-
 
 ## Collection Endpoints
 
@@ -63,6 +61,24 @@
 
 None
 
+## Event Streaming
+
+### MUST
+
+1. Expose per-resource event endpoints (for example, Server-Sent Events) that emit changed document identifiers so the PWA can perform cache invalidation, following the contract documented in `.agents/fullstack.md`.
+
+### SHOULD
+
+1. Describe event endpoint payloads and subscription expectations in workspace docs before rolling out breaking changes.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Fullstack Cohesion
 
 ### MUST
@@ -81,4 +97,3 @@ None
 ### WANT
 
 - None
-

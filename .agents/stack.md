@@ -42,6 +42,26 @@
 
 1. None
 
+## Path Aliases
+
+### MUST
+
+1. Resolve API workspace imports through the `@api/...` alias defined in `packages/api/tsconfig.json` so module resolution stays consistent across TypeScript, Jest, and build tooling.
+1. Resolve PWA workspace imports through the `@pwa/...` alias defined in `packages/pwa/tsconfig.json` to avoid brittle relative paths in React components and RTK Query modules.
+1. Update bundler and tooling configurations (for example, Vite, ESLint, ts-node, Jest) whenever alias paths change so runtime and editor behavior stay aligned.
+
+### SHOULD
+
+1. Record alias additions or updates in `.agents/fullstack.md` and relevant `docs/` guides before adopting them widely.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Domain Guidelines
 
 ### Web PWA (`packages/pwa`)
@@ -54,10 +74,13 @@
 1. Compose forms with Formik and validate with Yup for consistent client-side schema enforcement.
 1. Style the application with Tailwind CSS (PostCSS + Autoprefixer) and CSS modules, leveraging Vite plugins (`@vitejs/plugin-react`, `vite-plugin-svgr`, `vite-tsconfig-paths`).
 1. Configure RTK Query base URLs through environment variables (`VITE_SWAPI_API_URL`, `VITE_SEARCHES_STATS_API_URL`) surfaced in `vite.config.ts` and docker compose.
+1. Mirror the application URL structure in `packages/pwa/src/pages` by creating subdirectories per route segment (for example, `pages/films/`) with a local `index.ts` exporting that segment's route array and aggregating child routes via the parent `children` property.
+1. Keep the top-level route assembly in `packages/pwa/src/pages/index.ts`, importing each segment's exported routes to construct the final `createBrowserRouter` configuration.
 
 #### SHOULD
 
 1. Reuse shared domain types from `@swapi-mern/domain` when defining API contracts to avoid drift between client and server models.
+1. Document routing module additions or reorganizations in `docs/` so other contributors understand the folder hierarchy expectations.
 
 #### COULD
 
@@ -76,6 +99,10 @@
 1. Hash credentials with Argon2, issue JSON Web Tokens with `jsonwebtoken`, and enforce input rules through `express-validator`.
 1. Run scheduled jobs with `node-cron`, orchestrated via `initTopSearchScheduler` under `packages/api/src/tasks`.
 1. Share DTO contracts by consuming `@swapi-mern/domain`, mirroring the structures expected by the PWA.
+1. Keep API directories such as `controllers`, `services`, `routes`, `validators`, and `tasks` in lowercase so filesystem paths stay aligned with Express loader conventions.
+1. Name Mongoose models and their TypeScript sources in PascalCase (for example, `models/SearchQuery.ts`) to mirror exported class identifiers.
+1. Name controller, service, task, and validation files with a PascalCase entity stem (for example, `controllers/TopSearch.ts`, `services/SearchQuery.ts`).
+1. Keep route files lowercase (for example, `routes/searchQueries.ts`) so URL mappers remain predictable across Unix-like environments.
 
 #### SHOULD
 

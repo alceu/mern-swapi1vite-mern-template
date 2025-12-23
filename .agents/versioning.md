@@ -44,11 +44,15 @@ None
 
 ### MUST
 
-1. Run a verification cycle on all modified files.
+1. Determine the impacted workspaces and file types, then run verification steps only for the scopes that changed (for example, documentation updates may need Markdown linting, while API code changes require type checks and tests).
+1. Keep `README.md` and related debugging instructions aligned with the implemented behavior before seeking commit approval.
+1. Run the lint, type-check, and test commands applicable to the affected packages (for example, `pnpm lint`, `pnpm check-types`, `pnpm --filter pwa test`) and skip steps irrelevant to the change scope.
+1. Before running development-mode scripts, confirm the user is not already running the dev server, then launch the appropriate `pnpm` development command, redirect output to a log, and monitor the log for errors for up to 10 seconds when runtime behavior is affected.
+1. When pnpm scripts, Dockerfiles, or container orchestration change, start the documented Docker Compose environments in detached mode, verify service health, inspect logs for failures, then tear down only the started containers, networks, volumes, and orphans via `docker compose down --volumes --remove-orphans`.
 
 ### SHOULD
 
-1. Execute the workspace commands relevant to the change scope before requesting commit approval (`pnpm check-types`, `pnpm lint`, `pnpm --filter pwa test`).
+1. Execute additional workspace commands relevant to the change scope before requesting commit approval when they extend beyond the defaults listed above.
 
 <!-- Add future API or end-to-end verification commands here when the tooling lands. -->
 
@@ -68,15 +72,14 @@ None
 1. Verify the current `git status` and `git diff` to draft a commit message.
 1. Split changes into separate commits when a task involves multiple distinct areas (for example, development or documentation).
 1. Scope commits by feature and domain (for example, `profiles`, `companies`, `projects`), considering a feature-scoped Full-Stack Domain-Driven approach, to keep context consistent across workspaces and each commit focused on a feature logical change.
-1. Adopt `({project|package|fullstack/entity})` detailed prefix (for example, `api/events`, `web/events`, `fullstack/events`) to easily identify whether commmits are related to a single or cross projects/packages. 
-1. Open the draft message temporary file, with title and show summary, in an approval window or save it to `./COMMIT_EDITMSG`.
+1. Adopt `({project|package|fullstack/entity})` detailed prefix (for example, `api/events`, `web/events`, `fullstack/events`) to easily identify whether commmits are related to a single or cross projects/packages.
+1. Write the draft commit message to a real `./COMMIT_EDITMSG` file, and commit using the message draft temporary file with `git commit -F <file>`.
 1. Wait for explicit, affirmative confirmation from the user before proceeding with the commit. Unless explicitly said something like "just go ahead with all commits", do not assume approval.
-1. Commit using the final approved message draft temporary file with -F param.
 
 ### SHOULD
 
 1. Stage only files relevant to the current commit's domain.
-1. Commit shared UI or cross-domain changes separately. 
+1. Commit shared UI or cross-domain changes separately.
 
 ### COULD
 
