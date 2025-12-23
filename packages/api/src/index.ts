@@ -5,6 +5,7 @@ import cors from "cors";
 
 import routes from "@api/routes/";
 import { initTopSearchScheduler } from "@api/tasks/TopSearch";
+import { errorHandler } from "@api/middleware/errorHandler";
 
 dotenv.config();
 
@@ -32,6 +33,9 @@ app.use(routes);
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
+
+// Error handling middleware must be last
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
