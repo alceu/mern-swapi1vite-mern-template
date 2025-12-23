@@ -1,49 +1,84 @@
 # API Agent Instructions
 
+**Spec-ID:** `api::v1`
+
 ## General Principles
 
-- Keep route files focused on API structure, validation, and middleware chaining.
-- Keep controllers focused on business logic and service orchestration.
-- Adhere to protocol best practices, such as using appropriate HTTP status codes (e.g., 204 No Content for successful requests with no response body) to avoid unnecessary data transfer.
-- **Statelessness**: The api must be strictly stateless. Each API request must be independent and self-contained, carrying all necessary data for its processing. The server should not store any client-specific session state between requests.
+### MUST
+
+1. Use appropriate HTTP status codes (for example, return `204 No Content` for successful requests without a response body) to avoid unnecessary data transfer.
+1. Keep controllers focused on requests and responses logic and service orchestration.
+1. Keep services focused on business logic and repository orchestration.
+1. Organize files across controllers, services, repositories, validations, and other layers by model or schema name to keep the codebase navigable.
+
+### SHOULD
+
+1. Keep the API strictly stateless so every request carries all data required for processing without server-side session storage.
+
+### COULD
+
+- None
+
+### WANT
+
+- None
 
 ## Data Normalization and Caching
 
-1.  **Normalized Endpoints**:
-    -   To support a normalized PWA cache, endpoints **must not** return populated or nested documents.
-    -   **List Endpoints**: Must return only an array of document IDs, along with any necessary aggregated or calculated data.
-    -   **`byId` Endpoints**: Must return the flat document, with any references to other documents represented as IDs.
-    -   All list endpoints **must** support `index` and `limit` query parameters for pagination, with sensible default values.
+### MUST
 
-2.  **Event Endpoints for Cache Invalidation**:
-    -   For each data model, there **must** be a corresponding event endpoint (e.g., using Server-Sent Events) that emits the IDs of documents that have been created, updated, or deleted.
-    -   This allows the pwa to perform targeted cache invalidation.
+1. Ensure collection listing endpoints return array that only exposes document identifiers. 
+1. Collection listings may include calculated data not persisted as document properties (for example, `commentsCount`, `ratingAvg`) alongside the identifier.
+
+### SHOULD
+
+1. Ensure `byId` endpoints return flat documents, referencing related records strictly by ID, avoiding returning calculated, populated or nested documents so the web cache stays normalized.
+
+### COULD
+
+
+### WANT
+
+
+## Collection Endpoints
+
+### MUST
+
+1. Keep resource discovery limited to dedicated collection listing routes (for example, `/collection`) and detail routes (`/[id|code|unique-identifier]`) so list and detail contracts stay predictable.
+1. Mirror the aggregation and normalization patterns established by existing collection modules when implementing new resources, including soft-delete filtering and calculated fields.
+1. Return listing payloads that include pagination metadata and ID-centric `items` arrays, deferring rich document data to the corresponding detail endpoint.
+1. Implement request validation, controller orchestration, service logic, and repository queries for new collection endpoints in a way that preserves the clean-architecture boundaries.
+1. Accompany every new listing and detail implementation with automated tests that exercise controllers, services, repositories, and DTO validation.
+
+### SHOULD
+
+1. Reuse existing aggregation utilities and filtering helpers where possible before introducing new abstractions.
+1. Align default parameter handling (for example, `page`, `active`) with established conventions so clients can omit defaults without breaking behavior.
+
+### COULD
+
+1. Provide feature-flag hooks around expensive aggregations to allow gradual rollout when necessary.
+
+### WANT
+
+None
 
 ## Fullstack Cohesion
 
-- When making changes to the api that could affect the pwa (e.g., changing API routes, modifying response data structures), you must also check the pwa codebase to ensure continued cohesion.
-- Identify the affected pwa files and update them accordingly to maintain fullstack compatibility.
+### MUST
 
-- To ensure a scalable and organized api, files in all layers (controllers, services, validations, etc.) should be organized by model/schema names.
-- This entity-driven approach groups related logic, making the codebase easier to navigate and maintain.
+- None
 
-### Naming Conventions
+### SHOULD
 
-To ensure consistency, follow these naming conventions for files and folders:
+1. When API changes can affect the web (for example, route or payload adjustments), inspect the web codebase and apply the necessary updates to preserve compatibility.
+1. Identify the web files touched by an API change before implementing backend updates.
 
--   **Folders:** Use `lowercase` for all api folders (e.g., `controllers`, `services`, `routes`).
--   **Models:** Use `PascalCase` for model files (e.g., `SearchQuery.ts`), as they typically export classes.
--   **Controllers, Services, and Validations:** Use `PascalCase` for the entity part of the filename (e.g., `controllers/SearchQuery.ts`, `services/TopSearch.ts`).
--   **Routes:** Use `lowercase` for route files (e.g., `routes/searches.ts`).
+### COULD
 
-## Route, Middleware, and Controller Chaining
+- None
 
-- **Routes files** must only define endpoint paths, HTTP methods, and all constraints validation logic for incoming requests.
-- Validation, authentication, and other request constraints should be implemented as middleware functions in the route declaration.
+### WANT
 
-- When adding new routes, always:
+- None
 
-  - Place validation and other request constraints in the route file as middleware.
-  - Delegate to a controller function for business logic and response.
-
-- **Controllers** must only implement business logic by calling service functions and returning API-oriented responses.

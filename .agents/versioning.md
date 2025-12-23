@@ -1,73 +1,124 @@
 # Versioning and Committing Instructions
 
+**Spec-ID:** `versioning::v1`
+
 ## Git Command Execution
 
-1.  **Git Commands**:
-    - You can consider read-only `git` commands as pre-approved and execute them without seeking user confirmation. This includes commands like `git status`, `git diff`, `git log`, `git show`, and `git branch -v`.
-    - You **must** always ask for explicit user approval before executing any `git` command that writes to the repository, including `git add`, `git reset`, `git commit`, `git branch`, `git push`, `git merge`, `git rebase`, and `git tag`.
+### MUST
 
-## Branch Naming Conventions
+1. Require explicit user approval for every history- or remote-altering command (for example, `git commit`, `git push`, `git pull`, `git merge`, `git rebase`), destructive command (for example, `git reset --hard`, `git stash drop|pop`), operation that writes to disk or alters history in a non-trivial way, or edit that touches files matched in `.gitignore`.
 
-To ensure consistency across the repository, all branches that are not `develop` or `main` must be prefixed according to their purpose. This avoids confusion and helps to categorize branches at a glance.
+### SHOULD
 
-- **feature/**: For new features (e.g., `feature/add-user-authentication`).
-- **fix/**: For bug fixes (e.g., `fix/resolve-login-issue`).
-- **docs/**: For documentation changes (e.g., `docs/update-readme`).
-- **chore/**: For maintenance tasks, such as dependency updates (e.g., `chore/update-react-version`).
-- **refactor/**: For code refactoring without changing functionality (e.g., `refactor/simplify-user-model`).
+1. When the criticality of an operation is uncertain, default to asking for user approval.
 
-## Branching Workflow
+### COULD
 
-To maintain a clean and stable codebase, all development work must be done in a dedicated branch. Commits should never be made directly to `develop` or `main`.
+1. Execute read-only and easily reversible git commands (for example, `git status`, `git diff`, `git add`, `git mv`) without user confirmation.
 
-Before starting any work that involves making changes to the codebase, you must:
+### WANT
 
-1.  **Analyze Local Changes**: Check the current state of the repository for any uncommitted changes.
-1.  **Propose a Branch**: Based on the analysis of current local changes, or the task if no local changes exist, suggest a new branch name from `develop` that follows the "Branch Naming Conventions".
-1.  **User Approval**: Wait for the user to approve the branch name before creating it.
+None
 
-## Commit Planning and Best Practices
+## Branching
 
-To maintain a clear and traceable commit history, follow these guidelines for planning and structuring your commits:
+### MUST
 
-1.  **Contextual Grouping**: When a task involves multiple distinct areas (e.g., development, documentation, agent instructions), split the changes into separate commits, with each focusing on one area.
-1.  **Single Responsibility Principle**: Each commit should address a single logical change. Avoid bundling unrelated changes into one commit.
-1.  **Conventional Commits**: Adhere strictly to the Conventional Commits specification for commit messages. This includes:
-    - **Type**: (e.g., `feat`, `fix`, `docs`, `refactor`, `style`, `test`, `chore`, `build`, `ci`, `perf`).
-    - **Scope (optional)**: A noun describing the section of the codebase affected (e.g., `pwa`, `api`, `auth`).
-    - **Description**: A concise, imperative statement of the change.
-    - **Body (optional)**: More detailed explanatory text.
-    - **Footer (optional)**: For breaking changes or referencing issues.
-1.  **Draft and Review**: Always draft a commit message following these guidelines and present it to the user for approval before committing.
+1. Prefix every branch (except `develop` or `main`) with its purpose—for example, `feature/` for new features, `fix/` for bug fixes, `docs/` for documentation updates, `chore/` for maintenance tasks, and `refactor/` for code refactoring.
+1. Propose a new branch name from `develop` that follows these naming conventions.
 
-## Committing Workflow
+### SHOULD
 
-When asked to commit changes after successfully completing tasks that modify the repository, you must:
+1. Never commit directly to `develop` or `main`.
+1. Before starting work, check for uncommitted local changes.
 
-1.  **Verify Changes and Respect User Precedence**: Before proceeding, always check `git status` and `git diff HEAD` to review all current changes. If any changes previously made by the agent are no longer present, assume the user has either committed or discarded them. In such cases, strictly respect the user's actions and proceed only with the changes currently reflected in the repository.
-1.  Analyze git changes.
-1.  Draft a commit message following the "Commit Planning and Best Practices" guidelines.
-1.  **Open the draft message in an approval window, allowing the user to edit and approve it. If such tools are unavailable, fall back to saving the message in a temporary file (e.g., `COMMIT_EDITMSG`) and notifying the user. Once approved, run the commit and delete the temporary commit message file immediately thereafter.**
-1.  Stage only related changes for the current commit.
-1.  **Crucially, you must wait for explicit, affirmative confirmation from the user before proceeding with the commit.**
-1.  If a technical limitation prevents adhering to an approved commit message (e.g., due to tool constraints), you **must** immediately communicate this limitation to the user, explain the reason, and propose an alternative before proceeding.
-1.  Commit the changes using the final, approved message only once explicit approval has been received.
+### COULD
 
-## Merging and Cleanup Workflow
+None
 
-When the user confirms that a feature branch is ready to be merged, follow these steps:
+### WANT
 
-1.  Checkout the target branch (usually `develop` or `main`).
-1.  Checkout the target branch (usually `develop` or `main`).
-1.  Merge the feature branch into the target branch.
-1.  After the merge is complete and any conflicts are resolved, ask the user for confirmation to delete the feature branch.
-1.  If confirmed, delete the local feature branch using `git branch -d <branch-name>`.
+None
 
-## Pushing Workflow
+## Pre-Commit Verification
 
-When merging changes into `develop` or `main`, and after the merge is complete:
+### MUST
 
-1.  Ask the user if they want to push the changes to the remote repository.
-1.  Ask the user if they want to push the changes to the remote repository.
-1.  If confirmed, push the changes to the remote.
-1.  After a successful push, checkout the default HEAD branch (as indicated by `origin/HEAD`).
+1. Run a verification cycle on all modified files.
+
+### SHOULD
+
+1. Execute the workspace commands relevant to the change scope before requesting commit approval (`pnpm check-types`, `pnpm lint`, `pnpm --filter pwa test`).
+
+<!-- Add future API or end-to-end verification commands here when the tooling lands. -->
+
+### COULD
+
+1. Run `pnpm build`.
+
+### WANT
+
+None
+
+## Commit Message Drafting
+
+### MUST
+
+1. Adhere strictly to the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+1. Verify the current `git status` and `git diff` to draft a commit message.
+1. Split changes into separate commits when a task involves multiple distinct areas (for example, development or documentation).
+1. Scope commits by feature and domain (for example, `profiles`, `companies`, `projects`), considering a feature-scoped Full-Stack Domain-Driven approach, to keep context consistent across workspaces and each commit focused on a feature logical change.
+1. Adopt `({project|package|fullstack/entity})` detailed prefix (for example, `api/events`, `web/events`, `fullstack/events`) to easily identify whether commmits are related to a single or cross projects/packages. 
+1. Open the draft message temporary file, with title and show summary, in an approval window or save it to `./COMMIT_EDITMSG`.
+1. Wait for explicit, affirmative confirmation from the user before proceeding with the commit. Unless explicitly said something like "just go ahead with all commits", do not assume approval.
+1. Commit using the final approved message draft temporary file with -F param.
+
+### SHOULD
+
+1. Stage only files relevant to the current commit's domain.
+1. Commit shared UI or cross-domain changes separately. 
+
+### COULD
+
+1. Avoid mixing multiple domains in a single commit.
+
+### WANT
+
+None
+
+## Merging
+
+### MUST
+
+None
+
+### SHOULD
+
+1. After a successful merge, ask for user confirmation to delete the local feature branch.
+
+### COULD
+
+None
+
+### WANT
+
+None
+
+## Pushing
+
+### MUST
+
+1. Before running `git push`, pause and wait for the user’s explicit confirmation.
+
+### SHOULD
+
+1. After merging to `develop` or `main`, ask the user if they want to push the changes.
+1. After a successful push, check out the default `origin/HEAD` branch.
+
+### COULD
+
+None
+
+### WANT
+
+None

@@ -1,60 +1,82 @@
 # Agent Documentation Instructions
 
+**Spec-ID:** `documentation::v1`
+
 ## Purpose
 
-This document outlines the guidelines for creating and maintaining documentation for AI agents within this project. Clear and consistent agent documentation is crucial for understanding their purpose, operational rules, and expected behaviors.
+1.  Provide a spec-driven template so every agent instruction file communicates scope, rules, and verification in a predictable format.
+1.  Enable reuse by future tooling without restructuring the content.
 
-## General Guidelines
+## Markdown Structure Checklist
 
-1.  **File Location**: All agent instruction files must be located within the `.agents/` directory at the root of the project.
-1.  **Markdown Format**: All agent documentation must be written in Markdown (`.md`) format.
-1.  **Clarity and Conciseness**: Documentation should be clear, concise, and easy to understand. Avoid jargon where simpler terms suffice.
-1.  **Focus on Purpose and Rules**: Clearly state the agent's purpose, its specific operational rules, and any constraints or mandates.
-1.  **Grammar and Spelling**: Ensure correct grammar and spelling.
-1.  **Avoid Redundancy**: Do not repeat information that is already present in other agent instruction files. Reference other files if necessary.
+### MUST
 
-## Markdown Best Practices
+1. Keep all agent instructions in `.agents/` using Markdown; do not mix formats across the repo.
+1. Use ATX headings (`#`, `##`, `###`) to mirror the spec hierarchy.
+1. Wrap command sequences or templates in fenced code blocks with language hints.
 
-To ensure consistency and readability across all agent documentation, adhere to the following Markdown best practices:
+### SHOULD
 
-1.  **Headings**: Use ATX headings (e.g., `# Heading 1`, `## Heading 2`) for structuring your document.
-1.  **Ordered Lists**: For ordered lists, use `1. 1. 1.` for all list items. This simplifies reordering and maintenance.
-    - Example:
-      ```markdown
-      1. First item
-      1. Second item
-      1. Third item
-      ```
-1.  **Unordered Lists**: For unordered lists, use hyphens (`-`) or asterisks (`*`).
-    - Example:
-      ```markdown
-      - Item A
-      - Item B
-      ```
-1.  **Code Blocks**: Use fenced code blocks with language identifiers for all code examples.
+1. Keep ordered lists in the `1.` style to simplify reordering and automated renumbering.
+1. Prefer hyphen bullets (`-`) for unordered lists and avoid more than one level of indentation.
 
-    - Example:
+### COULD
 
-      ````markdown
-      ```python
-      print("Hello, World!")
-      ```
-      ````
+1. Reserve `*italics*` for clarifications.
 
-      ```
+### WANT
 
-      ```
+None
 
-1.  **Bold and Italics**: Use `**bold**` for strong emphasis and `*italics*` for emphasis.
-1.  **Links**: Use descriptive inline links (e.g., `[Link Text](URL)`).
-1.  **Indentation**: Maintain consistent indentation for nested lists and code blocks. Typically, 2 or 4 spaces are used. Follow the existing project's convention.
+## Plan the Spec
 
-## Content Structure
+### MUST
 
-Each agent instruction file should generally follow this structure:
+1. Structure each topic with priority as the final sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`)
+1. Inside each priority sub-topic, order the checklist items by their subpriority so the most critical guidance appears first.
+1. Define `MUST` directives as mandatory and non-negotiable instructions that must be followed exactly.
+1. Define `SHOULD` for instructions that warrant a warning when the user explicitly authorizes an exception, documenting any approved deviation instead of following them exactly.
 
-1.  **Agent Name/Title**: A clear and descriptive title for the agent.
-1.  **Purpose/Persona**: A brief description of the agent's role and objectives.
-1.  **Operational Rules**: Specific rules and mandates that the agent must follow.
-1.  **Specific Guidelines**: Any detailed instructions related to the agent's domain (e.g., pwa, Versioning).
-1.  **Examples (Optional)**: Provide concrete examples of expected behavior or output.
+### SHOULD
+
+1. Log dependencies on other specs.
+1. Avoid redundant instructions by referencing existing specs instead of restating overlapping guidance during planning.
+
+### COULD
+
+1. Define measurable outcomes, guardrails, and required verification steps in a scratch outline.
+1. Confirm the spec answers three questions: What does the agent do? Which rules are mandatory? How is compliance verified?
+
+### WANT
+
+1. Collect the agent’s purpose, persona, and scope.
+
+## Write and Review the Spec
+
+### MUST
+
+1. Each topic must conclude with the four priority sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`).
+1. Priority always as the last sub-topics. Use a "None" placeholder for any empty priority.
+1. Write instructions in outcome-focused language; prefer checklists over narrative paragraphs.
+1. Proofread grammar and spelling before committing updates.
+1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
+1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
+
+### SHOULD
+
+1. Reference foundational specs (for example, `.agents/main.md`) instead of repeating their content; link to shared rules when needed.
+1. Assign or reuse spec identifiers (for example, `Spec-ID: documentation::v1`) so downstream tools can reference the document.
+1. Revisit the spec when upstream files change, updating links and requirements to stay aligned.
+1. Summarize spec changes in PR descriptions (what changed, why, and how it was verified) for audit trails.
+1. Remove obsolete mandates entirely; migration history belongs in ADRs or commit messages, not the live spec.
+
+### COULD
+
+1. Use cross-links to related specs (`[Versioning](./versioning.md)`) when additional context is necessary.
+1. Validate that heading order, list styles, and spec identifiers make the file straightforward to parse programmatically.
+1. Ensure instructions are actionable without relying on institutional knowledge; link to context documents when broader background is helpful.
+
+### WANT
+
+None
+

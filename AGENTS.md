@@ -7,8 +7,10 @@ This file serves as the central configuration for AI agents working on this proj
 @./.agents/main.md
 @./.agents/developer_assistant.md
 @./.agents/versioning.md
+@./.agents/pull_requests.md
 @./.agents/authorship.md
 @./.agents/documentation.md
+@./.agents/qa.md
 @./.agents/fullstack.md
 @./.agents/pwa.md
 @./.agents/api.md

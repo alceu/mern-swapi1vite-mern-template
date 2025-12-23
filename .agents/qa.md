@@ -1,0 +1,75 @@
+# QA Agent Instructions
+
+**Spec-ID:** `qa::v1`
+
+## Bug Resolution Workflow
+
+when a request describes errors or undesired behaviors and asks for a fix.
+
+### MUST
+
+1. Add a failing test in the affected workspace that captures the reported behavior (for example, a Vitest spec under `packages/pwa`).
+1. Run the package-level test command (for example, `pnpm --filter pwa test`) to confirm the failure reproduces before applying fixes.
+1. Implement the code change that resolves the failing scenario, keeping implementations aligned with `.agents/api.md` and `.agents/pwa.md` as applicable.
+1. Re-run the same test command to verify the new behavior passes alongside existing suites.
+1. When the defect spans multiple layers (for example, API plus PWA), repeat the add-test → reproduce → fix → verify cycle in each impacted workspace before closing the issue.
+
+### SHOULD
+
+1. Prefer the smallest effective test scope, escalating from unit to integration coverage only when the discrepancy remains unresolved.
+1. Document manual reproduction steps in the issue or PR description if an automated harness is not yet available for the affected area.
+
+### COULD
+
+1. Introduce shared fixtures or utilities in the `packages/domain` workspace when a regression touches cross-package DTOs.
+
+### WANT
+
+1. None
+
+## Future E2E Readiness
+
+Guidance for introducing automated visual or end-to-end regression suites once the project adopts them.
+
+### MUST
+
+1. Document proposed tooling, required environment variables, and execution commands in this section before enabling the suite in CI or release workflows.
+1. Align new automation dependencies with `.agents/stack.md`, ensuring each package `package.json` declares the necessary libraries and scripts.
+
+### SHOULD
+
+1. Prototype new automation in isolated branches and capture outcomes under `docs/qa/` before enforcing runs on shared branches.
+
+### COULD
+
+1. Reuse findings from prototype runs to establish coding standards or page-object conventions for future contributors.
+
+### WANT
+
+1. None
+
+## Prototype Fidelity Validation
+
+when an issue references mismatches between the implementation and the approved prototype.
+
+### MUST
+
+1. Collect the approved design reference (for example, Figma frame URL or design doc) and document the target UI state in the task notes.
+1. Capture the current implementation via screenshots or screen recordings that highlight the reported deviation.
+1. Enumerate the UI deltas (layout, spacing, copy, interactions) in the fix plan, referencing the exact components or styles to adjust.
+1. Apply the fix and gather updated captures alongside notes confirming the UI now matches the reference.
+1. Store the before/after evidence in the issue, PR, or a `docs/qa/` note so future regressions can reuse the investigation context.
+
+### SHOULD
+
+1. Note any environmental prerequisites (seed data, route params, environment variables) necessary to reproduce the prototype state so the fix remains repeatable.
+1. Define the verification command or manual steps required to revisit the view after changes ship.
+
+### COULD
+
+1. Store comparison artifacts (for example, annotated screenshots or CSS audit notes) alongside QA documentation when historical reference is helpful.
+1. Pilot automated visual or end-to-end tooling (for example, Playwright) in an experiment branch before formal adoption.
+
+### WANT
+
+1. None
