@@ -4,6 +4,7 @@ import eventEmitter from "@api/utils/EventEmitter";
 import SearchQuery from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 import { ITopSearchDto, SearchType } from "@swapi-mern/domain";
+import { BadRequestError, NotFoundError } from "@api/utils/errors";
 
 /**
  * Calculates the top search queries from the SearchQuery model for a given type.
@@ -176,9 +177,9 @@ export async function getTopQueries(
 
 export async function getTopSearchById(
   searchQueryId: string
-): Promise<ITopSearchDto | null> {
+): Promise<ITopSearchDto> {
   if (!mongoose.Types.ObjectId.isValid(searchQueryId)) {
-    return null;
+    throw new BadRequestError("Invalid top search ID format");
   }
 
   const topSearch = await TopSearch.findOne({
@@ -186,7 +187,7 @@ export async function getTopSearchById(
   });
 
   if (!topSearch) {
-    return null;
+    throw new NotFoundError("Top search not found");
   }
 
   return {
