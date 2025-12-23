@@ -7,6 +7,7 @@
 ### MUST
 
 1. Require explicit user approval for every history- or remote-altering command (for example, `git commit`, `git push`, `git pull`, `git merge`, `git rebase`), destructive command (for example, `git reset --hard`, `git stash drop|pop`), operation that writes to disk or alters history in a non-trivial way, or edit that touches files matched in `.gitignore`.
+2. Prefer running git commands directly (e.g., via shell or terminal) rather than delegating to external MCP servers, to allow users to configure manual or automated approval workflows as needed.
 
 ### SHOULD
 
