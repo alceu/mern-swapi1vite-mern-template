@@ -73,7 +73,7 @@
 1. Organize source files by resource domain (controllers, services, models, validations, routes, tasks) under `packages/api/src`.
 1. Keep list endpoints focused on returning identifiers plus any calculated metadata, leaving document hydration to detail endpoints.
 1. Maintain detail endpoints that expose a single document shape aligned with the DTOs exported from `packages/domain`.
-1. Document environment variable expectations in the sample env files and `.agents/stack.md` when introducing new configuration keys.
+1. Document environment variable expectations in the sample env files and `docs/stack.md` when introducing new configuration keys.
 
 #### SHOULD
 
@@ -91,11 +91,11 @@
 
 #### MUST
 
-1. Load collection data through the shared data layer before requesting related detail records, mirroring the normalization strategy defined in `.agents/fullstack.md` and `.agents/stack.md`.
+1. Load collection data through the shared data layer before requesting related detail records, mirroring the normalization strategy defined in `.agents/fullstack.md` and `docs/stack.md`.
 1. Implement item-level feature components that own their own detail fetching, using `skip` or equivalent flags until the parent provides a stable identifier.
 1. House business logic, data access wiring, and store slices inside feature directories so pages remain focused on routing concerns.
 1. Keep shared presentational pieces inside `packages/pwa/src/components`, avoiding business-specific state in those modules.
-1. Defer to `.agents/stack.md` for workspace tooling and update that spec before adopting new frameworks or libraries.
+1. Defer to `docs/stack.md` for workspace tooling and update that reference before adopting new frameworks or libraries.
 
 #### SHOULD
 

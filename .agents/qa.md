@@ -55,7 +55,7 @@ Guidance for introducing automated visual or end-to-end regression suites once t
 ### MUST
 
 1. Document proposed tooling, required environment variables, and execution commands in this section before enabling the suite in CI or release workflows.
-1. Align new automation dependencies with `.agents/stack.md`, ensuring each package `package.json` declares the necessary libraries and scripts.
+1. Align new automation dependencies with `docs/stack.md`, ensuring each package `package.json` declares the necessary libraries and scripts.
 
 ### SHOULD
 

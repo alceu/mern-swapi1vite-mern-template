@@ -26,7 +26,7 @@
 ### MUST
 
 1. Follow the shared normalization approach described in `.agents/fullstack.md`, fetching collection endpoints first and loading detail queries by identifier.
-1. Configure data-layer settings in line with `.agents/stack.md`, keeping environment-controlled base URLs documented in that spec.
+1. Configure data-layer settings in line with `docs/stack.md`, keeping environment-controlled base URLs documented in that reference.
 1. Subscribe to the API event streams defined in `.agents/fullstack.md` and invalidate affected list and detail caches by identifier when events arrive.
 
 ### SHOULD
@@ -51,7 +51,7 @@
 1. Encapsulate business flows inside feature modules (`packages/pwa/src/features`), housing data fetching, store wiring, and view composition together.
 1. Reserve shared presentational components for `packages/pwa/src/components`, ensuring they remain stateless and receive all data via props.
 1. Avoid importing feature state or data hooks directly inside page modules; instead, pass props from pages to features so navigation and business logic stay separated.
-1. Mirror the URL hierarchy inside the pages components base folder using per-segment subdirectories and route exports, following the detailed structure documented in `.agents/stack.md`.
+1. Mirror the URL hierarchy inside the pages components base folder using per-segment subdirectories and route exports, following the detailed structure documented in `docs/stack.md`.
 1. Document new cross-feature utilities or adapters in the workspace README so contributors understand their scope.
 
 ### SHOULD
@@ -71,7 +71,7 @@
 ### MUST
 
 1. Provide meaningful ARIA labels, roles, and keyboard flows for interactive components created within pages or features.
-1. Keep copy centralization, localization hooks, and related tooling consistent with `.agents/stack.md` so strings remain translation-ready when localization is enabled.
+1. Keep copy centralization, localization hooks, and related tooling consistent with `docs/stack.md` so strings remain translation-ready when localization is enabled.
 
 ### SHOULD
 

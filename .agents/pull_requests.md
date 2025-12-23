@@ -119,7 +119,7 @@
 1. After pushing the branch, draft the pull request body.
 1. Use feature branch commit messages as the primary source of context for the pull request body.
 1. Request from the user any external references, manual testing notes, or additional context needed for the pull request body.
-1. Populate the template with a title containing the ticket identifier when applicable, a summary of changes and motivation, testing instructions referencing the commands you executed (for example `pnpm check-types`, `pnpm --filter pwa test`), and links to related tickets or issues. Reference `.agents/stack.md` when new tooling is involved.
+1. Populate the template with a title containing the ticket identifier when applicable, a summary of changes and motivation, testing instructions referencing the commands you executed (for example `pnpm check-types`, `pnpm --filter pwa test`), and links to related tickets or issues. Reference `docs/stack.md` when new tooling is involved.
 1. Save the drafted description to a temporary Markdown file (for example `./PR_BODY.md`) and pause until the user edits or approves it.
 1. Open the pull request targeting `develop`, then proceed through review and merge via the GitHub interface or linked CI tooling.
 1. Do not run `gh pr create` until both the feature branch has been pushed and the user confirms the pull request body.
