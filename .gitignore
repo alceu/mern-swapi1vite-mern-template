@@ -9,5 +9,4 @@ tsconfig.node.tsbuildinfo
 
 .vscode/
 
-misc
-notes_todo.txt
+**/gitignored-*
