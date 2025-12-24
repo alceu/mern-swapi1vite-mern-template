@@ -63,7 +63,7 @@ This guide captures the active tooling across the MERN SWAPI template so agents 
 
 ## Tooling & Automation
 
-- GitHub Actions coverage workflow runs `pnpm coverage` on push and pull requests.
+- GitHub Actions coverage workflow runs `pnpm coverage` on push and change requests.
 
 ## Testing & Quality Gates
 
