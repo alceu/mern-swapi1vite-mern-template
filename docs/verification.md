@@ -1,235 +1,343 @@
 # Verification Commands Reference
 
-This document captures the verification workflows and commands required before commits, merges, and releases. All agents must reference this file for specific command syntax and execution patterns.
+**Spec-ID:** `docs-verification::v1`
 
-## Core Verification Commands
+## Purpose
 
-### Type Checking
+### MUST
 
-```bash
-# Root-level type check across all workspaces
-pnpm check-types
+1. Define the verification commands and workflows required before commits, merges, and releases.
+1. Keep command syntax aligned with workspace scripts in `package.json` files and any container workflows.
 
-# Package-specific type checking
-pnpm --filter api check-types
-pnpm --filter pwa check-types
-pnpm --filter domain check-types
-```
+### SHOULD
 
-### Linting
+1. None
 
-```bash
-# Root-level linting
-pnpm lint
+### COULD
 
-# Package-specific linting
-pnpm --filter api lint
-pnpm --filter pwa lint
-```
+1. None
 
-### Testing
+### WANT
 
-```bash
-# PWA tests
-pnpm --filter pwa test
+1. None
 
-# PWA coverage
-pnpm --filter pwa coverage
+## Verification Commands
 
-# Workspace coverage bundle (API + PWA)
-pnpm coverage
+### MUST
 
-# API tests
-pnpm --filter api test
-pnpm --filter api coverage
+1. Use the following commands for type checking:
 
-# Domain tests (when needed)
-pnpm --filter domain test
-```
+   ```bash
+   pnpm check-types
+   pnpm --filter api check-types
+   pnpm --filter pwa check-types
+   pnpm --filter domain check-types
+   ```
 
-### Building
+1. Use the following commands for linting:
 
-```bash
-# Build all packages
-pnpm build
+   ```bash
+   pnpm lint
+   pnpm --filter api lint
+   pnpm --filter pwa lint
+   ```
 
-# Package-specific builds
-pnpm --filter api build
-pnpm --filter pwa build
-pnpm --filter domain build
-```
+1. Use the following commands for testing and coverage:
 
-## Pre-Commit Verification Workflow
+   ```bash
+   pnpm --filter pwa test
+   pnpm --filter pwa coverage
+   pnpm coverage
+   pnpm --filter api test
+   pnpm --filter api coverage
+   pnpm --filter domain test
+   ```
 
-As mandated by `.agents/versioning.md`, run verification steps scoped to changed files:
+1. Use the following commands for builds:
 
-1. **Documentation-only changes**: Markdown linting (if configured)
-2. **API changes**: `pnpm check-types`, `pnpm lint`, `pnpm --filter api test`
-3. **PWA changes**: `pnpm check-types`, `pnpm lint`, `pnpm --filter pwa test`
-4. **Domain changes**: `pnpm check-types`, `pnpm lint`, affected package tests
-5. **Cross-package changes**: Full workspace verification bundle
+   ```bash
+   pnpm build
+   pnpm --filter api build
+   pnpm --filter pwa build
+   pnpm --filter domain build
+   ```
 
-### Minimum Default Verification
+### SHOULD
 
-The default verification step required by `.agents/developer_assistant.md`:
+1. None
 
-```bash
-pnpm check-types
-```
+### COULD
 
-### Extended Verification
+1. None
 
-For changes affecting runtime behavior:
+### WANT
 
-```bash
-pnpm lint
-pnpm check-types
-pnpm --filter pwa test
-pnpm build  # optional but recommended
-```
+1. None
 
-## Docker Environment Verification
+## Verification Workflows
 
-### Container Cleanup Command
+### MUST
 
-Before and after Docker-based verification (`.agents/developer_assistant.md`, `.agents/qa.md`):
+1. The minimum default verification step is:
 
-```bash
-docker compose down --volumes --remove-orphans
-```
+   ```bash
+   pnpm check-types
+   ```
 
-This ensures:
+1. For documentation-only changes, run the minimum default verification and any configured Markdown linting.
+1. For runtime behavior changes, add linting and the relevant package tests.
+1. For container-based verification, run the cleanup command before and after using Docker:
 
-- All containers are stopped
-- Volumes are removed (clean database state)
-- Orphaned containers are cleaned up
-- No stale state affects verification
+   ```bash
+   docker compose down --volumes --remove-orphans
+   ```
 
-### Development Environment Startup
+1. Use the following dev server checks and start commands when runtime behavior is affected:
 
-```bash
-# Start all services (MongoDB, API, PWA)
-docker compose up -d
+   ```bash
+   lsof -ti:3000
+   lsof -ti:5173
+   lsof -ti:27017
+   pnpm dev
+   pnpm --filter api dev
+   pnpm --filter pwa dev
+   ```
 
-# Check service health
-docker compose ps
+### SHOULD
 
-# View logs
-docker compose logs -f
+1. Redirect dev server logs to a file and scan for failures when troubleshooting:
 
-# Verify API health
-curl http://localhost:3000/health
+   ```bash
+   pnpm dev > dev.log 2>&1 &
+   tail -f dev.log
+   timeout 10s tail -f dev.log | rg -i "error|fail|exception"
+   ```
 
-# Verify PWA is serving
-curl http://localhost:5173
-```
+### COULD
 
-### Production Environment Verification
+1. Run `pnpm build` after cross-package changes when time allows.
 
-```bash
-# Use production compose file
-docker compose -f docker-compose.production.yml up -d
+### WANT
 
-# Verify and tear down
-docker compose -f docker-compose.production.yml down --volumes --remove-orphans
-```
-
-## Development Server Verification
-
-### Check if Dev Server is Running
-
-Before starting verification that requires a dev server (`.agents/versioning.md`):
-
-```bash
-# Check if API is running
-lsof -ti:3000
-
-# Check if PWA is running
-lsof -ti:5173
-
-# Check if MongoDB is running
-lsof -ti:27017
-```
-
-### Start Development Servers
-
-```bash
-# Start both API and PWA concurrently
-pnpm dev
-
-# Start individual packages
-pnpm --filter api dev
-pnpm --filter pwa dev
-```
-
-### Monitor Development Logs
-
-Redirect output to logs and monitor for errors:
-
-```bash
-pnpm dev > dev.log 2>&1 &
-tail -f dev.log
-
-# Monitor for up to 10 seconds for errors
-timeout 10s tail -f dev.log | grep -i "error\|fail\|exception"
-```
-
-## Configuration File Validation
-
-When verifying stack changes (`.agents/documentation.md`):
-
-```bash
-# Validate JSON syntax
-cat package.json | jq empty
-cat packages/*/package.json | jq empty
-
-# Check TypeScript configs compile
-pnpm check-types
-
-# Validate docker-compose files
-docker compose config
-docker compose -f docker-compose.production.yml config
-
-# Check environment file templates exist
-test -f sample-development.env && echo "Dev env template OK"
-test -f sample-production.env && echo "Prod env template OK"
-```
+1. None
 
 ## Change Scope Detection
 
-Determine which verification commands to run based on changed files:
+### MUST
 
-```bash
-# Get changed files since last commit
-git diff --name-only HEAD
+1. Use the following commands to map change scope:
 
-# Get changed files in current branch vs develop
-git diff --name-only develop...HEAD
+   ```bash
+   git diff --name-only HEAD
+   git diff --name-only develop...HEAD
+   git diff --name-only develop...HEAD | rg "^packages/api/"
+   git diff --name-only develop...HEAD | rg "^packages/pwa/"
+   git diff --name-only develop...HEAD | rg "^\.agents/"
+   ```
 
-# Filter by workspace
-git diff --name-only develop...HEAD | grep "^packages/api/"
-git diff --name-only develop...HEAD | grep "^packages/pwa/"
-git diff --name-only develop...HEAD | grep "^\.agents/"
-```
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Verification Bundle by Change Type
 
-| Change Type               | Required Commands                                         |
-| ------------------------- | --------------------------------------------------------- |
-| `.agents/*.md` changes    | `pnpm check-types`, review docs consistency               |
-| `docs/*.md` changes       | Review against manifests, `pnpm check-types`              |
-| API source changes        | `pnpm lint`, `pnpm check-types`, `pnpm --filter api test` |
-| PWA source changes        | `pnpm lint`, `pnpm check-types`, `pnpm --filter pwa test` |
-| Domain changes            | `pnpm lint`, `pnpm check-types`, affected package tests   |
-| Docker changes            | Docker Compose validation, container startup/teardown     |
-| Package.json changes      | `pnpm install`, `pnpm check-types`, `pnpm build`          |
-| TypeScript config changes | `pnpm check-types`, `pnpm build`                          |
+### MUST
 
-## Related Specifications
+1. Use the following mapping to select verification commands:
 
-- `.agents/developer_assistant.md` — Default verification requirements
-- `.agents/versioning.md` — Pre-commit verification workflow
-- `.agents/documentation.md` — Stack documentation verification
-- `.agents/qa.md` — Bug resolution verification
-- `docs/stack.md` — Workspace structure and tooling
-- `docs/testing.md` — Testing framework details
+   ```text
+   .agents/*.md changes    -> pnpm check-types, review docs consistency
+   docs/*.md changes       -> pnpm check-types, review against manifests
+   API source changes      -> pnpm lint, pnpm check-types, pnpm --filter api test
+   PWA source changes      -> pnpm lint, pnpm check-types, pnpm --filter pwa test
+   Domain changes          -> pnpm lint, pnpm check-types, affected package tests
+   Docker changes          -> docker compose config, container startup/teardown
+   package.json changes    -> pnpm install, pnpm check-types, pnpm build
+   TypeScript config       -> pnpm check-types, pnpm build
+   ```
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Docker Environment Verification
+
+### MUST
+
+1. Use the following commands for Docker-based verification:
+
+   ```bash
+   docker compose down --volumes --remove-orphans
+   docker compose up -d
+   docker compose ps
+   docker compose logs -f
+   curl http://localhost:3000/health
+   curl http://localhost:5173
+   docker compose down --volumes --remove-orphans
+   ```
+
+1. Use the following commands for production Compose verification:
+
+   ```bash
+   docker compose -f docker-compose.production.yml up -d
+   docker compose -f docker-compose.production.yml down --volumes --remove-orphans
+   ```
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Configuration File Validation
+
+### MUST
+
+1. Use the following commands to validate config syntax and templates when stack changes occur:
+
+   ```bash
+   cat package.json | jq empty
+   cat packages/*/package.json | jq empty
+   pnpm check-types
+   docker compose config
+   docker compose -f docker-compose.production.yml config
+   test -f sample-development.env && echo "Dev env template OK"
+   test -f sample-production.env && echo "Prod env template OK"
+   ```
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Auto-Discovery
+
+### MUST
+
+1. Confirm available scripts in root and workspace `package.json` files before editing command lists.
+1. Check Docker Compose files for service names and ports before adding verification commands.
+1. Use local CLI commands, for example:
+
+   ```bash
+   rg -n "\"(check-types|lint|test|coverage|build)\"" package.json packages/*/package.json
+   rg -n "services:" docker-compose*.yml
+   ```
+
+### SHOULD
+
+1. Prefer local inspection over networked tooling unless the user approves remote access.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Missing Inputs
+
+### MUST
+
+1. Ask the user for any verification steps that are required but not present in workspace scripts, such as Markdown linting or additional QA tooling.
+1. Ask the user to confirm whether any health checks or service URLs differ from the defaults listed here.
+
+### SHOULD
+
+1. Clarify whether any verification steps require network access or credentials.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before running commands that alter container state, start background dev servers, or install dependencies.
+
+### SHOULD
+
+1. Confirm with the user before running verification steps that may take significant time.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Related Specs
+
+### MUST
+
+1. `.agents/developer_assistant.md`
+1. `.agents/version-control.md`
+1. `.agents/qa.md`
+1. `docs/stack.md`
+1. `docs/testing.md`
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Be able to run workspace scripts and interpret CLI output for failures.
+1. Understand when to scope verification to specific packages.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None

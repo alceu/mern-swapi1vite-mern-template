@@ -1,122 +1,233 @@
 # Testing Framework Reference
 
-This document captures testing tools, conventions, and verification flows for the MERN SWAPI template. Refer to this file when implementing or debugging automated test coverage.
+**Spec-ID:** `docs-testing::v1`
+
+## Purpose
+
+### MUST
+
+1. Document the per-project testing stack, commands, and coverage expectations for each workspace.
+1. Keep this file aligned with workspace configs and scripts so agents can auto-discover values before asking users.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Testing Stack
 
-### API Testing (`packages/api`)
+### MUST
 
-- **Framework**: Jest and Supertest for API endpoint testing
-- **Location**: Tests will be organized alongside source files or in dedicated test directories
-- **Command**: `pnpm --filter api test`
-- **Coverage**: `pnpm --filter api coverage`
-- **Scope**: Controllers, services, repositories, and validation logic
-- **Thresholds**: Configured in `packages/api/jest.config.cjs`
+1. API testing (`packages/api`): Jest and Supertest; commands `pnpm --filter api test` and `pnpm --filter api coverage`; thresholds in `packages/api/jest.config.cjs`.
+1. PWA testing (`packages/pwa`): Vitest with React Testing Library and jsdom; commands `pnpm --filter pwa test` and `pnpm --filter pwa coverage`; thresholds in `packages/pwa/vite.config.ts`.
+1. Domain testing (`packages/domain`): Vitest; command `pnpm --filter domain test` when needed.
+1. Workspace coverage: `pnpm coverage` runs API and PWA coverage with summary output.
 
-### PWA Testing (`packages/pwa`)
+### SHOULD
 
-- **Framework**: Vitest with React Testing Library and jsdom
-- **Location**: Tests colocated with components in `src/` directories
-- **Command**: `pnpm --filter pwa test`
-- **Coverage**: `pnpm --filter pwa coverage`
-- **Scope**: Components, hooks, RTK Query flows, and feature modules
-- **Thresholds**: Configured in `packages/pwa/vite.config.ts`
+1. Keep framework references aligned with package dependencies.
 
-### Domain Testing (`packages/domain`)
+### COULD
 
-- **Framework**: Vitest for DTO validation and type guards
-- **Location**: Tests in `src/` alongside domain models
-- **Command**: `pnpm --filter domain test` (when needed)
-- **Scope**: Data transfer objects, transformations, and validation utilities
+1. None
 
-### Workspace Coverage
+### WANT
 
-- **Command**: `pnpm coverage` (runs API + PWA coverage with summary output)
+1. None
 
 ## Testing Patterns
 
-### Unit Tests
+### MUST
 
-- Focus on isolated logic: pure functions, utilities, and business rules
-- Mock external dependencies (API calls, database access)
-- Target quick execution for fast feedback loops
+1. Unit tests focus on isolated logic and mock external dependencies.
+1. Integration tests exercise multi-layer flows such as controller to service to repository.
+1. Component tests use React Testing Library with accessible queries and user interactions.
 
-### Integration Tests
+### SHOULD
 
-- Exercise multi-layer flows: controller → service → repository
-- Use test databases or in-memory stores when feasible
-- Verify data contracts between layers
+1. Use test data fixtures or factories when scenarios repeat across suites.
 
-### Component Tests (PWA)
+### COULD
 
-- Render components with React Testing Library
-- Simulate user interactions (clicks, typing, navigation)
-- Assert on accessible queries (roles, labels, text content)
-- Mock data layer hooks and store state
+1. None
 
-### E2E/Visual Testing (Future)
+### WANT
 
-- **Proposed Tool**: Playwright for browser automation
-- **Scope**: Critical user journeys, cross-browser compatibility
-- **Status**: Not yet implemented; see `.agents/qa.md` for adoption guidance
-
-## Competency Requirements
-
-Contributors working on test coverage should be proficient with:
-
-1. **API Layer**: Jest, Supertest, HTTP assertions, test data seeding
-2. **PWA Layer**: Vitest, React Testing Library, user-event simulation, RTK Query mocking
-3. **Accessibility**: Semantic queries, ARIA patterns, keyboard navigation testing
-4. **CI/CD**: Running tests in pipelines, interpreting coverage reports
+1. None
 
 ## Test Execution Workflows
 
-### Before Committing
+### MUST
 
-Run verification commands for affected workspaces:
+1. Use the following baseline verification commands before commits:
 
-```bash
-pnpm lint
-pnpm check-types
-pnpm --filter pwa test    # when PWA code changes
-pnpm --filter api test    # when API code changes (once implemented)
-```
+   ```bash
+   pnpm lint
+   pnpm check-types
+   pnpm --filter pwa test
+   pnpm --filter api test
+   ```
 
-### During Bug Resolution (`.agents/qa.md`)
+1. Follow the QA bug resolution workflow from `.agents/qa.md` when fixing defects.
 
-1. Add a failing test that captures the reported behavior
-2. Run the test to confirm it reproduces the issue
-3. Implement the fix
-4. Re-run tests to verify resolution
-5. Ensure existing tests still pass (regression check)
+### SHOULD
 
-### Coverage Baselines
+1. Run coverage commands when acceptance criteria require updated baselines.
 
-- Maintain coverage thresholds in Jest/Vitest config and align them with agreed baselines
-- Review coverage reports when acceptance criteria call for updated baselines
-- Flag uncovered critical paths during code reviews
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Coverage Baselines
+
+### MUST
+
+1. Maintain coverage thresholds in workspace config files and keep them consistent with agreed baselines.
+
+### SHOULD
+
+1. Review coverage reports when acceptance criteria reference new coverage goals.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Docker Environment Testing
 
-When testing Docker-based workflows:
+### MUST
 
-```bash
-# Always reset environment before/after testing
-docker compose down --volumes --remove-orphans
+1. Reset Docker environments before and after testing:
 
-# Start services
-docker compose up -d
+   ```bash
+   docker compose down --volumes --remove-orphans
+   docker compose up -d
+   docker compose down --volumes --remove-orphans
+   ```
 
-# Verify service health, check logs, run tests
+### SHOULD
 
-# Tear down when complete
-docker compose down --volumes --remove-orphans
-```
+1. None
 
-## Related Specifications
+### COULD
 
-- `.agents/qa.md` — Bug resolution and debugging workflows
-- `.agents/developer_assistant.md` — Pre-commit verification requirements
-- `.agents/api.md` — API testing expectations
-- `.agents/pwa.md` — PWA testing expectations
-- `docs/stack.md` — Overall tooling and workspace structure
+1. None
+
+### WANT
+
+1. None
+
+## Auto-Discovery
+
+### MUST
+
+1. Inspect `packages/api/jest.config.cjs`, `packages/pwa/vite.config.ts`, and workspace `package.json` files to confirm frameworks and command scripts.
+1. Verify coverage thresholds in the relevant config files before updating this spec.
+1. Use local CLI commands, for example:
+
+   ```bash
+   rg -n "jest|vitest|supertest|testing-library" packages/*/package.json
+   rg -n "coverage" packages/api/jest.config.cjs packages/pwa/vite.config.ts
+   ```
+
+### SHOULD
+
+1. Prefer local inspection over networked tooling unless the user approves remote access.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Missing Inputs
+
+### MUST
+
+1. Ask the user to confirm any missing coverage thresholds, E2E testing plans, or test data seeding requirements not found in the repo.
+
+### SHOULD
+
+1. Clarify which scenarios require manual verification when automated coverage is not yet available.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before adding new testing frameworks or expanding CI test scope.
+
+### SHOULD
+
+1. Seek confirmation before enabling new coverage gates that could block merges.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Related Specs
+
+### MUST
+
+1. `.agents/qa.md`
+1. `.agents/api.md`
+1. `.agents/pwa.md`
+1. `docs/verification.md`
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Be proficient with Jest, Supertest, Vitest, and React Testing Library for the relevant workspaces.
+1. Understand how to run and interpret coverage reports.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
