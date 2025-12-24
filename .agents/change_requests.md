@@ -25,7 +25,7 @@
 
 ### MUST
 
-1. Always follow the committing workflow in `.agents/versioning.md`, mainly the commit message draft file and the pauses for user approval before `git commit` and `git push`.
+1. Always follow the committing workflow in `.agents/version-control.md`, mainly the commit message draft file and the pauses for user approval before `git commit` and `git push`.
 
 ### SHOULD
 
@@ -94,7 +94,7 @@
 
 ### MUST
 
-1. Confirm commit messages remain in the imperative mood and explain the “why,” per `.agents/versioning.md`.
+1. Confirm commit messages remain in the imperative mood and explain the “why,” per `.agents/version-control.md`.
 1. Verify locally with `pnpm build` (and contextual additional tests when helpful).
 1. Incorporate repository automation prompts documented in `docs/change-requests.md` before pushing the feature branch and raising a change request, so anticipated feedback can be addressed proactively.
 
@@ -192,7 +192,7 @@
 
 ### MUST
 
-1. Understand the change request workflow and commit policy in `.agents/versioning.md`.
+1. Understand the change request workflow and commit policy in `.agents/version-control.md`.
 
 ### SHOULD
 

@@ -91,7 +91,7 @@
 
 ### COULD
 
-1. Use cross-links to related specs (`[Versioning](./versioning.md)`) when additional context is necessary.
+1. Use cross-links to related specs (`[Version Control](./version-control.md)`) when additional context is necessary.
 1. Validate that heading order, list styles, and spec identifiers make the file straightforward to parse programmatically.
 1. Ensure instructions are actionable without relying on institutional knowledge; link to context documents when broader background is helpful.
 

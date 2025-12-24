@@ -12,7 +12,7 @@ This file serves as the central configuration for AI agents working on this proj
 @./.agents/api.md
 @./.agents/pwa.md
 @./.agents/qa.md
-@./.agents/versioning.md
+@./.agents/version-control.md
 @./.agents/change_requests.md
 @./.agents/authorship.md
 @./.agents/documentation.md
