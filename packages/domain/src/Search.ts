@@ -8,7 +8,8 @@ export interface ISearchQuery {
   updatedAt: Date;
 }
 
-export interface ISearchQueryDto extends Omit<ISearchQuery, 'createdAt' | 'updatedAt'> {
+export interface ISearchQueryDto
+  extends Omit<ISearchQuery, "createdAt" | "updatedAt"> {
   _id: string;
   createdAt: string;
   updatedAt: string;
