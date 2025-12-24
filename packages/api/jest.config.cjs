@@ -9,6 +9,20 @@ module.exports = {
     prefix: "<rootDir>/",
   }),
   testMatch: ["<rootDir>/src/**/*.test.ts"],
+  collectCoverageFrom: [
+    "<rootDir>/src/**/*.ts",
+    "!<rootDir>/src/**/*.test.ts",
+    "!<rootDir>/src/**/__tests__/**",
+  ],
+  coverageReporters: ["text-summary", "lcov"],
+  coverageThreshold: {
+    global: {
+      branches: 10,
+      functions: 10,
+      lines: 10,
+      statements: 10,
+    },
+  },
   globals: {
     "ts-jest": {
       useESM: true,

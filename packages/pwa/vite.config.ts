@@ -40,6 +40,16 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       css: true,
       setupFiles: "./src/test/setup.ts",
+      coverage: {
+        provider: "v8",
+        reporter: ["text-summary", "lcov"],
+        include: ["src/**/*.{ts,tsx}"],
+        exclude: ["src/test/**"],
+        branches: 10,
+        functions: 10,
+        lines: 10,
+        statements: 10,
+      },
     },
   };
 });
