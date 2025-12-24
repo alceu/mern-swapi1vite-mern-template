@@ -4,7 +4,7 @@
 
 ## Bug Resolution Workflow
 
-when a request describes errors or undesired behaviors and asks for a fix.
+When a request describes errors or undesired behaviors and asks for a fix.
 
 ### MUST
 
@@ -24,25 +24,6 @@ when a request describes errors or undesired behaviors and asks for a fix.
 ### COULD
 
 1. Introduce shared fixtures or utilities in the `packages/domain` workspace when a regression touches cross-package DTOs.
-
-### WANT
-
-1. None
-
-## Contributor Competencies
-
-### MUST
-
-1. Master the testing frameworks documented in `docs/testing.md` to write, extend, and debug automated coverage.
-1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
-
-### SHOULD
-
-1. Track accessibility and performance considerations raised during QA and route them to the owning specs.
-
-### COULD
-
-1. Document reusable troubleshooting recipes in `docs/qa/` to speed future investigations.
 
 ### WANT
 
@@ -90,7 +71,7 @@ Guidance for introducing automated visual or end-to-end regression suites once t
 
 ## Prototype Fidelity Validation
 
-when an issue references mismatches between the implementation and the approved prototype.
+When an issue references mismatches between the implementation and the approved prototype.
 
 ### MUST
 
@@ -109,6 +90,25 @@ when an issue references mismatches between the implementation and the approved 
 
 1. Store comparison artifacts (for example, annotated screenshots or CSS audit notes) alongside QA documentation when historical reference is helpful.
 1. Pilot automated visual or end-to-end tooling documented in `docs/testing.md` in an experiment branch before formal adoption.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Master the testing frameworks documented in `docs/testing.md` to write, extend, and debug automated coverage.
+1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
+
+### SHOULD
+
+1. Track accessibility and performance considerations raised during QA and route them to the owning specs.
+
+### COULD
+
+1. Document reusable troubleshooting recipes in `docs/qa/` to speed future investigations.
 
 ### WANT
 

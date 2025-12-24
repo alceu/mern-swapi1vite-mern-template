@@ -29,7 +29,7 @@
 
 ### SHOULD
 
-1. Treat `.github/` automation guidance to simulate copilot pr online review.
+1. Treat `.github/` automation guidance as input to simulate Copilot PR online review.
 1. Complete work on the relevant `feature/<name>` branch, keeping changes scoped to the task.
 1. Limit each pull request to a single logical feature or fix to keep reviews efficient.
 
@@ -95,8 +95,8 @@
 ### MUST
 
 1. Confirm commit messages remain in the imperative mood and explain the “why,” per `.agents/versioning.md`.
-1. Verify locally with `pnpm build` (and contextual additional tests when helpful)
-1. Incorporate `.github/*` automation prompts instructions to simulate copilot pr online review, before pushing feature branch and raising a pull request, so anticipated feedback can be addressed proactively.
+1. Verify locally with `pnpm build` (and contextual additional tests when helpful).
+1. Incorporate `.github/*` automation prompts to simulate Copilot PR online review before pushing the feature branch and raising a pull request, so anticipated feedback can be addressed proactively.
 
 ### SHOULD
 
@@ -119,7 +119,8 @@
 1. After pushing the branch, draft the pull request body.
 1. Use feature branch commit messages as the primary source of context for the pull request body.
 1. Request from the user any external references, manual testing notes, or additional context needed for the pull request body.
-1. Populate the template with a title containing the ticket identifier when applicable, a summary of changes and motivation, testing instructions referencing the verification commands from `docs/verification.md` that you executed, and links to related tickets or issues. Reference `docs/stack.md` when new tooling is involved.
+1. Populate the template with a title containing the ticket identifier when applicable, plus a summary of changes and motivation.
+1. Include testing instructions referencing the verification commands from `docs/verification.md` that you executed and links to related tickets or issues. Reference `docs/stack.md` when new tooling is involved.
 1. Save the drafted description to a temporary Markdown file (for example `./PR_BODY.md`) and pause until the user edits or approves it.
 1. Open the pull request targeting `develop`, then proceed through review and merge via the GitHub interface or linked CI tooling.
 1. Do not run `gh pr create` until both the feature branch has been pushed and the user confirms the pull request body.
@@ -141,7 +142,8 @@
 
 ### MUST
 
-1. When the user requests fixes for review findings, git pull feature branch to fetch conversations inline resolutions. Then, gather unresolved threads with `gh pr view <number> --json reviewThreads`, implement the changes, follow the full committing workflow, and resolve the threads via `gh pr review-thread resolve <thread-id>` once pushed.
+1. When the user requests fixes for review findings, git pull the feature branch to fetch inline conversation resolutions.
+1. Gather unresolved threads with `gh pr view <number> --json reviewThreads`, implement the changes, follow the full committing workflow, and resolve the threads via `gh pr review-thread resolve <thread-id>` once pushed.
 1. Rely on `.github/` automation guidance and tooling for formatting concerns where possible.
 1. Approve only after confirming guidelines are satisfied, tests pass, and outstanding issues are resolved.
 
@@ -163,3 +165,21 @@
 ### WANT
 
 1. Move protracted discussions to synchronous channels when threads grow long.
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand the pull request workflow and commit policy in `.agents/versioning.md`.
+
+### SHOULD
+
+1. Maintain familiarity with `.github/` automation prompts used for reviews.
+
+### COULD
+
+1. Capture review learnings in `docs/` when they affect team practices.
+
+### WANT
+
+1. None

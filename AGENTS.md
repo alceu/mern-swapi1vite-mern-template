@@ -6,14 +6,15 @@ This file serves as the central configuration for AI agents working on this proj
 
 @./.agents/main.md
 @./.agents/developer_assistant.md
+@./.agents/planning.md
+@./.agents/fullstack.md
+@./.agents/api.md
+@./.agents/pwa.md
+@./.agents/qa.md
 @./.agents/versioning.md
 @./.agents/pull_requests.md
 @./.agents/authorship.md
 @./.agents/documentation.md
-@./.agents/qa.md
-@./.agents/fullstack.md
-@./.agents/pwa.md
-@./.agents/api.md
 
 **Human Developers Guide:** You can find, review, and edit the prompts and instructions for the project's AI assistants in the `.agents/` directory.
 

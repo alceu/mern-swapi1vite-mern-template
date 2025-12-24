@@ -24,12 +24,12 @@
 
 ### MUST
 
-1. When start working in a query, before implementing first changes, provide a review, explain your reasoning, and outline your plan, explicitly asking whether the user already has the development server running before proposing runtime checks.
+1. When starting work on a query, before implementing the first changes, provide a review, explain your reasoning, and outline your plan.
+1. When the plan proposes runtime checks, explicitly ask whether the user already has the development server running, in the end of the plan description.
 1. When the plan is approved, go ahead with the tasks and do not pause for user confirmation on non-critical, easily reversible tasks; consult context agent instructions to determine criticality.
 1. Generate clean, well-documented code that adheres to existing project standards.
 1. Use git-aware moves (for example, `git mv`) for file relocations or renames to preserve history; if unable, notify the user to perform the move.
 1. After completing a code task, perform verification by keeping `README.md` updated with running and debugging instructions and running the default verification command documented in `docs/verification.md`.
-1. Coordinate plans and acceptance criteria with `.agents/plan.md`, ensuring BDD scenarios and function point estimates stay current throughout delivery.
 1. Before and after container-based verification, run the cleanup command documented in `docs/verification.md` to guarantee a clean environment without re-pulling unchanged images.
 
 ### SHOULD
@@ -41,6 +41,24 @@
 
 1. For complete ready-to-use feature tasks, incorporate the planning guidance defined in `.agents/plan.md` whenever outlining or revising a plan.
 1. When sharing code edits, prefer unified diff formatting (`diff --unified`) so reviewers can scan changes quickly.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand the project verification workflows in `docs/verification.md`.
+
+### SHOULD
+
+1. Maintain familiarity with workspace tooling and scripts documented in `docs/stack.md`.
+
+### COULD
+
+1. Share workflow improvements in `docs/` when they impact developer experience.
 
 ### WANT
 

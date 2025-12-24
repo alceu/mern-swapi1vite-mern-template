@@ -6,8 +6,9 @@
 
 ### MUST
 
-1. Require explicit user approval for every history- or remote-altering command (for example, `git commit`, `git push`, `git pull`, `git merge`, `git rebase`), destructive command (for example, `git reset --hard`, `git stash drop|pop`), operation that writes to disk or alters history in a non-trivial way, or edit that touches files matched in `.gitignore`.
-2. Prefer running git commands directly (e.g., via shell or terminal) rather than delegating to external MCP servers, to allow users to configure manual or automated approval workflows as needed.
+1. Require explicit user approval for every history- or remote-altering command (for example, `git commit`, `git push`, `git pull`, `git merge`, `git rebase`) and destructive command (for example, `git reset --hard`, `git stash drop|pop`).
+1. Require explicit user approval for operations that write to disk or alter history in a non-trivial way, plus any edits that touch files matched in `.gitignore`.
+1. Prefer running git commands directly (e.g., via shell or terminal) rather than delegating to external MCP servers, to allow users to configure manual or automated approval workflows as needed.
 
 ### SHOULD
 
@@ -26,6 +27,7 @@
 ### MUST
 
 1. Prefix every branch (except `develop` or `main`) with its purpose—for example, `feature/` for new features, `fix/` for bug fixes, `docs/` for documentation updates, `chore/` for maintenance tasks, and `refactor/` for code refactoring.
+1. Use feature branches that name the feature or entity after the `feature/` prefix (for example, `feature/posts-advanced-search`) to align with the feature-scoped Full-Stack Domain-Driven approach and related commits.
 1. Propose a new branch name from `develop` that follows these naming conventions.
 
 ### SHOULD
@@ -69,13 +71,14 @@
 
 ### MUST
 
-1. Adhere strictly to the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+1. Even after the commit plan is approved, wait for explicit, affirmative confirmation from the user before proceeding with each single commit. Unless the user explicitly says something like "just go ahead with all commits", do not assume blanket approval.
 1. Verify the current `git status` and `git diff` to draft a commit message.
+1. Adhere strictly to the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 1. Split changes into separate commits when a task involves multiple distinct areas (for example, development or documentation).
-1. Scope commits by feature and domain (for example, `profiles`, `companies`, `projects`), considering a feature-scoped Full-Stack Domain-Driven approach, to keep context consistent across workspaces and each commit focused on a feature logical change.
-1. Adopt `({project|package|fullstack/entity})` detailed prefix (for example, `api/events`, `web/events`, `fullstack/events`) to easily identify whether commmits are related to a single or cross projects/packages.
+1. Keep commit subjects focused on the feature or entity (for example, `posts`, `events`) to reflect the feature-scoped Full-Stack Domain-Driven approach across workspaces.
+1. Adopt `({scope})` as a hyphenated package list without spaces (for example, `(api)`, `(pwa)`, `(api-pwa)`), and pair it with a feature-focused subject (for example, `feat(api-pwa): add posts sort by relevance`) so titles stay Conventional Commits compliant and tooling-friendly.
+1. Use `base` when the change affects root-level or cross-cutting files outside `packages/*` (for example, `.github/`, root `package.json`, `docs/`, or tooling configs).
 1. Write the draft commit message to a real `./COMMIT_EDITMSG` file, and commit using the message draft temporary file with `git commit -F <file>`.
-1. Wait for explicit, affirmative confirmation from the user before proceeding with the commit. Unless explicitly said something like "just go ahead with all commits", do not assume approval.
 
 ### SHOULD
 
@@ -122,6 +125,25 @@
 ### COULD
 
 1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand Conventional Commits and commit scoping standards used in this repository.
+1. Be comfortable with Git workflows that require explicit approval for history-altering commands.
+
+### SHOULD
+
+1. Keep feature branch naming and commit subjects aligned to feature entities for traceability.
+
+### COULD
+
+1. Maintain familiarity with monorepo package boundaries to select accurate scopes.
 
 ### WANT
 

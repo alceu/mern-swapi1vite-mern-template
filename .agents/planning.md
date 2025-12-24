@@ -82,3 +82,21 @@
 ### WANT
 
 1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Translate requirements into BDD scenarios and function point estimates.
+
+### SHOULD
+
+1. Maintain familiarity with verification commands in `docs/verification.md`.
+
+### COULD
+
+1. Capture planning assumptions and risks in task notes when helpful.
+
+### WANT
+
+1. None

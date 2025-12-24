@@ -24,26 +24,6 @@
 
 1. None
 
-## Contributor Competencies
-
-### MUST
-
-1. Understand Git workflows that support coordinated backend and frontend deliveries, including rebasing and release branch hygiene.
-1. Navigate the project’s CI/CD pipelines to validate cross-workspace builds, tests, and deployments.
-1. Evaluate performance implications across API and PWA layers when introducing new data flows or normalization rules.
-
-### SHOULD
-
-1. Share lessons learned from CI/CD or performance tuning in `docs/` so patterns scale across teams.
-
-### COULD
-
-1. Pilot improvements to developer tooling (for example, shared scripts) that streamline cross-stack verification.
-
-### WANT
-
-1. None
-
 ## Data Normalization and Caching Strategy
 
 ### MUST
@@ -144,6 +124,26 @@
 ### COULD
 
 1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand Git workflows that support coordinated backend and frontend deliveries, including rebasing and release branch hygiene.
+1. Navigate the project’s CI/CD pipelines to validate cross-workspace builds, tests, and deployments.
+1. Evaluate performance implications across API and PWA layers when introducing new data flows or normalization rules.
+
+### SHOULD
+
+1. Share lessons learned from CI/CD or performance tuning in `docs/` so patterns scale across teams.
+
+### COULD
+
+1. Pilot improvements to developer tooling (for example, shared scripts) that streamline cross-stack verification.
 
 ### WANT
 

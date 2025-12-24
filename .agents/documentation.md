@@ -4,8 +4,22 @@
 
 ## Purpose
 
-1.  Provide a spec-driven template so every agent instruction file communicates scope, rules, and verification in a predictable format.
-1.  Enable reuse by future tooling without restructuring the content.
+### MUST
+
+1. Provide a spec-driven template so every agent instruction file communicates scope, rules, and verification in a predictable format.
+1. Enable reuse by future tooling without restructuring the content.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Markdown Structure Checklist
 
@@ -57,13 +71,14 @@
 ### MUST
 
 1. Each topic must conclude with the four priority sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`).
-1. Priority always as the last sub-topics. Use a "None" placeholder for any empty priority.
+1. Priority must always be the last subtopics. Use a "None" placeholder for any empty priority.
 1. Write instructions in outcome-focused language; prefer checklists over narrative paragraphs.
+1. Keep each instruction item pragmatic and concise, near 300 characters; if it becomes long, shorten it by trimming non-essential motivation while preserving clarity, so the rationale remains implicit. If meaning is lost, split the instruction into smaller items without losing intent.
 1. Proofread grammar and spelling before committing updates.
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
 1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic; relocate stack- or command-specific guidance to the appropriate `docs/` references.
-1. Ensure each spec documents the contributor competencies it depends on so team members know which skills are required.
+1. Ensure each spec documents the contributor competencies it depends on as the last section, so team members know which skills are required.
 
 ### SHOULD
 
@@ -100,6 +115,24 @@
 ### COULD
 
 1. Include change history notes summarizing stack evolutions to accelerate onboarding.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Apply spec-writing conventions to keep instructions consistent, testable, and easy to audit.
+
+### SHOULD
+
+1. Maintain familiarity with Markdown and documentation tooling used in this repository.
+
+### COULD
+
+1. Cross-check specs against related files to avoid duplicated or conflicting guidance.
 
 ### WANT
 
