@@ -22,6 +22,25 @@
 
 1. None
 
+## Workflow Tooling Alignment
+
+### MUST
+
+1. Follow `docs/version-control.md` and `docs/change-requests.md` for approved CLI usage in version control and change-request workflows.
+1. Keep CLI-driven workflow actions aligned with the approval requirements in this spec and `.agents/change_requests.md`.
+
+### SHOULD
+
+1. Prefer the documented CLI tooling for repeatable automation when the workflow is documented.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Branching
 
 ### MUST

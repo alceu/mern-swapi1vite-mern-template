@@ -24,12 +24,32 @@
 
 1. None
 
+## SDLC Inputs and User Stories
+
+### MUST
+
+1. Record vision inputs from `docs/vision.md` and prototype references from `docs/prototypes.md` before drafting the plan.
+1. Capture user stories in the format required by `.agents/sdlc.md` and track them using the work-management workflow in `docs/tasks-management.md`.
+1. Define acceptance criteria for each story before translating them into BDD scenarios.
+
+### SHOULD
+
+1. Note stakeholders, dependencies, and constraints that may affect story sequencing.
+
+### COULD
+
+1. Map stories to releases or milestones when the delivery plan spans multiple iterations.
+
+### WANT
+
+1. None
+
 ## BDD-Driven Breakdown
 
 ### MUST
 
 1. Translate functional goals into explicit BDD scenarios (`Given/When/Then`) before implementation begins.
-1. Associate each scenario with the files, specs, and verifications it will touch so coverage stays synchronized across layers.
+1. Associate each scenario with the files, specs, acceptance criteria, and verifications it will touch so coverage stays synchronized across layers.
 1. Update the plan when new scenarios emerge during implementation, keeping the scenario list authoritative for follow-up work.
 
 ### SHOULD
@@ -70,14 +90,35 @@
 
 1. Escalate uncertainties, conflicting specs, or suspected refactor opportunities before implementation, proposing options when possible.
 1. Summarize the agreed plan, scenarios, and estimates before starting work to confirm alignment with stakeholders.
+1. Confirm the plan covers SDLC deliverables (development, documentation, testing, version control, change requests, CI/CD, release) per `.agents/sdlc.md`.
 
 ### SHOULD
 
-1. Record clarifications in the task notes or PR description so the history remains visible to later contributors.
+1. Record clarifications in the task notes or change request description so the history remains visible to later contributors.
 
 ### COULD
 
 1. Provide suggested refactor follow-ups when large improvements are identified but out of scope for the current task.
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before changing agreed story scope, acceptance criteria, or function point estimates.
+1. Require user approval before executing history- or remote-altering git commands (`git commit`, `git push`, `git pull`, `git merge`, `git rebase`) or destructive commands.
+1. Require user approval before edits that affect files matched by `.gitignore`.
+
+### SHOULD
+
+1. Pause for confirmation when plan changes introduce new milestones or release targets.
+
+### COULD
+
+1. None
 
 ### WANT
 

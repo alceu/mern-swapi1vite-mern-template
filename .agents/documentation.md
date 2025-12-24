@@ -78,6 +78,7 @@
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
 1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic; relocate stack- or command-specific guidance to the appropriate `docs/` references.
+1. Treat agnostic terminology as keys in `.agents/` specs and store per-project values in `docs/` so tooling choices stay contextual.
 1. Ensure each spec documents the contributor competencies it depends on as the last section, so team members know which skills are required.
 
 ### SHOULD
@@ -85,7 +86,7 @@
 1. Reference foundational specs (for example, `.agents/main.md`) instead of repeating their content; link to shared rules when needed.
 1. Assign or reuse spec identifiers (for example, `Spec-ID: documentation::v1`) so downstream tools can reference the document.
 1. Revisit the spec when upstream files change, updating links and requirements to stay aligned.
-1. Summarize spec changes in PR descriptions (what changed, why, and how it was verified) for audit trails.
+1. Summarize spec changes in change request descriptions (what changed, why, and how it was verified) for audit trails.
 1. Remove obsolete mandates entirely; migration history belongs in ADRs or commit messages, not the live spec.
 
 ### COULD
@@ -106,6 +107,7 @@
 1. Cross-check every update against active manifests (package manifests, workspace configurations, type system configs) and infrastructure blueprints (container orchestration files, environment templates) documented in `docs/stack.md` before publishing changes.
 1. Record required verification commands documented in `docs/verification.md` whenever `docs/stack.md` changes so reviewers can confirm compatibility.
 1. Link back to governing specs (for example, `.agents/main.md`, `.agents/api.md`, `.agents/pwa.md`) rather than duplicating their mandates, keeping `docs/stack.md` focused on project specifics.
+1. Document per-project values for agnostic `.agents/` terminology in `docs/` so the key-value mapping stays explicit.
 
 ### SHOULD
 

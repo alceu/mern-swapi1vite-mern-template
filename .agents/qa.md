@@ -18,12 +18,32 @@ When a request describes errors or undesired behaviors and asks for a fix.
 ### SHOULD
 
 1. Prefer the smallest effective test scope, escalating from unit to integration coverage only when the discrepancy remains unresolved.
-1. Document manual reproduction steps in the issue or PR description if an automated harness is not yet available for the affected area.
+1. Document manual reproduction steps in the issue or change request description if an automated harness is not yet available for the affected area.
 1. Run the relevant coverage command documented in `docs/verification.md` when fixes touch instrumentation or when acceptance criteria call for updated coverage baselines.
 
 ### COULD
 
 1. Introduce shared fixtures or utilities in the `packages/domain` workspace when a regression touches cross-package DTOs.
+
+### WANT
+
+1. None
+
+## Acceptance Criteria Validation
+
+### MUST
+
+1. Validate each story's acceptance criteria against the implemented behavior and the mapped BDD scenarios.
+1. Confirm test coverage or manual verification evidence traces back to the originating user stories and criteria.
+1. Use `docs/vision.md` and `docs/prototypes.md` as the authoritative sources for scope or fidelity validation when applicable.
+
+### SHOULD
+
+1. Record acceptance criteria verification outcomes in QA notes or change request descriptions.
+
+### COULD
+
+1. Maintain a reusable checklist for recurring acceptance criteria patterns.
 
 ### WANT
 
@@ -79,7 +99,7 @@ When an issue references mismatches between the implementation and the approved 
 1. Capture the current implementation via screenshots or screen recordings that highlight the reported deviation.
 1. Enumerate the UI deltas (layout, spacing, copy, interactions) in the fix plan, referencing the exact components or styles to adjust.
 1. Apply the fix and gather updated captures alongside notes confirming the UI now matches the reference.
-1. Store the before/after evidence in the issue, PR, or a `docs/qa/` note so future regressions can reuse the investigation context.
+1. Store the before/after evidence in the issue, change request, or a `docs/qa/` note so future regressions can reuse the investigation context.
 
 ### SHOULD
 
@@ -90,6 +110,26 @@ When an issue references mismatches between the implementation and the approved 
 
 1. Store comparison artifacts (for example, annotated screenshots or CSS audit notes) alongside QA documentation when historical reference is helpful.
 1. Pilot automated visual or end-to-end tooling documented in `docs/testing.md` in an experiment branch before formal adoption.
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before executing history- or remote-altering git commands (`git commit`, `git push`, `git pull`, `git merge`, `git rebase`) or destructive commands.
+1. Require user approval before edits that affect files matched by `.gitignore`.
+1. Require user approval before marking acceptance criteria or prototype mismatches as resolved when evidence is incomplete.
+
+### SHOULD
+
+1. Pause for confirmation before adopting new QA tooling that changes verification scope.
+
+### COULD
+
+1. None
 
 ### WANT
 

@@ -1,12 +1,12 @@
-# Pull Request Agent Instructions
+# Change Request Agent Instructions
 
-**Spec-ID:** `pull_requests::v1`
+**Spec-ID:** `change_requests::v1`
 
 ## Purpose
 
 ### MUST
 
-1. Provide clear guidance for planning, opening, and reviewing pull requests in this monorepo.
+1. Provide clear guidance for planning, opening, and reviewing change requests in this monorepo.
 1. Ensure agents follow consistent workflows that align with the broader `.agents/` mandate.
 
 ### SHOULD
@@ -29,9 +29,9 @@
 
 ### SHOULD
 
-1. Treat `.github/` automation guidance as input to simulate Copilot PR online review.
+1. Treat repository automation guidance documented in `docs/change-requests.md` as input to simulate automated change-request review.
 1. Complete work on the relevant `feature/<name>` branch, keeping changes scoped to the task.
-1. Limit each pull request to a single logical feature or fix to keep reviews efficient.
+1. Limit each change request to a single logical feature or fix to keep reviews efficient.
 
 ### COULD
 
@@ -96,7 +96,7 @@
 
 1. Confirm commit messages remain in the imperative mood and explain the “why,” per `.agents/versioning.md`.
 1. Verify locally with `pnpm build` (and contextual additional tests when helpful).
-1. Incorporate `.github/*` automation prompts to simulate Copilot PR online review before pushing the feature branch and raising a pull request, so anticipated feedback can be addressed proactively.
+1. Incorporate repository automation prompts documented in `docs/change-requests.md` before pushing the feature branch and raising a change request, so anticipated feedback can be addressed proactively.
 
 ### SHOULD
 
@@ -110,21 +110,23 @@
 
 1. None
 
-## Push, Describe, and Open the Pull Request
+## Create, Describe, and Open the Change Request
 
 ### MUST
 
 1. Inspect diffs with `git diff develop` to ensure only intentional files change.
 1. Review commits with `git log --oneline develop..HEAD`.
-1. After pushing the branch, draft the pull request body.
-1. Use feature branch commit messages as the primary source of context for the pull request body.
-1. Request from the user any external references, manual testing notes, or additional context needed for the pull request body.
+1. After pushing the branch, draft the change request description.
+1. Use feature branch commit messages as the primary source of context for the change request description.
+1. Link the change request to the relevant user stories, acceptance criteria, and BDD scenarios referenced in `.agents/sdlc.md`.
+1. Request from the user any external references, manual testing notes, or additional context needed for the change request description.
 1. Populate the template with a title containing the ticket identifier when applicable, plus a summary of changes and motivation.
 1. Include testing instructions referencing the verification commands from `docs/verification.md` that you executed and links to related tickets or issues. Reference `docs/stack.md` when new tooling is involved.
-1. Save the drafted description to a temporary Markdown file (for example `./PR_BODY.md`) and pause until the user edits or approves it.
-1. Open the pull request targeting `develop`, then proceed through review and merge via the GitHub interface or linked CI tooling.
-1. Do not run `gh pr create` until both the feature branch has been pushed and the user confirms the pull request body.
-1. Remove the temporary pull request body file after the pull request has been opened.
+1. Follow the change request formatting and workflow documented in `docs/change-requests.md`.
+1. Save the drafted description to a temporary Markdown file (for example `./CHANGE_REQUEST_BODY.md`) and pause until the user edits or approves it.
+1. Open the change request targeting `develop`, then proceed through review and merge via the configured platform or tooling.
+1. Do not submit the change request until both the feature branch has been pushed and the user confirms the change request body.
+1. Remove the temporary change request body file after the change request has been opened.
 
 ### SHOULD
 
@@ -138,13 +140,13 @@
 
 1. None
 
-## Pull Request online review, posting and resolving conversation threads
+## Change Request Review and Thread Resolution
 
 ### MUST
 
 1. When the user requests fixes for review findings, git pull the feature branch to fetch inline conversation resolutions.
-1. Gather unresolved threads with `gh pr view <number> --json reviewThreads`, implement the changes, follow the full committing workflow, and resolve the threads via `gh pr review-thread resolve <thread-id>` once pushed.
-1. Rely on `.github/` automation guidance and tooling for formatting concerns where possible.
+1. Gather unresolved review threads using the tooling documented in `docs/change-requests.md`, implement the changes, follow the full committing workflow, and resolve the threads with the same tooling once pushed.
+1. Rely on repository automation guidance and tooling documented in `docs/change-requests.md` for formatting concerns where possible.
 1. Approve only after confirming guidelines are satisfied, tests pass, and outstanding issues are resolved.
 
 ### SHOULD
@@ -155,26 +157,46 @@
 
 ### COULD
 
-1. Aim to review within 24 hours to keep delivery flowing once the pull request is awaiting feedback.
-1. Check out the branch locally, following the author’s instructions:
+1. Aim to review within 24 hours to keep delivery flowing once the change request is awaiting feedback.
+1. Check out the branch locally, following the author’s instructions or platform guidance:
    ```bash
-   git fetch origin pull/XYZ/head:pr_branch
-   git checkout pr_branch
+   git fetch origin <change-request-ref>
+   git checkout <branch>
    ```
 
 ### WANT
 
 1. Move protracted discussions to synchronous channels when threads grow long.
 
+## Approval Gates
+
+### MUST
+
+1. Require user approval before executing history- or remote-altering git commands (`git commit`, `git push`, `git pull`, `git merge`, `git rebase`) or destructive commands.
+1. Require user approval before edits that affect files matched by `.gitignore`.
+1. Require user approval before opening a change request or posting reviews that finalize acceptance criteria status.
+
+### SHOULD
+
+1. Pause for confirmation before adopting new change-request tooling or templates that alter review expectations.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Contributor Competencies
 
 ### MUST
 
-1. Understand the pull request workflow and commit policy in `.agents/versioning.md`.
+1. Understand the change request workflow and commit policy in `.agents/versioning.md`.
 
 ### SHOULD
 
-1. Maintain familiarity with `.github/` automation prompts used for reviews.
+1. Maintain familiarity with repository automation prompts or templates documented in `docs/change-requests.md`.
 
 ### COULD
 
