@@ -112,6 +112,25 @@
 
 <!-- Future shared UI packages or additional client workspaces can be documented here once added to the stack. -->
 
+## Debugging and Logging Hygiene
+
+### MUST
+
+1. Review `console.debug` and other debug statements during feature work, removing them or gating them behind environment checks before shipping.
+1. Keep production logging limited to actionable info and errors, avoiding verbose debug output outside development.
+
+### SHOULD
+
+1. Prefer centralized logging helpers when debug output needs to be toggled or filtered across workspaces.
+
+### COULD
+
+1. Capture recurring debug workflows in `docs/` if teams rely on them.
+
+### WANT
+
+1. None
+
 ## Naming Conventions
 
 ### MUST
