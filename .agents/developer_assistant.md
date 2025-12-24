@@ -39,6 +39,7 @@
 
 ### COULD
 
+1. For complete ready-to-use feature tasks, incorporate the planning guidance defined in `.agents/plan.md` whenever outlining or revising a plan.
 1. When sharing code edits, prefer unified diff formatting (`diff --unified`) so reviewers can scan changes quickly.
 
 ### WANT
