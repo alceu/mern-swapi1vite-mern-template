@@ -153,5 +153,5 @@ See `.agents/` for details.
 
 ## TODO
 
-- [ ] Add testing framework.
+- [x] Add API testing framework (Jest/Supertest).
 - [ ] Achieve code coverage above 90% across the codebase.

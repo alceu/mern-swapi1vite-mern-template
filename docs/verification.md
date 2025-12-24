@@ -36,7 +36,7 @@ pnpm --filter pwa test
 # PWA coverage
 pnpm --filter pwa coverage
 
-# API tests (to be implemented)
+# API tests
 pnpm --filter api test
 pnpm --filter api coverage
 
@@ -61,7 +61,7 @@ pnpm --filter domain build
 As mandated by `.agents/versioning.md`, run verification steps scoped to changed files:
 
 1. **Documentation-only changes**: Markdown linting (if configured)
-2. **API changes**: `pnpm check-types`, `pnpm lint`, `pnpm --filter api test` (once implemented)
+2. **API changes**: `pnpm check-types`, `pnpm lint`, `pnpm --filter api test`
 3. **PWA changes**: `pnpm check-types`, `pnpm lint`, `pnpm --filter pwa test`
 4. **Domain changes**: `pnpm check-types`, `pnpm lint`, affected package tests
 5. **Cross-package changes**: Full workspace verification bundle

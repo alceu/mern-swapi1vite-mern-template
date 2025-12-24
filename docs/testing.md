@@ -8,8 +8,8 @@ This document captures testing tools, conventions, and verification flows for th
 
 - **Framework**: Jest and Supertest for API endpoint testing
 - **Location**: Tests will be organized alongside source files or in dedicated test directories
-- **Command**: `pnpm --filter api test` (to be implemented)
-- **Coverage**: `pnpm --filter api coverage` (to be implemented)
+- **Command**: `pnpm --filter api test`
+- **Coverage**: `pnpm --filter api coverage`
 - **Scope**: Controllers, services, repositories, and validation logic
 
 ### PWA Testing (`packages/pwa`)
