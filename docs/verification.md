@@ -36,6 +36,9 @@ pnpm --filter pwa test
 # PWA coverage
 pnpm --filter pwa coverage
 
+# Workspace coverage bundle (API + PWA)
+pnpm coverage
+
 # API tests
 pnpm --filter api test
 pnpm --filter api coverage

@@ -11,6 +11,7 @@ This document captures testing tools, conventions, and verification flows for th
 - **Command**: `pnpm --filter api test`
 - **Coverage**: `pnpm --filter api coverage`
 - **Scope**: Controllers, services, repositories, and validation logic
+- **Thresholds**: Configured in `packages/api/jest.config.cjs`
 
 ### PWA Testing (`packages/pwa`)
 
@@ -19,6 +20,7 @@ This document captures testing tools, conventions, and verification flows for th
 - **Command**: `pnpm --filter pwa test`
 - **Coverage**: `pnpm --filter pwa coverage`
 - **Scope**: Components, hooks, RTK Query flows, and feature modules
+- **Thresholds**: Configured in `packages/pwa/vite.config.ts`
 
 ### Domain Testing (`packages/domain`)
 
@@ -26,6 +28,10 @@ This document captures testing tools, conventions, and verification flows for th
 - **Location**: Tests in `src/` alongside domain models
 - **Command**: `pnpm --filter domain test` (when needed)
 - **Scope**: Data transfer objects, transformations, and validation utilities
+
+### Workspace Coverage
+
+- **Command**: `pnpm coverage` (runs API + PWA coverage with summary output)
 
 ## Testing Patterns
 
@@ -86,7 +92,7 @@ pnpm --filter api test    # when API code changes (once implemented)
 
 ### Coverage Baselines
 
-- Maintain coverage thresholds in package `package.json` or Vitest config
+- Maintain coverage thresholds in Jest/Vitest config and align them with agreed baselines
 - Review coverage reports when acceptance criteria call for updated baselines
 - Flag uncovered critical paths during code reviews
 

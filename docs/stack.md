@@ -63,20 +63,19 @@ This guide captures the active tooling across the MERN SWAPI template so agents 
 
 ## Tooling & Automation
 
+- GitHub Actions coverage workflow runs `pnpm coverage` on push and pull requests.
+
 ## Testing & Quality Gates
 
 See `docs/testing.md` for framework details and `docs/verification.md` for command reference.
 
 - **Type Safety**: `pnpm check-types` (required default verification step)
 - **Linting**: `pnpm lint` to enforce workspace-wide rules (ESLint 8.57.x + Prettier 3.2.x)
+- **Workspace Coverage**: `pnpm coverage` (API + PWA summary output)
 - **PWA Tests**: `pnpm --filter pwa test` (Vitest + React Testing Library + jsdom)
 - **PWA Coverage**: `pnpm --filter pwa coverage`
-- **API Tests**: `pnpm --filter api test` (Jest + Supertest, to be implemented)
-- **API Coverage**: `pnpm --filter api coverage` (to be implemented)
-- Type safety: `pnpm check-types` (required default verification step).
-- Client coverage: `pnpm --filter pwa test` and optionally `pnpm --filter pwa coverage` (Vitest + Testing Library + jsdom).
-- API tests: add suites via Vitest/Jest as features expand; follow `.agents/api.md` for structure and update this list when commands land.
-- Linting: `pnpm lint` to enforce workspace-wide rules.
+- **API Tests**: `pnpm --filter api test` (Jest + Supertest)
+- **API Coverage**: `pnpm --filter api coverage`
 
 ## Change Checklist
 
