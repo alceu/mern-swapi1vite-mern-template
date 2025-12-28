@@ -1,10 +1,17 @@
+const path = require("node:path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+
 const { pathsToModuleNameMapper } = require("ts-jest");
 const { compilerOptions } = require("./tsconfig.json");
 
+const coverageThresholdEnv = Number(process.env.COVERAGE_THRESHOLD);
+const coverageThreshold = Number.isFinite(coverageThresholdEnv)
+  ? coverageThresholdEnv
+  : 70;
+
 module.exports = {
-  preset: "ts-jest/presets/default-esm",
+  preset: "ts-jest",
   testEnvironment: "node",
-  extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
     prefix: "<rootDir>/",
   }),
@@ -17,16 +24,13 @@ module.exports = {
   coverageReporters: ["text-summary", "lcov"],
   coverageThreshold: {
     global: {
-      branches: 10,
-      functions: 10,
-      lines: 10,
-      statements: 10,
+      branches: coverageThreshold,
+      functions: coverageThreshold,
+      lines: coverageThreshold,
+      statements: coverageThreshold,
     },
   },
-  globals: {
-    "ts-jest": {
-      useESM: true,
-      tsconfig: "<rootDir>/tsconfig.json",
-    },
+  transform: {
+    "^.+\\.ts$": ["ts-jest", { tsconfig: "<rootDir>/tsconfig.json" }],
   },
 };
