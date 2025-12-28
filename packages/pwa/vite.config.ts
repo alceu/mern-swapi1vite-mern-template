@@ -10,6 +10,16 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
+  const isTest =
+    mode === "test" ||
+    process.env.VITEST === "true" ||
+    process.env.NODE_ENV === "test";
+  const testHost = "127.0.0.1";
+  const coverageThresholdRaw =
+    env.COVERAGE_THRESHOLD || process.env.COVERAGE_THRESHOLD;
+  const coverageThreshold = Number.isFinite(Number(coverageThresholdRaw))
+    ? Number(coverageThresholdRaw)
+    : 70;
 
   if (!env.VITE_PWA_PORT) {
     throw new Error("Missing required environment variable: VITE_PWA_PORT");
@@ -18,7 +28,9 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       port: Number(env.VITE_PWA_PORT),
-      host: true,
+      host: isTest ? testHost : true,
+      hmr: isTest ? { host: testHost } : undefined,
+      ws: isTest ? false : undefined,
     },
     preview: {
       port: Number(env.VITE_PWA_PORT),
@@ -45,10 +57,12 @@ export default defineConfig(({ mode }) => {
         reporter: ["text-summary", "lcov"],
         include: ["src/**/*.{ts,tsx}"],
         exclude: ["src/test/**"],
-        branches: 10,
-        functions: 10,
-        lines: 10,
-        statements: 10,
+        thresholds: {
+          branches: coverageThreshold,
+          functions: coverageThreshold,
+          lines: coverageThreshold,
+          statements: coverageThreshold,
+        },
       },
     },
   };
