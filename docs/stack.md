@@ -142,6 +142,7 @@
    pnpm --filter api test
    pnpm --filter pwa coverage
    pnpm --filter api coverage
+   pnpm --filter domain coverage
    ```
 
 1. Run only the commands scoped to the affected workspaces as defined in `docs/verification.md`.

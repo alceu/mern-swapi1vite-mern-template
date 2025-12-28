@@ -27,8 +27,8 @@
 
 1. API testing (`packages/api`): Jest and Supertest; commands `pnpm --filter api test` and `pnpm --filter api coverage`; thresholds in `packages/api/jest.config.cjs`.
 1. PWA testing (`packages/pwa`): Vitest with React Testing Library and jsdom; commands `pnpm --filter pwa test` and `pnpm --filter pwa coverage`; thresholds in `packages/pwa/vite.config.ts`.
-1. Domain testing (`packages/domain`): Vitest; command `pnpm --filter domain test` when needed.
-1. Workspace coverage: `pnpm coverage` runs API and PWA coverage with summary output.
+1. Domain testing (`packages/domain`): Vitest; commands `pnpm --filter domain test` and `pnpm --filter domain coverage` when needed.
+1. Workspace coverage: `pnpm coverage` runs API, PWA, and domain coverage with summary output.
 
 ### SHOULD
 
@@ -94,6 +94,7 @@
 ### MUST
 
 1. Maintain coverage thresholds in workspace config files and keep them consistent with agreed baselines.
+1. Coverage thresholds for API and PWA may be overridden with `COVERAGE_THRESHOLD` from the environment or `.env`.
 
 ### SHOULD
 

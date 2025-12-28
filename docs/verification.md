@@ -51,6 +51,7 @@
    pnpm --filter api test
    pnpm --filter api coverage
    pnpm --filter domain test
+   pnpm --filter domain coverage
    ```
 
 1. Use the following commands for builds:
