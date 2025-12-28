@@ -18,7 +18,7 @@
     "check-types": "pnpm -r check-types",
     "lint": "pnpm -r lint && pnpm markdownlint",
     "markdownlint": "markdownlint-cli2 **/*.md --ignore-path .markdownlintignore",
-    "coverage": "pnpm --filter api coverage && pnpm --filter pwa coverage",
+    "coverage": "pnpm --filter api coverage && pnpm --filter pwa coverage && pnpm --filter domain coverage",
     "lint:fix": "pnpm -r lint:fix && prettier --write .",
     "prettier": "prettier --write ."
   },

@@ -9,8 +9,8 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
-    "coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "@swapi-mern/domain": "workspace:*",
