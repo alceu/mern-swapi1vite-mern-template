@@ -66,11 +66,9 @@
 
 ### MUST
 
-1. Use the following baseline verification commands before commits:
+1. Use the verification commands in `docs/verification.md` for linting and type checks, then run:
 
    ```bash
-   pnpm lint
-   pnpm check-types
    pnpm --filter pwa test
    pnpm --filter api test
    ```

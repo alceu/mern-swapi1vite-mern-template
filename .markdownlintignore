@@ -3,4 +3,7 @@ build/
 dist/
 .git/
 .gitignored-misc/
+
 coverage/
+
+packages/

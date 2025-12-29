@@ -28,27 +28,21 @@
 
    ```yaml
    ports:
-
      - "${MONGO_PORT}:27017"
-
    ```
 
 1. Use the following API port mapping in Compose files:
 
    ```yaml
    ports:
-
      - "${API_PORT}:5000"
-
    ```
 
 1. Use the following PWA port mapping in Compose files:
 
    ```yaml
    ports:
-
      - "${VITE_PWA_PORT}:${PWA_CONTAINER_PORT}"
-
    ```
 
 1. Document host port defaults in `sample-development.env` and `sample-production.env`.

@@ -38,6 +38,11 @@
 
    ```bash
    pnpm lint
+   pnpm lint:fix
+   pnpm lint:packages
+   pnpm lint:packages:fix
+   pnpm lint:base
+   pnpm lint:base:fix
    pnpm --filter api lint
    pnpm --filter pwa lint
    ```

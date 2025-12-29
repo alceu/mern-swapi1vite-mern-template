@@ -132,19 +132,7 @@
 
 ### MUST
 
-1. Use the following verification commands as the project baseline:
-
-   ```bash
-   pnpm check-types
-   pnpm lint
-   pnpm coverage
-   pnpm --filter pwa test
-   pnpm --filter api test
-   pnpm --filter pwa coverage
-   pnpm --filter api coverage
-   pnpm --filter domain coverage
-   ```
-
+1. Use the verification commands documented in `docs/verification.md` as the project baseline.
 1. Run only the commands scoped to the affected workspaces as defined in `docs/verification.md`.
 
 ### SHOULD
