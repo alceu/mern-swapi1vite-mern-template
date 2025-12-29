@@ -9,7 +9,8 @@
 1. Use appropriate HTTP status codes (for example, return `204 No Content` for successful requests without a response body) to avoid unnecessary data transfer.
 1. Keep controllers focused on request and response logic and service orchestration.
 1. Keep services focused on business logic and repository orchestration.
-1. Organize files across controllers, services, repositories, validations, and other layers by model or schema name to keep the codebase navigable.
+1. Organize source files by resource domain under `packages/api/src` (controllers, services, repositories/models, validations, routes, tasks) to keep the codebase navigable.
+1. Document environment variable expectations in the sample env files and `docs/stack.md` when introducing new configuration keys.
 
 ### SHOULD
 
@@ -29,6 +30,7 @@
 
 1. Ensure collection listing endpoints return an `items` array property that only exposes document identifiers.
 1. Collection listings may include calculated data not persisted as document properties (for example, `commentsCount`, `ratingAvg`) alongside the identifier.
+1. Maintain detail endpoints that expose a single document shape aligned with the DTOs exported from `packages/domain`.
 
 ### SHOULD
 

@@ -81,7 +81,7 @@
 
 ### COULD
 
-1. Run `pnpm build`.
+1. Run the default build command documented in `docs/verification.md`.
 
 ### WANT
 

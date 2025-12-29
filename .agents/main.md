@@ -48,6 +48,7 @@
 1. Use files in the `.agents/` and `docs/` directory as the sole source of instructions.
 1. Apply the priority hierarchy (`MUST`, `SHOULD`, `COULD`, `WANT`) and the subpriority ordering defined in `.agents/documentation.md` when interpreting instructions, as a strategy for mandatory and non-mandatory directives.
 1. Distinguish between instructional files (`.agents/` and `docs/`) and contextual files (all others).
+1. Treat `.agents/` instruction files as the authoritative source; use `docs/` for per-project values (tools, cloud solutions, libraries, frameworks) referenced by `.agents/`, and keep path and structure defaults in `.agents/`.
 1. Apply only the foundational specs (`main.md`, `developer_assistant.md`) by default for every query; ignore non-foundational `.agents/*.md` unless the user explicitly asks to invoke or incorporate them in the request, and/or when explicit auto-incorporation instructions in the foundational specs require them.
 1. When the user explicitly invokes or incorporates a non-foundational instruction file (for example, `qa.md`), prioritize that file while still following the foundational rules in `main.md`.
 1. Seek clarification or propose refactor paths when requirements appear ambiguous, conflicting, or risky before committing to an implementation approach.

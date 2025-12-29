@@ -41,6 +41,27 @@
 
 1. None
 
+## Defaults and Missing Inputs
+
+### MUST
+
+1. Use the per-project discovery sources in `docs/change-requests.md` to gather title format, required sections, linked issue format, labels, default reviewers, required checks, merge strategy, and draft usage rules.
+1. When values remain undefined after discovery, propose defaults using conventional best practices and pause for user review before creating or updating the change request.
+1. Ask the user to confirm or supply missing metadata plus any compliance or release-notes sections before submission.
+
+### SHOULD
+
+1. Confirm whether any compliance or release notes sections are mandatory.
+1. Prefer local inspection over networked tooling unless the user approves remote access.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Pre-Merge Preparation
 
 ### MUST
@@ -95,7 +116,9 @@
 ### MUST
 
 1. Confirm commit messages remain in the imperative mood and explain the “why,” per `.agents/version-control.md`.
-1. Verify locally with `pnpm build` (and contextual additional tests when helpful).
+1. Verify locally with the default build command documented in `docs/verification.md` (and contextual additional tests when helpful).
+1. Run a change-request review simulation after merging `develop` into the feature branch and before pushing or submitting the change request.
+1. Use the review inputs defined in `docs/change-requests.md` (required sections, required checks, diff scope) to validate readiness.
 1. Incorporate repository automation prompts documented in `docs/change-requests.md` before pushing the feature branch and raising a change request, so anticipated feedback can be addressed proactively.
 
 ### SHOULD
@@ -144,7 +167,6 @@
 
 ### MUST
 
-1. Trigger the configured AI change-request review for every feature branch once the change request is ready, ensuring the review follows the SDLC and architecture guidance in `.agents/` and `docs/`.
 1. When the user requests fixes for review findings, git pull the feature branch to fetch inline conversation resolutions.
 1. Gather unresolved review threads using the tooling documented in `docs/change-requests.md`, implement the changes, follow the full committing workflow, and resolve the threads with the same tooling once pushed.
 1. Rely on repository automation guidance and tooling documented in `docs/change-requests.md` for formatting concerns where possible.
@@ -152,6 +174,7 @@
 
 ### SHOULD
 
+1. Request the configured AI change-request review once the change request is ready when the repo/account has AI review enabled.
 1. Break down reviews into manageable contextual commits. Commits should cover the files related to each review, with the commit message pointing the review id.
 1. Prioritize functional correctness, architectural soundness, security, and maintainability when reviewing.
 1. Offer constructive, respectful feedback framed as questions or suggestions.

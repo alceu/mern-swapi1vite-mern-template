@@ -77,8 +77,9 @@
 1. Proofread grammar and spelling before committing updates.
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
-1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic; relocate stack- or command-specific guidance to the appropriate `docs/` references.
-1. Treat agnostic terminology as keys in `.agents/` specs and store per-project values in `docs/` so tooling choices stay contextual.
+1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic about tools, cloud solutions, libraries, frameworks, and command usage; relocate those per-project specifics to the appropriate `docs/` references.
+1. Treat tools, cloud solutions, libraries, and frameworks as per-project values in `docs/`, keeping path and structure defaults in `.agents/` so guidance stays consistent.
+1. State that `.agents/` instruction files take precedence over `docs/` instruction files, with `docs/` reserved for per-project values (tools, cloud solutions, libraries, frameworks) referenced by `.agents/`.
 1. Ensure each spec documents the contributor competencies it depends on as the last section, so team members know which skills are required.
 
 ### SHOULD
@@ -107,7 +108,7 @@
 1. Cross-check every update against active manifests (package manifests, workspace configurations, type system configs) and infrastructure blueprints (container orchestration files, environment templates) documented in `docs/stack.md` before publishing changes.
 1. Record required verification commands documented in `docs/verification.md` whenever `docs/stack.md` changes so reviewers can confirm compatibility.
 1. Link back to governing specs (for example, `.agents/main.md`, `.agents/api.md`, `.agents/pwa.md`) rather than duplicating their mandates, keeping `docs/stack.md` focused on project specifics.
-1. Document per-project values for agnostic `.agents/` terminology in `docs/` so the key-value mapping stays explicit.
+1. Document per-project values for tools, cloud solutions, libraries, and frameworks in `docs/` so the key-value mapping stays explicit.
 
 ### SHOULD
 

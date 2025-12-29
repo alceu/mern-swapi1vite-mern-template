@@ -25,7 +25,8 @@
 
 ### MUST
 
-1. Follow the shared normalization approach described in `.agents/fullstack.md`, fetching collection endpoints first and loading detail queries by identifier.
+1. Follow the shared normalization approach described in `.agents/fullstack.md`, loading collections through the shared data layer before requesting detail queries by identifier.
+1. Implement item-level feature components that own their own detail fetching, using `skip` or equivalent flags until a stable identifier is available.
 1. Configure the data access layer settings in line with `docs/stack.md`, keeping environment-controlled base URLs documented in that reference.
 1. Subscribe to the API event streams defined in `.agents/fullstack.md` and invalidate affected list and detail caches by identifier when events arrive.
 
@@ -57,6 +58,24 @@
 ### SHOULD
 
 1. Reuse existing feature building blocks before introducing new patterns to maintain consistency across the PWA.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Tooling and Framework Updates
+
+### MUST
+
+1. Defer to `docs/stack.md` for workspace tooling and update that reference before adopting new frameworks or libraries.
+
+### SHOULD
+
+1. None
 
 ### COULD
 
