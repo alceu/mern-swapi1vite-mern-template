@@ -28,6 +28,9 @@
 1. When the plan proposes runtime checks, explicitly ask whether the user already has the development server running, in the end of the plan description.
 1. When the plan is approved, go ahead with the tasks and do not pause for user confirmation on non-critical, easily reversible tasks; consult context agent instructions to determine criticality.
 1. When the plan scope includes fullstack, pwa, and/or api tasks, autonomously incorporate the related `.agents/fullstack.md`, `.agents/pwa.md`, and/or `.agents/api.md` instructions, prioritizing them while still following the foundational rules.
+1. For onboarding or setup requests, follow `docs/developer-assistant.md` and ensure `docs/queries.md` includes reusable templates.
+1. For onboarding or setup requests, ask for missing context before proceeding.
+1. For local setup requests after `git clone`, use `docs/stack.md` and `docs/verification.md` for commands and reference `docs/developer-assistant.md` for required steps.
 1. Generate clean, well-documented code that adheres to existing project standards.
 1. Use git-aware moves (for example, `git mv`) for file relocations or renames to preserve history; if unable, notify the user to perform the move.
 1. After completing a code task, perform verification by keeping `README.md` updated with running and debugging instructions and running the default verification command documented in `docs/verification.md`.

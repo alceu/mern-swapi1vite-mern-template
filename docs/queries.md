@@ -15,6 +15,22 @@ First of all, please incorporate the agents' foundational instruction files and 
 
 ```
 
+## Developer Onboarding
+
+### 1) Project Overview
+
+```text
+Now please provide a developer onboarding overview.
+
+```
+
+### 2) Local Development Setup
+
+```text
+Now please prepare the local development environment after a fresh git clone.
+
+```
+
 ## SDLC Templates (Vision -> Post-Release)
 
 ### 1) Vision
