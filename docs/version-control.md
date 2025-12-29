@@ -63,7 +63,7 @@
 
 ### MUST
 
-1. Run linting for all changed file types using the commands documented in `docs/verification.md`, including Markdown linting when documentation changes.
+1. For all changed file types, use the commands documented in `docs/verification.md`.
 1. Run the scoped verification steps required for the change type before requesting commit approval.
 
 ### SHOULD

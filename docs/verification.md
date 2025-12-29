@@ -21,30 +21,37 @@
 
 1. None
 
-## Verification Commands
+## Base and Cross-package Commands
 
 ### MUST
-
-1. Use the following commands for type checking:
-
-   ```bash
-   pnpm check-types
-   pnpm --filter api check-types
-   pnpm --filter pwa check-types
-   pnpm --filter domain check-types
-   ```
 
 1. Use the following commands for linting:
 
    ```bash
-   pnpm lint
-   pnpm lint:fix
+   pnpm lint # (default)
    pnpm lint:packages
-   pnpm lint:packages:fix
    pnpm lint:base
-   pnpm lint:base:fix
    pnpm --filter api lint
    pnpm --filter pwa lint
+   ```
+
+1. Use the following commands for formatting:
+
+   ```bash
+   pnpm lint:fix # (default)
+   pnpm lint:packages:fix
+   pnpm lint:base:fix
+   pnpm --filter api lint:fix
+   pnpm --filter pwa lint:fix
+   ```
+
+1. Use the following commands for type checking:
+
+   ```bash
+   pnpm check-types # (default)
+   pnpm --filter api check-types
+   pnpm --filter pwa check-types
+   pnpm --filter domain check-types
    ```
 
 1. Use the following commands for testing and coverage:
@@ -62,7 +69,7 @@
 1. Use the following commands for builds:
 
    ```bash
-   pnpm build
+   pnpm build # (default)
    pnpm --filter api build
    pnpm --filter pwa build
    pnpm --filter domain build
@@ -80,109 +87,7 @@
 
 1. None
 
-## Verification Workflows
-
-### MUST
-
-1. The minimum default verification step is:
-
-   ```bash
-   pnpm check-types
-   ```
-
-1. For documentation-only changes, run the minimum default verification and any configured Markdown linting.
-1. For runtime behavior changes, add linting and the relevant package tests.
-1. For container-based verification, run the cleanup command before and after using Docker:
-
-   ```bash
-   docker compose down --volumes --remove-orphans
-   ```
-
-1. Use the following dev server checks and start commands when runtime behavior is affected:
-
-   ```bash
-   lsof -ti:3000
-   lsof -ti:5173
-   lsof -ti:27017
-   pnpm dev
-   pnpm --filter api dev
-   pnpm --filter pwa dev
-   ```
-
-### SHOULD
-
-1. Redirect dev server logs to a file and scan for failures when troubleshooting:
-
-   ```bash
-   pnpm dev > dev.log 2>&1 &
-   tail -f dev.log
-   timeout 10s tail -f dev.log | rg -i "error|fail|exception"
-   ```
-
-### COULD
-
-1. Run `pnpm build` after cross-package changes when time allows.
-
-### WANT
-
-1. None
-
-## Change Scope Detection
-
-### MUST
-
-1. Use the following commands to map change scope:
-
-   ```bash
-   git diff --name-only HEAD
-   git diff --name-only develop...HEAD
-   git diff --name-only develop...HEAD | rg "^packages/api/"
-   git diff --name-only develop...HEAD | rg "^packages/pwa/"
-   git diff --name-only develop...HEAD | rg "^\.agents/"
-   ```
-
-### SHOULD
-
-1. None
-
-### COULD
-
-1. None
-
-### WANT
-
-1. None
-
-## Verification Bundle by Change Type
-
-### MUST
-
-1. Use the following mapping to select verification commands:
-
-   ```text
-   .agents/*.md changes    -> pnpm check-types, review docs consistency
-   docs/*.md changes       -> pnpm check-types, review against manifests
-   API source changes      -> pnpm lint, pnpm check-types, pnpm --filter api test
-   PWA source changes      -> pnpm lint, pnpm check-types, pnpm --filter pwa test
-   Domain changes          -> pnpm lint, pnpm check-types, affected package tests
-   Docker changes          -> docker compose config, container startup/teardown
-   package.json changes    -> pnpm install, pnpm check-types, pnpm build
-   TypeScript config       -> pnpm check-types, pnpm build
-   ```
-
-### SHOULD
-
-1. None
-
-### COULD
-
-1. None
-
-### WANT
-
-1. None
-
-## Docker Environment Verification
+## Docker Environment Commands
 
 ### MUST
 
@@ -212,6 +117,77 @@
 ### COULD
 
 1. None
+
+### WANT
+
+1. None
+
+## Change Scope Detection
+
+### MUST
+
+1. None
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. Use the following commands to map change scope:
+
+   ```bash
+   git diff --name-only HEAD
+   git diff --name-only develop...HEAD
+   git diff --name-only develop...HEAD | rg "^packages/api/"
+   git diff --name-only develop...HEAD | rg "^packages/pwa/"
+   git diff --name-only develop...HEAD | rg "^\.agents/"
+   ```
+
+### WANT
+
+1. None
+
+## Verification Bundle by Change Type (referencing the defaults listed above)
+
+### MUST
+
+1. The minimum verification step is the default formatting command.
+1. Run the default build command for cross-package changes.
+1. Use the following mapping to select verification commands:
+   - any changes -> default formatting command
+   - Markdown changes (`*.md`) -> review docs consistency + review against manifests
+   - `packages/api` source changes -> default type-check + api tests
+   - `packages/pwa` source changes -> default type-check + pwa tests
+   - `packages/domain` source changes -> default type-check + affected package tests
+   - Docker changes -> follow Docker Environment Commands
+   - tools and package configuration changes -> pnpm install + verify commands run successfully
+   - TypeScript config changes -> default type-check
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. Use the following dev server checks and start commands when runtime behavior is affected:
+
+   ```bash
+   lsof -ti:3000
+   lsof -ti:5173
+   lsof -ti:27017
+   pnpm dev
+   pnpm --filter api dev
+   pnpm --filter pwa dev
+   ```
+
+1. Redirect dev server logs to a file and scan for failures when troubleshooting:
+
+   ```bash
+   pnpm dev > dev.log 2>&1 &
+   tail -f dev.log
+   timeout 10s tail -f dev.log | rg -i "error|fail|exception"
+   ```
 
 ### WANT
 
@@ -274,8 +250,7 @@
 
 ### MUST
 
-1. Ask the user for any verification steps that are required but not present in workspace scripts, such as Markdown linting or additional QA tooling.
-1. Ask the user to confirm whether any health checks or service URLs differ from the defaults listed here.
+1. None
 
 ### SHOULD
 
@@ -283,7 +258,8 @@
 
 ### COULD
 
-1. None
+1. Suggest the user add any verification steps that are required but not present in workspace scripts, such as additional QA tooling.
+1. Suggest the user confirm whether any health checks or service URLs differ from the defaults listed here.
 
 ### WANT
 
