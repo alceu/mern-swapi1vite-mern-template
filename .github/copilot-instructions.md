@@ -1,14 +1,7 @@
-# Copilot Review Instructions
+# Copilot
 
-Use these sources of truth for change-request reviews:
-- .agents/main.md
-- .agents/developer_assistant.md
-- .agents/change_requests.md
-- .agents/version-control.md
-- .agents/sdlc.md
-- .agents/fullstack.md
-- docs/change-requests.md
-- docs/verification.md
-- docs/stack.md
+Primary source of truth: AGENTS.md
 
-If the change touches a specific domain (API, PWA, QA, documentation), consult the matching `.agents/` and `docs/` files.
+## Review Instructions
+
+**On pull request review:** please incorporate the agents' foundational instruction files, plus the version-control and change-request instruction files, and proceed with the change-request code review.

@@ -30,3 +30,7 @@ Notes:
 
 - Track and review any changes to the foundational files with human maintainers.
 - Preserve user changes in the repo and follow the conflict-resolution rules in `.agents/main.md`.
+
+## Tool and Model Entrypoints
+
+AGENTS.md is the canonical, tool-agnostic entrypoint for AI guidance in this repo. Tool-specific files should only point here and avoid duplicating instructions.

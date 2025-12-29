@@ -122,8 +122,9 @@
 ### MUST
 
 1. Request a GitHub Copilot change-request review for every feature branch once the change request is ready for review.
-1. Keep `.github/copilot-instructions.md` minimal and focused on referencing the `.agents/` and `docs/` sources of truth for SDLC, architecture, and verification guidance.
-1. Avoid duplicating detailed instructions in `.github/copilot-instructions.md`; centralize guidance in `.agents/` and `docs/` instead.
+1. Keep `.github/copilot-instructions.md` minimal and focused on pointing to `AGENTS.md` as the canonical entrypoint.
+1. Use `.github/copilot-instructions.md` to include a short change-request review query that invokes the foundational, version-control, and change-request instruction files.
+1. Avoid duplicating detailed instructions in `.github/copilot-instructions.md`; centralize guidance in `AGENTS.md` and the referenced `.agents/` and `docs/` files instead.
 
 ### SHOULD
 

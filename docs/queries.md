@@ -134,13 +134,15 @@ Now please incorporate the agents' QA and SDLC instruction files. Summarize post
 ## Version Control and Collaboration
 
 ```text
-Now please incorporate the agents' version-control instruction file as well, and plan plus execute contextual committing of all current changes. Once the plan is approved, keep committing until every commit is done.
+Now please incorporate the agents' version-control instruction files as well, and plan and execute contextual commits for all current changes.
+    - Once the plan is approved, move forward and stop only right before each commit command.
+    - Once the plan is approved, keep committing until every commit is done.
 
-Now please incorporate the agents' version-control instruction file as well, and create a new feature branch from develop, naming based on the task XXX.
+Now please incorporate the agents' version-control instruction files as well, and create a new feature branch from develop, naming based on the task XXX.
 
-Now please incorporate the agents' version-control instruction file as well, merge back to develop and push branch. I am done with this feature branch.
+Now please incorporate the agents' version-control instruction files as well, merge back to develop and push branch. I am done with this feature branch.
 
-Now please incorporate the agents' version-control instruction file as well, merge back to develop, then merge develop into master, push both branches, and finally check out develop. I am done with this branch.
+Now please incorporate the agents' version-control instruction files as well, merge back to develop, then merge develop into master, push both branches, and finally check out develop. I am done with this branch.
 
 Now please incorporate the agents' version-control and change request instruction files as well, and proceed with a feature change request targeting the develop branch. I am done with this feature branch.
 
@@ -155,19 +157,19 @@ Now please incorporate the agents' version-control and change request instructio
 ```text
 Now please incorporate the agents' documentation instruction file as well, and review the agents' XXX instruction file to confirm whether the following guidance is covered in the correct section, or place it if missing: XXX
 
-Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file to check grammar and meaning, and assert whether it's following the documentation base instructions.
+Now please incorporate the agents' documentation instruction file as well, and review the agents' XXX instructions file to check grammar and meaning, and assert whether it's following the documentation base instructions.
 
-Now please incorporate the agents' documentation instructions file as well, and review the agents' XXX instructions file to include this task-context approach descriptions we just achieved, as future orientation notes.
+Now please incorporate the agents' documentation instruction file as well, and review the agents' XXX instructions file to include this task-context approach descriptions we just achieved, as future orientation notes.
 
 ```
 
 ## Misc
 
 ```text
-Incorporate the agents' fullstack, API, and PWA instructions, then review the current changes to confirm they meet all requirements.
+Incorporate the agents' fullstack, API, and PWA instruction files, then review the current changes to confirm they meet all requirements.
 
-Now please incorporate the agents' QA instructions file and fix the XXX.
+Now please incorporate the agents' QA instruction files and fix the XXX.
 
-Please incorporate the relevant agents' XX instructions file as well, and proceed with the requested task (replace XX with the specific spec needed for the context).
+Please incorporate the relevant agents' XX instruction files as well, and proceed with the requested task (replace XX with the specific spec needed for the context).
 
 ```
