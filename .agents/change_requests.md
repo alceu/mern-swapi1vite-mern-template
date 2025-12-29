@@ -144,6 +144,7 @@
 
 ### MUST
 
+1. Trigger the configured AI change-request review for every feature branch once the change request is ready, ensuring the review follows the SDLC and architecture guidance in `.agents/` and `docs/`.
 1. When the user requests fixes for review findings, git pull the feature branch to fetch inline conversation resolutions.
 1. Gather unresolved review threads using the tooling documented in `docs/change-requests.md`, implement the changes, follow the full committing workflow, and resolve the threads with the same tooling once pushed.
 1. Rely on repository automation guidance and tooling documented in `docs/change-requests.md` for formatting concerns where possible.

@@ -117,6 +117,26 @@
 
 1. None
 
+## AI Review (GitHub Copilot)
+
+### MUST
+
+1. Request a GitHub Copilot change-request review for every feature branch once the change request is ready for review.
+1. Keep `.github/copilot-instructions.md` minimal and focused on referencing the `.agents/` and `docs/` sources of truth for SDLC, architecture, and verification guidance.
+1. Avoid duplicating detailed instructions in `.github/copilot-instructions.md`; centralize guidance in `.agents/` and `docs/` instead.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
 ## Merge and Follow-up
 
 ### MUST
@@ -166,12 +186,14 @@
 ### MUST
 
 1. Inspect `.github/PULL_REQUEST_TEMPLATE.md`, `.github/CODEOWNERS`, and `.github/workflows/` to discover required sections, reviewers, and checks.
+1. Inspect `.github/copilot-instructions.md` to confirm the AI review instructions point to the authoritative `.agents/` and `docs/` guidance.
 1. Confirm any repository automation guidance referenced in `docs/tasks-management.md`.
 1. Use local CLI commands, for example:
 
    ```bash
    ls .github
    test -f .github/PULL_REQUEST_TEMPLATE.md && cat .github/PULL_REQUEST_TEMPLATE.md
+   test -f .github/copilot-instructions.md && cat .github/copilot-instructions.md
    ls .github/workflows
    ```
 
