@@ -66,7 +66,7 @@
 
 ### MUST
 
-1. None
+1. Define change-request verification commands based on the full feature branch diff (all commits), not just the last commit.
 
 ### SHOULD
 

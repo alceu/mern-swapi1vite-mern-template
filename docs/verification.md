@@ -269,11 +269,11 @@
 
 ### MUST
 
-1. Require user approval before running commands that alter container state, start background dev servers, or install dependencies.
+1. None
 
 ### SHOULD
 
-1. Confirm with the user before running verification steps that may take significant time.
+1. When services are already running, confirm whether to reuse them before restarting containers or dev servers.
 
 ### COULD
 
