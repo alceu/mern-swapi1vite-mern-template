@@ -15,7 +15,7 @@
     "start:api": "pnpm --filter api start",
     "start:pwa": "pnpm --filter pwa start",
     "start": "pnpm --parallel --filter api --filter pwa start",
-    "check-types": "pnpm -r check-types",
+    "check-types": "pnpm --filter @swapi-mern/domain build && pnpm -r check-types",
     "coverage": "pnpm --filter api coverage && pnpm --filter pwa coverage && pnpm --filter domain coverage",
     "markdownlint": "markdownlint-cli2 **/*.md --ignore-path .markdownlintignore",
     "lint:base": "eslint . --ext .js,.cjs,.mjs,.ts,.tsx --no-error-on-unmatched-pattern && pnpm markdownlint && prettier --check .",
