@@ -164,6 +164,8 @@ Now please incorporate the agents' version-control and change request instructio
 
 Now please incorporate the agents' version-control and change request instruction files as well, and retrieve the current non-resolved change request review conversations. Analyze and resolve each one. The change request id is XXX.
 
+Now please incorporate the agents' version-control and change request instruction files as well, and retrieve the current unsuccessful details from change request. Analyze and resolve them. The change request id is XXX.”
+
 Now please incorporate the agents' version-control and change request instruction files as well, push the code changes for the non-resolved conversations, and once they are pushed, mark the handled conversations as resolved.
 
 ```
