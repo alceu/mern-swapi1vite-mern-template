@@ -63,5 +63,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Prepare env
+        run: |
+          cp sample-production.env .env
+          ln -sf ../../.env packages/pwa/.env
+          ln -sf ../../.env packages/api/.env
+
       - name: Run coverage
         run: pnpm coverage
