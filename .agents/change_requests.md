@@ -95,6 +95,7 @@
    git pull origin feature/<name>
    git merge develop
    ```
+1. Preserve feature-branch commit history when syncing `develop` by using merge (no squash or rebase).
 1. When conflicts appear, draft a summary covering the files involved, the conflicting intent, and your proposed resolution.
 1. Document conflict resolutions and pause for user direction whenever merge conflicts arise.
 1. Resolve conflicts in line with the committing workflow, stage only related files, and document context in the commit body when helpful.
