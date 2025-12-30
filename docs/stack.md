@@ -1,122 +1,292 @@
 # Repository Stack Reference
 
-This guide captures the active tooling across the MERN SWAPI template so agents and contributors can reason about dependencies, environments, and verification flows without re-reading every spec.
+**Spec-ID:** `docs-stack::v1`
 
-## How to Use This Document
+## Purpose
 
-- Follow the authoring rules in `.agents/documentation.md`, especially the "Documentation Stack" section, when updating this file.
-- Treat this as the project-facing view; cross-link to `.agents/*.md` files for governance detail instead of duplicating mandates.
-- Validate any edits against the manifests and infrastructure files listed in the change checklist below before merging.
+### MUST
+
+1. Capture the per-project stack values (tooling, services, workspace layout, and verification hooks) referenced by `.agents/*` specs.
+1. Keep this file aligned with manifests, configs, and Compose files so agents can auto-discover values before asking users.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Monorepo Overview
 
-- Package management uses pnpm workspaces with shared configuration in `package.json`, `pnpm-workspace.yaml`, and `tsconfig.base.json`.
-- Source language is TypeScript 5.9.x across packages; compiled output lands under each package’s `build/` directory.
-- Runtime configuration flows through environment files derived from `sample-development.env` and `sample-production.env`.
-- Docker Compose definitions (`docker-compose.yml`, `docker-compose.production.yml`) orchestrate MongoDB, the Express API, and the Vite PWA containers.
+### MUST
+
+1. Package management uses pnpm workspaces with shared config in `package.json`, `pnpm-workspace.yaml`, and `tsconfig.base.json`.
+1. Source language is TypeScript; confirm the exact version from workspace manifests.
+1. Runtime configuration uses `sample-development.env` and `sample-production.env` as templates.
+1. Docker Compose (`docker-compose.yml`, `docker-compose.production.yml`) orchestrates MongoDB, the API, and the PWA services.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Workspace Packages
 
-### API (`packages/api`)
+### MUST
 
-- **Framework**: Express 4 HTTP server with middleware-based request processing
-- **Database**: MongoDB accessed via Mongoose 8 ODM
-- **Scheduled Tasks**: node-cron for periodic jobs (see `src/tasks/TopSearch.ts`)
-- **Build**: TypeScript compiled with `tsx` in development, `tsc` + `tsc-alias` for production
-- **Security**: Argon2 for password hashing, JWT for token issuance (enable via env toggles)
-- **File Structure**: Lowercase folders per `.agents/api.md` (`controllers`, `services`, `routes`, `tasks`, `validations`)
-- **Testing**: Jest + Supertest (see `docs/testing.md`)
+1. API workspace (`packages/api`): Express 4 HTTP server, Mongoose 8 ODM, node-cron for scheduled tasks, `tsx` for development, `tsc` plus `tsc-alias` for production builds, Argon2 and JWT for auth when enabled, file layout per `.agents/api.md`.
+1. PWA workspace (`packages/pwa`): React 18 with Vite 5, Redux Toolkit with RTK Query, React Router DOM 6, Tailwind CSS plus CSS modules, environment variables `VITE_SWAPI_API_URL` and `VITE_SEARCHES_STATS_API_URL`.
+1. Domain workspace (`packages/domain`): shared DTOs and types exported via `@swapi-mern/domain` for API and PWA contract alignment.
+1. Testing frameworks per workspace are defined in `docs/testing.md`.
 
-### PWA (`packages/pwa`)
+### SHOULD
 
-- **Framework**: React 18 with hooks and concurrent rendering
-- **Build Tool**: Vite 5 for fast HMR and optimized production builds
-- **State Management**: Redux Toolkit with RTK Query for server state caching
-- **Routing**: React Router DOM 6 with segment-based page organization under `src/pages/*`
-- **Styling**: Tailwind CSS utility-first framework with CSS modules
-- **Environment**: `VITE_SWAPI_API_URL`, `VITE_SEARCHES_STATS_API_URL` for API base URLs
-- **Testing**: Vitest + React Testing Library + jsdom (see `docs/testing.md`)
+1. Keep workspace descriptions aligned with their `package.json` dependencies.
 
-## Type System & Module Conventions
+### COULD
 
-- **Language**: TypeScript 5.9.x with strict mode enabled across all workspaces
-- **Path Aliases**:
-  - `@api/*` — API internal imports (defined in `packages/api/tsconfig.json`)
-  - `@pwa/*` — PWA internal imports (defined in `packages/pwa/tsconfig.json`)
-  - `@swapi-mern/domain` — Shared DTOs (imported by both API and PWA)
-- **Build**: `tsc` + `tsc-alias` for API compilation, Vite handles PWA transpilation
-- **Config Sync**: Mirror alias updates in ESLint, Vitest/Jest, ts-node, and Vite configs
-- **Change Protocol**: Record any alias changes in `.agents/fullstack.md` and update this document
+1. None
 
-## Path & Module Conventions
+### WANT
 
-- API imports: use the `@api/*` alias defined in `packages/api/tsconfig.json`; mirror updates in ESLint, Vitest/Jest, and ts-node configs when alias paths change.
-- PWA imports: use the `@pwa/*` alias configured in `packages/pwa/tsconfig.json`; ensure Vite (`vite.config.ts`) and Vitest respect any adjustments.
-- Shared models: import via `@swapi-mern/domain` to guarantee API and PWA stay in sync.
-- Record any alias changes in `.agents/fullstack.md` and update this document accordingly.
+1. None
 
-## Environments & Configuration
+## Type System and Module Conventions
 
-- Default development: run `pnpm dev` to start API + PWA concurrently (uses `concurrently` under the hood).
-- Docker-first workflows: `docker-compose.yml` starts MongoDB, the API, and the PWA; always run `docker compose down --volumes --remove-orphans` before and after verification per `.agents/developer_assistant.md`.
-- Environment templates list required variables; keep `sample-development.env` and `sample-production.env` aligned with actual service expectations.
+### MUST
 
-## Tooling & Automation
+1. Path aliases: `@api/*` in `packages/api/tsconfig.json`, `@pwa/*` in `packages/pwa/tsconfig.json`, and `@swapi-mern/domain` in the domain package.
+1. Sync alias changes across TypeScript, ESLint, Jest/Vitest, and Vite configs.
+1. Record alias changes here and in `.agents/fullstack.md`.
 
-## Testing & Quality Gates
+### SHOULD
 
-See `docs/testing.md` for framework details and `docs/verification.md` for command reference.
+1. None
 
-- **Type Safety**: `pnpm check-types` (required default verification step)
-- **Linting**: `pnpm lint` to enforce workspace-wide rules (ESLint 8.57.x + Prettier 3.2.x)
-- **PWA Tests**: `pnpm --filter pwa test` (Vitest + React Testing Library + jsdom)
-- **PWA Coverage**: `pnpm --filter pwa coverage`
-- **API Tests**: `pnpm --filter api test` (Jest + Supertest, to be implemented)
-- **API Coverage**: `pnpm --filter api coverage` (to be implemented)
-- Type safety: `pnpm check-types` (required default verification step).
-- Client coverage: `pnpm --filter pwa test` and optionally `pnpm --filter pwa coverage` (Vitest + Testing Library + jsdom).
-- API tests: add suites via Vitest/Jest as features expand; follow `.agents/api.md` for structure and update this list when commands land.
-- Linting: `pnpm lint` to enforce workspace-wide rules.
+### COULD
 
-## Change Checklist
+1. None
 
-1. Compare proposed updates against:
-   - `package.json`, package-level `package.json` files
+### WANT
+
+1. None
+
+## Environment and Configuration
+
+### MUST
+
+1. Use the following command to start API and PWA concurrently in development:
+
+   ```bash
+   pnpm dev
+   ```
+
+1. For container-based verification, run the cleanup command from `docs/verification.md` before and after using Docker.
+1. Keep env templates aligned with service expectations in Compose and application configs.
+1. PWA base URLs are configured via `VITE_SWAPI_API_URL` and `VITE_SEARCHES_STATS_API_URL`.
+
+### SHOULD
+
+1. Keep env template values consistent across development and production samples unless explicitly documented.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Tooling and Automation
+
+### MUST
+
+1. CI uses GitHub Actions; record workflow names and required checks in `docs/cicd.md`.
+1. The coverage workflow runs `pnpm coverage` on push and change requests, if configured in `.github/workflows/`.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Testing and Quality Gates
+
+### MUST
+
+1. Use the verification commands documented in `docs/verification.md` as the project baseline.
+1. Run only the commands scoped to the affected workspaces as defined in `docs/verification.md`.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Data Architecture
 
-### Normalization Strategy
+### MUST
 
-- **Collection Endpoints**: Return arrays of identifiers plus calculated metadata (not full documents)
-- **Detail Endpoints**: Return complete documents referenced by ID
-- **Client Caching**: RTK Query maintains normalized cache with automatic refetching
-- **Cache Invalidation**: API event streams trigger identifier-based cache updates
-- **Base URLs**: `VITE_SWAPI_API_URL` and `VITE_SEARCHES_STATS_API_URL` environment variables
+1. Collection endpoints return identifier-centric `items` arrays plus calculated metadata; detail endpoints return full documents.
+1. RTK Query maintains normalized cache, and cache invalidation uses identifier-based updates and API event streams.
+1. API base URLs for the PWA use `VITE_SWAPI_API_URL` and `VITE_SEARCHES_STATS_API_URL`.
 
-See `.agents/fullstack.md` for cross-layer normalization rules and `.agents/pwa.md` for client caching patterns. for API, Vite handles PWA transpilation
+### SHOULD
 
-### Testing Frameworks
+1. Keep normalization rules aligned with `.agents/fullstack.md`.
 
-See `docs/testing.md` for comprehensive testing stack details:
+### COULD
 
-- API: Jest + Supertest
-- PWA: Vitest + React Testing Library + jsdom
-- E2E: Playwright (future adoption)
+1. None
 
-## Related Specifications
+### WANT
 
-- `.agents/main.md` — global agent mandates
-- `.agents/documentation.md` — documentation authoring rules
-- `.agents/api.md`, `.agents/pwa.md`, `.agents/fullstack.md` — layer-specific governance
-- `docs/testing.md` — testing frameworks and patterns
-- `docs/verification.md` — verification commands and workflows
-- `docs/pending-agents-instructions.md`, `docs/pending-app-instructions.md` — staging areas for upcoming spec updates
+1. None
 
-```sh
-# Default verification bundle after stack edits
-# See docs/verification.md for complete command reference
-pnpm lint
-pnpm check-types
-pnpm --filter pwa test   # when front-end behaviour changes
-pnpm --filter api test   # add once API test suites land
-```
+## Change Checklist
+
+### MUST
+
+1. Compare proposed updates against `package.json` files, `pnpm-workspace.yaml`, `tsconfig*.json`, `docker-compose*.yml`, and env templates before editing this spec.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Auto-Discovery
+
+### MUST
+
+1. Inspect `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`, and `packages/*/package.json` to confirm tooling, versions, and scripts.
+1. Inspect `docker-compose.yml`, `docker-compose.production.yml`, and env templates to confirm service topology and configuration.
+1. Inspect `packages/api` and `packages/pwa` configs to confirm framework versions and build outputs.
+1. Use local CLI commands only, for example:
+
+   ```bash
+   cat package.json
+   cat packages/api/package.json
+   cat packages/pwa/package.json
+   rg "VITE_" sample-development.env sample-production.env
+   ```
+
+### SHOULD
+
+1. Prefer local inspection over networked lookups unless the user approves remote access.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Missing Inputs
+
+### MUST
+
+1. Ask the user to confirm any stack value that cannot be verified locally, such as required Node or pnpm versions, environment-specific overrides, or new services not present in Compose.
+
+### SHOULD
+
+1. Clarify any ambiguity about build output locations when config files do not specify them.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before changing documented stack values, adding or removing services, or renaming environment variable keys.
+
+### SHOULD
+
+1. Seek confirmation before altering data normalization or caching strategy.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Related Specs
+
+### MUST
+
+1. `.agents/documentation.md`
+1. `.agents/fullstack.md`
+1. `.agents/api.md`
+1. `.agents/pwa.md`
+1. `docs/testing.md`
+1. `docs/verification.md`
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand pnpm workspaces, TypeScript configuration, and Docker Compose workflows.
+1. Be able to trace build, test, and runtime settings across the repo.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None

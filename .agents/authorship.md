@@ -40,3 +40,21 @@
 ### WANT
 
 1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Apply the authorship rules consistently across code and documentation changes.
+
+### SHOULD
+
+1. Maintain familiarity with contributor attribution practices used by the team.
+
+### COULD
+
+1. Document attribution edge cases in `docs/` when they arise.
+
+### WANT
+
+1. None

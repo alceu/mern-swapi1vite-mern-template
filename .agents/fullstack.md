@@ -24,26 +24,6 @@
 
 1. None
 
-## Contributor Competencies
-
-### MUST
-
-1. Understand Git workflows that support coordinated backend and frontend deliveries, including rebasing and release branch hygiene.
-1. Navigate the project’s CI/CD pipelines to validate cross-workspace builds, tests, and deployments.
-1. Evaluate performance implications across API and PWA layers when introducing new data flows or normalization rules.
-
-### SHOULD
-
-1. Share lessons learned from CI/CD or performance tuning in `docs/` so patterns scale across teams.
-
-### COULD
-
-1. Pilot improvements to developer tooling (for example, shared scripts) that streamline cross-stack verification.
-
-### WANT
-
-1. None
-
 ## Data Normalization and Caching Strategy
 
 ### MUST
@@ -66,51 +46,24 @@
 
 1. None
 
-### API Workspace (`packages/api`)
+## Debugging and Logging Hygiene
 
-#### MUST
+### MUST
 
-1. Organize source files by resource domain (controllers, services, models, validations, routes, tasks) under `packages/api/src`.
-1. Keep list endpoints focused on returning identifiers plus any calculated metadata, leaving document hydration to detail endpoints.
-1. Maintain detail endpoints that expose a single document shape aligned with the DTOs exported from `packages/domain`.
-1. Document environment variable expectations in the sample env files and `docs/stack.md` when introducing new configuration keys.
+1. Review `console.debug` and other debug statements during feature work, removing them or gating them behind environment checks before shipping.
+1. Keep production logging limited to actionable info and errors, avoiding verbose debug output outside development.
 
-#### SHOULD
+### SHOULD
 
-1. Reuse existing parameter conventions (pagination, search filters) when adding new routes to keep the client experience consistent.
+1. Prefer centralized logging helpers when debug output needs to be toggled or filtered across workspaces.
 
-#### COULD
+### COULD
 
-1. Emit lightweight notifications (for example, via dedicated routes or events) when clients benefit from cache invalidation hooks.
+1. Capture recurring debug workflows in `docs/` if teams rely on them.
 
-#### WANT
+### WANT
 
 1. None
-
-### PWA Workspace (`packages/pwa`)
-
-#### MUST
-
-1. Load collection data through the shared data layer before requesting related detail records, mirroring the normalization strategy defined in `.agents/fullstack.md` and `docs/stack.md`.
-1. Implement item-level feature components that own their own detail fetching, using `skip` or equivalent flags until the parent provides a stable identifier.
-1. House business logic, data access wiring, and store slices inside feature directories so pages remain focused on routing concerns.
-1. Keep shared presentational pieces inside `packages/pwa/src/components`, avoiding business-specific state in those modules.
-1. Defer to `docs/stack.md` for workspace tooling and update that reference before adopting new frameworks or libraries.
-
-#### SHOULD
-
-1. Define PWA-specific view models when composed data is required, keeping the normalization boundary intact.
-1. Surface reusable filters and list utilities through feature entry points before creating one-off implementations.
-
-#### COULD
-
-1. Document new feature shells or architectural patterns in `docs/` to speed onboarding for additional contributors.
-
-#### WANT
-
-1. None
-
-<!-- Future shared UI packages or additional client workspaces can be documented here once added to the stack. -->
 
 ## Naming Conventions
 
@@ -125,6 +78,26 @@
 ### COULD
 
 1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand Git workflows that support coordinated backend and frontend deliveries, including rebasing and release branch hygiene.
+1. Navigate the project’s CI/CD pipelines to validate cross-workspace builds, tests, and deployments.
+1. Evaluate performance implications across API and PWA layers when introducing new data flows or normalization rules.
+
+### SHOULD
+
+1. Share lessons learned from CI/CD or performance tuning in `docs/` so patterns scale across teams.
+
+### COULD
+
+1. Pilot improvements to developer tooling (for example, shared scripts) that streamline cross-stack verification.
 
 ### WANT
 

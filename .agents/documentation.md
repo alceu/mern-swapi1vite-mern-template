@@ -4,8 +4,22 @@
 
 ## Purpose
 
-1.  Provide a spec-driven template so every agent instruction file communicates scope, rules, and verification in a predictable format.
-1.  Enable reuse by future tooling without restructuring the content.
+### MUST
+
+1. Provide a spec-driven template so every agent instruction file communicates scope, rules, and verification in a predictable format.
+1. Enable reuse by future tooling without restructuring the content.
+
+### SHOULD
+
+1. None
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
 
 ## Markdown Structure Checklist
 
@@ -57,25 +71,28 @@
 ### MUST
 
 1. Each topic must conclude with the four priority sub-topics (`MUST`, `SHOULD`, `COULD`, `WANT`).
-1. Priority always as the last sub-topics. Use a "None" placeholder for any empty priority.
+1. Priority must always be the last subtopics. Use a "None" placeholder for any empty priority.
 1. Write instructions in outcome-focused language; prefer checklists over narrative paragraphs.
+1. Keep each instruction item pragmatic and concise, near 300 characters; if it becomes long, shorten it by trimming non-essential motivation while preserving clarity, so the rationale remains implicit. If meaning is lost, split the instruction into smaller items without losing intent.
 1. Proofread grammar and spelling before committing updates.
 1. Explicitly list actions that require user approval so automation can enforce pauses consistently.
 1. Within every priority sub-topic, keep the checklist ordered and formatted with Markdown ordered-list markers (for example, `1.`) to preserve canonical numbering.
-1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic; relocate stack- or command-specific guidance to the appropriate `docs/` references.
-1. Ensure each spec documents the contributor competencies it depends on so team members know which skills are required.
+1. Keep `AGENTS.md` and `.agents/` specs stack-agnostic about tools, cloud solutions, libraries, frameworks, and command usage; relocate those per-project specifics to the appropriate `docs/` references.
+1. Treat tools, cloud solutions, libraries, and frameworks as per-project values in `docs/`, keeping path and structure defaults in `.agents/` so guidance stays consistent.
+1. State that `.agents/` instruction files take precedence over `docs/` instruction files, with `docs/` reserved for per-project values (tools, cloud solutions, libraries, frameworks) referenced by `.agents/`.
+1. Ensure each spec documents the contributor competencies it depends on as the last section, so team members know which skills are required.
 
 ### SHOULD
 
 1. Reference foundational specs (for example, `.agents/main.md`) instead of repeating their content; link to shared rules when needed.
 1. Assign or reuse spec identifiers (for example, `Spec-ID: documentation::v1`) so downstream tools can reference the document.
 1. Revisit the spec when upstream files change, updating links and requirements to stay aligned.
-1. Summarize spec changes in PR descriptions (what changed, why, and how it was verified) for audit trails.
+1. Summarize spec changes in change request descriptions (what changed, why, and how it was verified) for audit trails.
 1. Remove obsolete mandates entirely; migration history belongs in ADRs or commit messages, not the live spec.
 
 ### COULD
 
-1. Use cross-links to related specs (`[Versioning](./versioning.md)`) when additional context is necessary.
+1. Use cross-links to related specs (`[Version Control](./version-control.md)`) when additional context is necessary.
 1. Validate that heading order, list styles, and spec identifiers make the file straightforward to parse programmatically.
 1. Ensure instructions are actionable without relying on institutional knowledge; link to context documents when broader background is helpful.
 
@@ -91,6 +108,7 @@
 1. Cross-check every update against active manifests (package manifests, workspace configurations, type system configs) and infrastructure blueprints (container orchestration files, environment templates) documented in `docs/stack.md` before publishing changes.
 1. Record required verification commands documented in `docs/verification.md` whenever `docs/stack.md` changes so reviewers can confirm compatibility.
 1. Link back to governing specs (for example, `.agents/main.md`, `.agents/api.md`, `.agents/pwa.md`) rather than duplicating their mandates, keeping `docs/stack.md` focused on project specifics.
+1. Document per-project values for tools, cloud solutions, libraries, and frameworks in `docs/` so the key-value mapping stays explicit.
 
 ### SHOULD
 
@@ -100,6 +118,24 @@
 ### COULD
 
 1. Include change history notes summarizing stack evolutions to accelerate onboarding.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Apply spec-writing conventions to keep instructions consistent, testable, and easy to audit.
+
+### SHOULD
+
+1. Maintain familiarity with Markdown and documentation tooling used in this repository.
+
+### COULD
+
+1. Cross-check specs against related files to avoid duplicated or conflicting guidance.
 
 ### WANT
 

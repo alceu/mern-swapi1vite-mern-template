@@ -7,9 +7,10 @@
 ### MUST
 
 1. Use appropriate HTTP status codes (for example, return `204 No Content` for successful requests without a response body) to avoid unnecessary data transfer.
-1. Keep controllers focused on requests and responses logic and service orchestration.
+1. Keep controllers focused on request and response logic and service orchestration.
 1. Keep services focused on business logic and repository orchestration.
-1. Organize files across controllers, services, repositories, validations, and other layers by model or schema name to keep the codebase navigable.
+1. Organize source files by resource domain under `packages/api/src` (controllers, services, repositories/models, validations, routes, tasks) to keep the codebase navigable.
+1. Document environment variable expectations in the sample env files and `docs/stack.md` when introducing new configuration keys.
 
 ### SHOULD
 
@@ -23,36 +24,17 @@
 
 1. None
 
-## Contributor Competencies
-
-### MUST
-
-1. Understand Git-based workflows and CI/CD pipelines used to deploy the API so changes remain shippable and traceable.
-1. Be proficient with the API testing frameworks documented in `docs/testing.md` to keep controllers and services covered.
-1. Apply performance profiling and monitoring basics to spot regressions introduced by new endpoints or aggregations.
-
-### SHOULD
-
-1. Stay familiar with security best practices (authentication, authorization, input validation) relevant to the API server and database layer documented in `docs/stack.md`.
-
-### COULD
-
-1. Share performance findings or CI/CD adjustments in `docs/` to help other contributors adopt improvements.
-
-### WANT
-
-1. None
-
 ## Data Normalization and Caching
 
 ### MUST
 
-1. Ensure collection listing endpoints return array that only exposes document identifiers.
+1. Ensure collection listing endpoints return an `items` array property that only exposes document identifiers.
 1. Collection listings may include calculated data not persisted as document properties (for example, `commentsCount`, `ratingAvg`) alongside the identifier.
+1. Maintain detail endpoints that expose a single document shape aligned with the DTOs exported from `packages/domain`.
 
 ### SHOULD
 
-1. Ensure `byId` endpoints return flat documents, referencing related records strictly by ID, avoiding returning calculated, populated or nested documents so the web cache stays normalized.
+1. Ensure `byId` endpoints return flat documents, referencing related records strictly by ID, avoiding returning calculated, populated, or nested documents so the web cache stays normalized.
 
 ### COULD
 
@@ -107,7 +89,7 @@
 
 ### MUST
 
-- None
+1. None
 
 ### SHOULD
 
@@ -138,6 +120,26 @@
 ### COULD
 
 1. Publish reusable validation utilities that enforce compliant array parameter encoding and limit selection.
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Understand Git-based workflows and CI/CD pipelines used to deploy the API so changes remain shippable and traceable.
+1. Be proficient with the API testing frameworks documented in `docs/testing.md` to keep controllers and services covered.
+1. Apply performance profiling and monitoring basics to spot regressions introduced by new endpoints or aggregations.
+
+### SHOULD
+
+1. Stay familiar with security best practices (authentication, authorization, input validation) relevant to the API server and database layer documented in `docs/stack.md`.
+
+### COULD
+
+1. Share performance findings or CI/CD adjustments in `docs/` to help other contributors adopt improvements.
 
 ### WANT
 

@@ -4,7 +4,7 @@
 
 ## Bug Resolution Workflow
 
-when a request describes errors or undesired behaviors and asks for a fix.
+When a request describes errors or undesired behaviors and asks for a fix.
 
 ### MUST
 
@@ -18,7 +18,7 @@ when a request describes errors or undesired behaviors and asks for a fix.
 ### SHOULD
 
 1. Prefer the smallest effective test scope, escalating from unit to integration coverage only when the discrepancy remains unresolved.
-1. Document manual reproduction steps in the issue or PR description if an automated harness is not yet available for the affected area.
+1. Document manual reproduction steps in the issue or change request description if an automated harness is not yet available for the affected area.
 1. Run the relevant coverage command documented in `docs/verification.md` when fixes touch instrumentation or when acceptance criteria call for updated coverage baselines.
 
 ### COULD
@@ -29,20 +29,21 @@ when a request describes errors or undesired behaviors and asks for a fix.
 
 1. None
 
-## Contributor Competencies
+## Acceptance Criteria Validation
 
 ### MUST
 
-1. Master the testing frameworks documented in `docs/testing.md` to write, extend, and debug automated coverage.
-1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
+1. Validate each story's acceptance criteria against the implemented behavior and the mapped BDD scenarios.
+1. Confirm test coverage or manual verification evidence traces back to the originating user stories and criteria.
+1. Use `docs/vision.md` and `docs/prototypes.md` as the authoritative sources for scope or fidelity validation when applicable.
 
 ### SHOULD
 
-1. Track accessibility and performance considerations raised during QA and route them to the owning specs.
+1. Record acceptance criteria verification outcomes in QA notes or change request descriptions.
 
 ### COULD
 
-1. Document reusable troubleshooting recipes in `docs/qa/` to speed future investigations.
+1. Maintain a reusable checklist for recurring acceptance criteria patterns.
 
 ### WANT
 
@@ -90,7 +91,7 @@ Guidance for introducing automated visual or end-to-end regression suites once t
 
 ## Prototype Fidelity Validation
 
-when an issue references mismatches between the implementation and the approved prototype.
+When an issue references mismatches between the implementation and the approved prototype.
 
 ### MUST
 
@@ -98,7 +99,7 @@ when an issue references mismatches between the implementation and the approved 
 1. Capture the current implementation via screenshots or screen recordings that highlight the reported deviation.
 1. Enumerate the UI deltas (layout, spacing, copy, interactions) in the fix plan, referencing the exact components or styles to adjust.
 1. Apply the fix and gather updated captures alongside notes confirming the UI now matches the reference.
-1. Store the before/after evidence in the issue, PR, or a `docs/qa/` note so future regressions can reuse the investigation context.
+1. Store the before/after evidence in the issue, change request, or a `docs/qa/` note so future regressions can reuse the investigation context.
 
 ### SHOULD
 
@@ -109,6 +110,45 @@ when an issue references mismatches between the implementation and the approved 
 
 1. Store comparison artifacts (for example, annotated screenshots or CSS audit notes) alongside QA documentation when historical reference is helpful.
 1. Pilot automated visual or end-to-end tooling documented in `docs/testing.md` in an experiment branch before formal adoption.
+
+### WANT
+
+1. None
+
+## Approval Gates
+
+### MUST
+
+1. Require user approval before executing history- or remote-altering git commands (`git commit`, `git push`, `git pull`, `git merge`, `git rebase`) or destructive commands.
+1. Require user approval before edits that affect files matched by `.gitignore`.
+1. Require user approval before marking acceptance criteria or prototype mismatches as resolved when evidence is incomplete.
+
+### SHOULD
+
+1. Pause for confirmation before adopting new QA tooling that changes verification scope.
+
+### COULD
+
+1. None
+
+### WANT
+
+1. None
+
+## Contributor Competencies
+
+### MUST
+
+1. Master the testing frameworks documented in `docs/testing.md` to write, extend, and debug automated coverage.
+1. Understand CI/CD verification gates so QA workflows integrate with pipelines and block regressions effectively.
+
+### SHOULD
+
+1. Track accessibility and performance considerations raised during QA and route them to the owning specs.
+
+### COULD
+
+1. Document reusable troubleshooting recipes in `docs/qa/` to speed future investigations.
 
 ### WANT
 

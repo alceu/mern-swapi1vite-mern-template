@@ -1,0 +1,73 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.18.3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare env
+        run: |
+          cp sample-production.env .env
+          ln -sf ../../.env packages/pwa/.env
+          ln -sf ../../.env packages/api/.env
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check types
+        run: pnpm check-types
+
+      - name: Build
+        run: pnpm build
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: code-quality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.18.3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare env
+        run: |
+          cp sample-production.env .env
+          ln -sf ../../.env packages/pwa/.env
+          ln -sf ../../.env packages/api/.env
+
+      - name: Run coverage
+        run: pnpm coverage

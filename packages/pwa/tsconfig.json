@@ -6,20 +6,12 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@pwa/*": [
-        "src/*"
-      ],
+      "@pwa/*": ["src/*"],
       "@swapi-mern/domain": ["../../packages/domain/src"]
     },
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "src",
-    "vite.config.d.ts",
-    "vite.config.ts"
-  ],
+  "include": ["src", "vite.config.d.ts", "vite.config.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"

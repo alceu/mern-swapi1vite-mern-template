@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { ISearchQueryDto } from "@swapi-mern/domain";
 import SearchQuery from "@api/models/SearchQuery";
+import { BadRequestError, NotFoundError } from "@api/utils/errors";
 
 /**
  * Registers a search query by directly updating the database.
@@ -18,17 +19,15 @@ export async function registerSearchQuery(
   );
 }
 
-export async function getSearchQueryById(
-  id: string
-): Promise<ISearchQueryDto | null> {
+export async function getSearchQueryById(id: string): Promise<ISearchQueryDto> {
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return null;
+    throw new BadRequestError("Invalid search query ID format");
   }
 
   const searchQuery = await SearchQuery.findById(id);
 
   if (!searchQuery) {
-    return null;
+    throw new NotFoundError("Search query not found");
   }
 
   return {

@@ -2,132 +2,43 @@
 
 This project implements a MERN (MongoDB, Express.js, React, Node.js) stack application. It leverages a Vite-based build system for the PWA, and both the PWA and API are developed using TypeScript, ensuring type safety and improved code quality.
 
+## Agent instructions (applied by default)
+
+This repository includes a set of AI agent instruction files. The files listed (notably `main.md` and `developer_assistant.md`) are considered the authoritative, foundational instructions and are applied by default for all AI agent interactions related to this project.
+
 ## Getting Started
 
-Follow these instructions to set up and run the project.
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd swapi-mern-example
-```
-
-1. **Install dependencies:**
+1. Clone the repository:
 
    ```bash
-   pnpm install
+   git clone <repository-url>
+   cd swapi-mern-example
    ```
 
-1. Optional:
+1. Run the foundational setup:
 
-   ```bash
-   cp -r sample-.vscode .vscode
+   ```text
+   First of all, please incorporate the agents' foundational instruction files and apply them by default to all our future queries.
+
    ```
 
-1. Environment Setup
+1. Run this developer assistant query for the onboarding overview:
 
-To get started, you need to create `.env` files from the provided samples for both the api and pwa. These files will hold your environment-specific variables.
+   ```text
+   Now please provide a developer onboarding overview.
 
-- **For Development:**
-  ```bash
-  cp sample-development.env .env
-  ```
-- **For Production:**
-  ```bash
-  cp sample-production.env .env
-  ```
-- **Create symbolic links for each workspace:**
-  ```bash
-  ln -s ../../.env packages/pwa/.env && ln -s ../../.env packages/api/.env
-  ```
+   ```
 
-**Note:** The `.env` files are ignored by Git, so your secrets are safe. Ensure you configure the variables within these files according to your needs.
+1. Run this developer assistant query for local setup and run/debug instructions:
 
-1. Running the Application
+   ```text
+   Now please prepare the local development environment after a fresh git clone.
 
-You can run this project in two ways: using Docker (recommended for a consistent environment) or running the services locally on your machine.
-
-#### A. Docker Development (Recommended)
-
-This is the easiest way to get started. With Docker, the entire application (pwa, api, and database) runs in containers.
-
-**Prerequisites:**
-
-- Docker
-- Docker Compose
-
-**Instructions:**
-
-- **For development:**
-
-```bash
-docker compose up --build
-```
-
-- **For production:**
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.production.yml up --build
-```
-
-The `-d` flag can be added to run in detached mode (in the background).
-
-#### B. Local Development
-
-If you prefer to run the services directly on your machine, follow these steps.
-
-**Prerequisites:**
-
-- Node.js 18+
-- pnpm
-- Docker (for the database)
-
-**Instructions:**
-
-1.  **Start the database:**
-
-    ```bash
-    docker compose up mongo -d
-    ```
-
-1.  **IMPORTANT:** In your `.env` file, update the `MONGO_URI` to replace `mongo:27017` with `localhost:27017`.
-
-1.  **Start the development servers:**
-
-    - **API (in one terminal):**
-
-      ```bash
-      pnpm dev:api
-      ```
-
-    - **PWA (in another terminal):**
-
-      ```bash
-      pnpm dev:pwa
-      ```
-
-**Accessing the Application (default, check your `.env`):**
-
-- **Docker and Local Development:**
-
-  - api: `http://localhost:5000`
-  - pwa: `http://localhost:3000`
-
-- **Docker Production:**
-
-  - api: `http://localhost:5000`
-  - pwa: `http://localhost`
+   ```
 
 ## Project Development
 
 This project implements specific features and code organization, adhering to modern development practices.
-
-## Agent instructions (applied by default)
-
-This repository includes a set of AI agent instruction files in the `.agents/` directory. The files listed (notably `main.md` and `developer_assistant.md`) are considered the authoritative, foundational instructions and are applied by default for all AI agent interactions related to this project. Human developers may review and edit the `.agents/` files; agents must preserve and respect any user-made changes.
-
-See `.agents/` for details.
 
 ### Key Solutions and Features Implemented:
 
@@ -145,13 +56,18 @@ See `.agents/` for details.
     - All pwa components are designed with responsiveness in mind, utilizing `rem` units, Flexbox, Grid, and media queries to ensure optimal viewing across various devices.
 
 1.  **[x] Code Quality and Development Experience**:
+
     - Integrated Prettier and ESLint for consistent code formatting and linting across both pwa and api.
+
 1.  **[x] Data normalization and caching strategies between PWA and API**:
+
     - Using the PWA Top Search Queries Chart feature as an example.
+
 1.  **[x] Monorepo structure**:
+
     - For better project organization, sharing resources, and strong type definitions.
 
-## TODO
+1.  **[x] Test coverage**:
 
-- [ ] Add testing framework.
-- [ ] Achieve code coverage above 90% across the codebase.
+    - API testing framework (Jest/Supertest).
+    - Code coverage above 70% across the codebase.

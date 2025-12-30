@@ -7,6 +7,8 @@ dist
 tsconfig.tsbuildinfo
 tsconfig.node.tsbuildinfo
 
+coverage/
+
 .vscode/
 
 **/gitignored-*

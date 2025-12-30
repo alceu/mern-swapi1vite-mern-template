@@ -4,6 +4,13 @@ import eventEmitter from "@api/utils/EventEmitter";
 import SearchQuery from "@api/models/SearchQuery";
 import TopSearch, { ITopSearch } from "@api/models/TopSearch";
 import { ITopSearchDto, SearchType } from "@swapi-mern/domain";
+import { BadRequestError, NotFoundError } from "@api/utils/errors";
+
+const logDebug = (message: string) => {
+  if (process.env.NODE_ENV === "development") {
+    console.debug(message);
+  }
+};
 
 /**
  * Calculates the top search queries from the SearchQuery model for a given type.
@@ -117,7 +124,7 @@ export async function calculateAndPersistTopQueriesByType(
  * Calculates and persists top queries for both types, emits a single event with all changed TopSearch document IDs.
  */
 export async function calculateAndPersistAllTopQueries(): Promise<void> {
-  console.debug("Calculating and persisting top queries for all types...");
+  logDebug("Calculating and persisting top queries for all types...");
   const changedIds = new Set<string>();
   const filmsChanged = await calculateAndPersistTopQueriesByType("films");
   const peopleChanged = await calculateAndPersistTopQueriesByType("people");
@@ -125,11 +132,11 @@ export async function calculateAndPersistAllTopQueries(): Promise<void> {
   peopleChanged.forEach((id) => changedIds.add(id));
   if (changedIds.size > 0) {
     eventEmitter.emit("top-searches-updated", Array.from(changedIds));
-    console.debug(
+    logDebug(
       "Top queries for all types calculated, persisted, and event emitted."
     );
   } else {
-    console.debug(
+    logDebug(
       "Top queries for all types calculated, persisted, no changes detected."
     );
   }
@@ -176,9 +183,9 @@ export async function getTopQueries(
 
 export async function getTopSearchById(
   searchQueryId: string
-): Promise<ITopSearchDto | null> {
+): Promise<ITopSearchDto> {
   if (!mongoose.Types.ObjectId.isValid(searchQueryId)) {
-    return null;
+    throw new BadRequestError("Invalid top search ID format");
   }
 
   const topSearch = await TopSearch.findOne({
@@ -186,7 +193,7 @@ export async function getTopSearchById(
   });
 
   if (!topSearch) {
-    return null;
+    throw new NotFoundError("Top search not found");
   }
 
   return {
